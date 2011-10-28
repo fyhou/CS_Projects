@@ -1,6 +1,6 @@
 
 //------------------------------------------------------------------------
-// Program:   client
+// Program:   client 
 //
 // Purpose:   allocate a socket, connect to a server, and print all output
 //
