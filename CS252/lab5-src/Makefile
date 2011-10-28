@@ -1,5 +1,5 @@
 CXX = g++ -fPIC
-NETLIBS= -lnsl -lsocket
+NETLIBS= -lnsl # -lsocket on lore
 
 all: daytime-server daytime-client use-dlopen hello.so
 
