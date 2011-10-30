@@ -6,7 +6,7 @@
 -- the data specified in data.sql               --
 
 set serveroutput on size 32000
-
+	
 /**
 	procedure generates a report that lists, for each department, the faculty members in 
 	that department.  
@@ -63,7 +63,7 @@ end;
 
 -- runs pro_department_report procedure
 begin
-	if 1=2 then	
+	if 1=1 then	
 		pro_department_report;
 	end if;
 end;
@@ -149,6 +149,8 @@ end;
 
 -- runs pro_faculty_stats procedure
 begin
-	pro_faculty_stats;
+	if 1=1 then
+		pro_faculty_stats;
+	end if;
 end;
 /
