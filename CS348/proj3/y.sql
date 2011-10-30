@@ -11,7 +11,16 @@ is
 		from department 
 		order by dname;
 	d departments%rowtype;
+
+	cursor profs is
+		select fname, deptid
+		from faculty
+		order by fname;
+	p profs%rowtype;
+
 	profCount number(3);
+
+	i number(1);
 begin
 	for d in departments
 	loop
@@ -23,7 +32,18 @@ begin
 		where faculty.deptid=d.deptid;
 		dbms_output.put_line('Total faculty members: ' || profCount);
 
-		dbms_output.put_line('-------------' || CHR(10));
+		dbms_output.put_line('-------------');
+
+		i:= 1;
+		for p in profs
+		loop
+			if p.deptid=d.deptid then
+				dbms_output.put_line(i || '. ' || p.fname);
+				i:= i+1;
+			end if;
+		end loop;
+
+		dbms_output.put_line(CHR(10));
 	end loop;
 end;
 /
