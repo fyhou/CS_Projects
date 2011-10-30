@@ -1,2 +1,2 @@
-show errors procedure pro_department_report;
+show errors procedure pro_faculty_stats;
 
