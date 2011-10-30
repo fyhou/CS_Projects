@@ -73,7 +73,7 @@ create or replace procedure pro_faculty_stats
 is
 	-- gets faculty
 	cursor profs is
-		select fname, deptid
+		select fname, fid
 		from faculty
 		order by fname;
 	p profs%rowtype;
@@ -88,8 +88,11 @@ is
 	facultyTotal number(2); -- total number of faculty
 	classTotal   number(2); -- total number of classes
 
-	studentToFaculty number(2);
-	averageClasses number(2,1);
+	studentToFaculty number(2); -- student to faculty ratio 
+	averageClasses number(2,1); -- average classes per faculty
+
+	studentCount number(2); -- number of students that faculty teaches
+	spaces long;            -- spaces between faculty name and number of students
 begin
 	-- gets count of students
 	select count(1)
@@ -112,7 +115,32 @@ begin
 
 	-- calcualtes average number of classes per faculty
 	averageClasses := classTotal/facultyTotal;
-	dbms_output.put_line('Average number of classes per faculty:' || to_char(averageClasses, '99.9'));
+	dbms_output.put_line('Average number of classes per faculty:' || to_char(averageClasses, '99.9') || CHR(10));
+
+	dbms_output.put_line('Faculty Name          # Students');
+	dbms_output.put_line('------------          ----------');
+
+	for p in profs
+	loop
+		select count(1)
+		into studentCount
+		from class c, enrolled e
+		where 
+			p.fid = c.fid and
+			c.name = e.cname;
+
+		if studentCount = 0 then
+			studentCount := 0;
+		else
+			spaces:= '';
+			for i in 1..(22-length(p.fname)) loop
+				spaces:= spaces || ' ';
+			end loop;
+
+			dbms_output.put_line(p.fname || spaces || studentCount);
+		end if;
+
+	end loop;
 end;
 /
 
