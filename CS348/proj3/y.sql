@@ -1,6 +1,9 @@
--- CS 348: Project 3    --
--- Author: Joe Martella --
--- Date: 11/08/2011     --
+-- CS 348: Project 3                            --
+-- Author: Joe Martella                         --
+-- Date: 11/08/2011                             --
+
+-- Script generates reports on the tables from  --
+-- the data specified in data.sql               --
 
 set serveroutput on size 32000
 

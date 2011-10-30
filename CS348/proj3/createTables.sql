@@ -1,6 +1,8 @@
--- CS 348: Project 3    --
--- Author: Joe Martella --
--- Date: 11/08/2011     --
+-- CS 348: Project 3              --
+-- Author: Joe Martella           --
+-- Date: 11/08/2011               -- 
+
+-- Script that creates the tables --
 
 -- create STUDENT table --
 create table student (
