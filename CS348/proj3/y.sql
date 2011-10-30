@@ -81,12 +81,6 @@ is
 		order by fname;
 	p profs%rowtype;
 
-	-- gets students
-	cursor students is
-		select snum
-		from student;
-	s students%rowtype;
-
 	studentTotal number(2); -- total number of students
 	facultyTotal number(2); -- total number of faculty
 	classTotal   number(2); -- total number of classes
