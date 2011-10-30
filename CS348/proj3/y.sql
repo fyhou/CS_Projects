@@ -44,12 +44,12 @@ begin
 		dbms_output.put_line('-------------');
 
 		-- iterates over faculty, prints if they are in current department
-		i:= 1;
+		i := 1;
 		for p in profs
 		loop
 			if p.deptid=d.deptid then
 				dbms_output.put_line(i || '. ' || p.fname);
-				i:= i+1;
+				i := i+1;
 			end if;
 		end loop;
 
@@ -60,6 +60,58 @@ end;
 
 -- runs pro_department_report procedure
 begin
-	pro_department_report;
+	if 1=2 then	
+		pro_department_report;
+	end if;
+end;
+/
+
+/**
+	procedure generates a report that contains statistics about faculty.
+**/
+create or replace procedure pro_faculty_stats
+is
+	-- gets faculty
+	cursor profs is
+		select fname, deptid
+		from faculty
+		order by fname;
+	p profs%rowtype;
+
+	-- gets students
+	cursor students is
+		select snum
+		from student;
+	s students%rowtype;
+
+	studentTotal number(2); -- total number of students
+	facultyTotal number(2); -- total number of faculty
+	classTotal   number(2); -- total number of classes
+
+	studentToFaculty number(2);
+begin
+	-- gets count of students
+	select count(1)
+	into studentTotal
+	from student;
+	
+	-- gets count of faculty
+	select count(1)
+	into facultyTotal
+	from faculty;
+
+	-- gets count of classes
+	select count(1)
+	into classTotal
+	from class;
+
+	studentToFaculty := studentTotal/facultyTotal;
+	dbms_output.put_line('Student to faculty ratio: ' || studentToFaculty || ':1');
+end;
+/
+
+-- runs pro_faculty_stats procedure
+begin
+	pro_faculty_stats;
 end;
 /
