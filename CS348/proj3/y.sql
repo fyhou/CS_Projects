@@ -89,6 +89,7 @@ is
 	classTotal   number(2); -- total number of classes
 
 	studentToFaculty number(2);
+	averageClasses number(2,1);
 begin
 	-- gets count of students
 	select count(1)
@@ -105,8 +106,13 @@ begin
 	into classTotal
 	from class;
 
+	-- calculates student to faculty ratio
 	studentToFaculty := studentTotal/facultyTotal;
 	dbms_output.put_line('Student to faculty ratio: ' || studentToFaculty || ':1');
+
+	-- calcualtes average number of classes per faculty
+	averageClasses := classTotal/facultyTotal;
+	dbms_output.put_line('Average number of classes per faculty:' || to_char(averageClasses, '99.9'));
 end;
 /
 
