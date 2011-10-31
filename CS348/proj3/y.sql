@@ -143,8 +143,37 @@ end;
 
 -- runs pro_faculty_stats procedure
 begin
-	if 1=1 then
+	if 1=2 then
 		pro_faculty_stats;
+	end if;
+end;
+/
+
+/**
+	procedure generates a report about the number of classes a student is in.
+**/
+create or replace procedure pro_student_stats
+is
+	-- gets students
+	cursor students is
+		select sname, snum
+		from student
+		order by sname;
+	s students%rowtype;
+
+	numberClasses number(2); -- number of classes student is in
+begin
+	for s in students
+	loop
+		dbms_output.put_line(s.sname);
+	end loop;
+end;
+/
+
+-- runs pro_student_stats procedure
+begin
+	if 1=1 then
+		pro_student_stats;
 	end if;
 end;
 /
