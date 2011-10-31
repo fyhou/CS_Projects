@@ -208,3 +208,87 @@ begin
 end;
 /
 
+/**
+	procedure generates a histrogram for the ages of the students.
+**/
+create or replace procedure pro_histogram
+is
+	minAge number(2); -- min age
+	maxAge number(2); -- max age
+	medAge number(10,2); -- median age
+	
+	medAgeCopy number(10,2);
+	printMed number(1);
+
+	people number(2); -- students with age of interest
+	Xs long;          -- histogram bar
+	spaces long;      -- formatting
+begin
+	-- gets min age
+	select min(s.age)
+	into minAge
+	from student s;
+
+	-- gets max age
+	select max(s.age)
+	into maxAge
+	from student s;
+
+	-- gets median age
+	select median(s.age)
+	into medAge
+	from student s;
+	
+	medAgeCopy := medAge;
+	while medAgeCopy >= 1
+	loop
+		medAgeCopy := medAgeCopy - 1;
+	end loop;
+
+	if medAgeCopy = 0 then
+		printMed := 1;
+	else
+		printMed := 0;
+	end if;
+
+	dbms_output.put_line('age');
+	
+	for i in minAge..maxAge 
+	loop
+		-- get count of people with age of interest
+		select count(1)
+		into people
+		from student
+		where student.age=i;
+
+		-- generate histogram bar
+		Xs := '';
+		for j in 1..people 
+		loop
+			Xs := Xs || 'x';
+		end loop;
+
+		-- pure formatting
+		if people < 10 then
+			spaces := '  ';
+		else
+			spaces := ' ';
+		end if;
+
+		-- print output
+		if medAge = i and printMed = 1 then
+			dbms_output.put_line(i || ' | ' || people || spaces || Xs || ' <-- median');
+		else
+			dbms_output.put_line(i || ' | ' || people || spaces || Xs);
+		end if;
+	end loop;
+end;
+/
+
+-- runs pro_histogram
+begin
+	if 1=2 then
+		pro_histogram;
+	end if;
+end;
+/
