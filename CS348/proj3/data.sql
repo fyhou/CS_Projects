@@ -1,8 +1,8 @@
--- CS 348: Project 3             --
--- Author: Joe Martella          --
--- Date: 11/08/2011              -- 
+-- CS 348: Project 3              --
+-- Author: Joe Martella           --
+-- Date: 11/08/2011               -- 
 
--- Script fills tables with data --
+-- Script fills tables with data  --
 
 insert into STUDENT values (0418,'S.Jack','Math','SO',17);
 insert into STUDENT values (0671,'A.Smith','English','FR',20);
