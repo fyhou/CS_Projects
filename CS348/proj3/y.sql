@@ -119,12 +119,13 @@ begin
 
 	for p in profs
 	loop
-		select count(1)
+		select count(distinct s.snum)
 		into studentCount
-		from class c, enrolled e
+		from student s, class c, enrolled e
 		where 
 			p.fid = c.fid and
-			c.name = e.cname;
+			c.name = e.cname and
+			s.snum = e.snum;
 
 		if studentCount = 0 then
 			studentCount := 0;
@@ -201,7 +202,7 @@ end;
 
 -- runs pro_student_stats procedure
 begin
-	if 1=1 then
+	if 1=2 then
 		pro_student_stats;
 	end if;
 end;
