@@ -180,6 +180,18 @@ begin
 			for i in 1..(12-length(s.sname)) loop
 				spaces := spaces || ' ';
 			end loop;
+		elsif numberClasses = 1 then
+			for i in 1..(18-length(s.sname)) loop
+				spaces := spaces || ' ';
+			end loop;
+		elsif numberClasses = 2 then
+			for i in 1..(24-length(s.sname)) loop
+				spaces := spaces || ' ';
+			end loop;
+		else
+			for i in 1..(31-length(s.sname)) loop
+				spaces := spaces || ' ';
+			end loop;
 		end if;
 
 		dbms_output.put_line(s.sname || spaces || numberClasses);
