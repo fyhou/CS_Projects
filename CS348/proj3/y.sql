@@ -162,6 +162,7 @@ is
 	s students%rowtype;
 
 	numberClasses number(2); -- number of classes student is in
+	spaces long;             -- determines what column to print in
 begin
 	dbms_output.put_line('--            # classes         --');
 	dbms_output.put_line('Student     0     1     2     >=3');
@@ -174,7 +175,14 @@ begin
 		from enrolled
 		where enrolled.snum=s.snum;
 
-		dbms_output.put_line(s.sname || ' ' || numberClasses);
+		spaces := '';
+		if numberClasses = 0 then
+			for i in 1..(12-length(s.sname)) loop
+				spaces := spaces || ' ';
+			end loop;
+		end if;
+
+		dbms_output.put_line(s.sname || spaces || numberClasses);
 	end loop;
 end;
 /
