@@ -2,4 +2,5 @@ CS 348 - Project 3
 Joseph Martella
 November 8, 2011
 
-The file your_login.sql generates reports on tables with data specified by the file data.sql.
+Execute reset.sql (this will drop the tables, add the tables, refill with data).
+Execute jmarte.sql (this will provide the necessary reports).

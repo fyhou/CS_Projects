@@ -5,5 +5,5 @@
 -- Script that shows compilation errors  --
 -- of current working procedure          --
 
-show errors procedure pro_faculty_stats;
+show errors procedure pro_insert_class;
 

@@ -25,7 +25,7 @@ create table faculty (
 -- create CLASS table --
 create table class (
 	name      varchar2(30)  not null,
-	meets_at  date,
+	meets_at  timestamp(0),
 	room      varchar2(30),  
 	fid       integer       not null check(fid >= 0),
 	primary key (name),
