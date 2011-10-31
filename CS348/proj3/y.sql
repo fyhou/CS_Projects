@@ -194,7 +194,7 @@ begin
 			end loop;
 		end if;
 
-		dbms_output.put_line(s.sname || spaces || numberClasses);
+		dbms_output.put_line(s.sname || spaces || 'X');
 	end loop;
 end;
 /
