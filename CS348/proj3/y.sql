@@ -163,6 +163,10 @@ is
 
 	numberClasses number(2); -- number of classes student is in
 begin
+	dbms_output.put_line('             # classes');
+	dbms_output.put_line('Student     0     1     2     >=3');
+	dbms_output.put_line('-------    ---   ---   ---   -----');
+
 	for s in students
 	loop
 		dbms_output.put_line(s.sname);
