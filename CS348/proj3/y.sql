@@ -63,7 +63,7 @@ end;
 
 -- runs pro_department_report procedure
 begin
-	if 1=1 then	
+	if 1=2 then	
 		pro_department_report;
 	end if;
 end;
@@ -143,7 +143,7 @@ end;
 
 -- runs pro_faculty_stats procedure
 begin
-	if 1=1 then
+	if 1=2 then
 		pro_faculty_stats;
 	end if;
 end;
