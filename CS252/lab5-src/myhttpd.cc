@@ -204,6 +204,40 @@ processRequest(int socket)
 	// just display cwd for my own benefit
 	printf("cwd is: %s\n", myCwd);
 
+
+	/**********************************
+	 * Now I have to determine
+	 * the content type to return.
+	 **********************************/
+	int pathLength = strlen(docPath)-1;
+	int j = 0;
+	char fileExt[1024];
+	while (docPath[pathLength] != '.') {
+		fileExt[j++] = docPath[pathLength];
+		pathLength--;
+	}
+	fileExt[j] = '.';
+	fileExt[j+1] = '\0';
+
+	// display file extension for my own benefit
+	printf("file extension is: %s\n", fileExt);
+
+	char contentType[256];
+
+	// check file extension and set content type accordingly
+	if (strcmp(fileExt, "lmth.") == 0 || strcmp(fileExt, "/lmth.") == 0) {
+		strcpy(contentType, "text/html");
+	}
+	else if (strcmp(fileExt, "fig.") == 0 || strcmp(fileExt, "/fig.") == 0) {
+		strcpy(contentType, "image/gif");
+	}
+	else {
+		strcpy(contentType, "text/plain");
+	}
+
+	// display content type for my own benefit
+	printf("content type is: %s\n", contentType);
+	
 	/*
 	FILE * document;
 	document = fopen(cwd, "r");
