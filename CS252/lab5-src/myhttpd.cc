@@ -123,20 +123,29 @@ processRequest(int socket)
 	int length = 0;
 	char currString[1024];
 	
+	// read request header
 	while (n = read(socket, &newChar, sizeof(newChar))) {			
 		if (newChar == ' ') {
+			// if it's first space, we've finished reading GET
+			// and can start reading the docPath			
 			if (gotGet == 0) {
 				gotGet = 1;
 			}
+			// if it's second space (and we haven't got docPath yet)
+			// we know we've finished reading docPath and we can store it
 			else if (gotDP == 0) {
 				length++;
 				currString[length-1] = '\0';
 				strcpy(docPath, currString);
 			}
 		}
+		// end of header, break out of loop
 		else if (oldChar == '\n' && newChar == '\r') {
 			break;
 		}
+		// store newChar in oldChar so we can check for EOH
+		// and if we've encountered GET, store newChar in currString
+		// because it's effectively building docPath
 		else {
 			oldChar = newChar;
 			if (gotGet == 1) {
@@ -146,10 +155,54 @@ processRequest(int socket)
 		}	
 	}
 
+	// just display docPath for my own benefit
 	printf("docPath is: %s\n", &docPath);
 	
+	/****************************************
+	 * Get details of request now, i.e.
+	 * where the file lives.
+	 ****************************************/
 
+	// first get CWD (where files are)
+	char *myCwd = {0};
+	myCwd = getcwd(myCwd, 256);
 
+	int i = 1;
+	char begin[1024];
+	memset(begin, 0, sizeof(begin));
+
+	// if "/", just return index.html
+	if (strcmp(docPath, "/") == 0) {
+		strcat(myCwd, "/http-root-dir/htdocs/index.html");
+	}
+	// if not, check the beginning to see
+	// if it is in one of our folders
+	else {	
+		// get the first part of the path
+		while (docPath[i] != '/') {
+			begin[i-1] = docPath[i];
+			i++;
+		} 
+		begin[i] = '\0';
+		
+		// check the beginning against folder names
+		// and build full path
+		if (strcmp(begin, "icons") == 0) {
+			strcat(myCwd, "/http-root-dir");
+			strcat(myCwd, docPath);
+		}
+		else if (strcmp(begin, "htdocs") == 0) {
+			strcat(myCwd, "/http-root-dir");
+			strcat(myCwd, docPath);
+		}
+		else {
+			strcat(myCwd, "/http-root-dir/htdocs");
+			strcat(myCwd, docPath);
+		}
+	}
+
+	// just display cwd for my own benefit
+	printf("cwd is: %s\n", myCwd);
 
 	/*
 	FILE * document;
