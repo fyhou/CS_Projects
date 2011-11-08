@@ -166,7 +166,11 @@ processRequest(int socket)
 	}
 
 	// just display docPath for my own benefit
-	// printf("docPath is: %s\n", &docPath);
+	//printf("docPath is: %s\n", &docPath);
+
+	//char *realPath = realpath(docPath, NULL);
+	//printf("realPath is: %s\n", &realPath);
+	
 	
 	/****************************************
 	 * Get details of request now, i.e.
@@ -261,7 +265,7 @@ processRequest(int socket)
 		document = fopen(myCwd, "rb");
 	}
 	
-	if (document == 0) {
+	if (document <= 0) {
 		// send 404 if file isn't found
 		const char *notFound = "Sorry, but that file could not be found.";
 		write(socket, "HTTP/1.0", strlen("HTTP/1.0"));
@@ -275,11 +279,11 @@ processRequest(int socket)
 		write(socket, "\r\n", 2);
 		write(socket, "Server:", 7);
 		write(socket, " ", 1);
-		write(socket, "Joserver", 9);
+		write(socket, "CS 252 Lab 5", strlen("CS 252 Lab 5"));
 		write(socket, "\r\n", 2);
 		write(socket, "Content-type:", 13);
 		write(socket, " ", 1);
-		write(socket, contentType, sizeof(contentType));
+		write(socket, "text/plain", strlen("text/plain"));
 		write(socket, "\r\n", 2);
 		write(socket, "\r\n", 2);
 		write(socket, notFound, strlen(notFound));
@@ -299,7 +303,7 @@ processRequest(int socket)
 			write(socket, "\r\n", 2);
 			write(socket, "Server:", 7);
 			write(socket, " ", 1);
-			write(socket, "lore", strlen("lore"));
+			write(socket, "CS 252 Lab 5", strlen("CS 252 Lab 5"));
 			write(socket, "\r\n", 2);
 			write(socket, "Content-Type:", strlen("Content-Type:"));
 			write(socket, " ", 1);
