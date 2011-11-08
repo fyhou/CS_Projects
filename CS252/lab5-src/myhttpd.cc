@@ -251,10 +251,8 @@ processRequest(int socket)
 		strcpy(contentType, "text/plain");
 	}
 
-	// display content type for my own benefit
-	// printf("content type is: %s\n", contentType);
-	
-	
+	// open file depending on content-type
+	// ** probably not changing anything
 	FILE * document;
 	if (isText == true) {
 		document = fopen(myCwd, "r");
@@ -264,8 +262,8 @@ processRequest(int socket)
 	}
 	
 	if (document == 0) {
-		//printf("Could not open file.\n");
-		const char *notFound = "No no, we don't gots that file, yo!";
+		// send 404 if file isn't found
+		const char *notFound = "Sorry, but that file could not be found.";
 		write(socket, "HTTP/1.0", strlen("HTTP/1.0"));
 		write(socket, " ", 1);
 		write(socket, "404", 3);
@@ -287,21 +285,8 @@ processRequest(int socket)
 		write(socket, notFound, strlen(notFound));
 	}
 	else {
-		//printf("Opened a file.\n");
+		// get the fd of the requested file
 		int fd = fileno(document);
-		//printf("fd = %d\n", fd);
-		
-		// stores size of file
-		char szS[1024];
-		memset(szS,0,sizeof(szS));
-		
-		// gets file size
-		fseek(document, 0L, SEEK_END);
-		long sz = ftell(document);
-		fseek(document, 0L, SEEK_SET);
-		sprintf(szS, "%d", sz);
-		// printf("file size: %s\n", szS);
-		
 
 		if (fd == -1) ;
 		else {
@@ -319,53 +304,16 @@ processRequest(int socket)
 			write(socket, "Content-Type:", strlen("Content-Type:"));
 			write(socket, " ", 1);
 			write(socket, contentType, strlen(contentType));
-			//write(socket, "\r\n", 2);
-			/*write(socket, "Content-Length:", strlen("Content-Length:"));
-			write(socket, " ", 1);
-			write(socket, szS, strlen(szS));*/
 			write(socket, "\r\n", 2);
 			write(socket, "\r\n", 2);
 
 			char c;
-			//memset(c,0,sizeof(c));
 			int count = 0;
-			int f = 0;
 
-			// printf("%s\n", contentType);
-
-			// uses read/write if html or text
-			if (isText == true) {
-				while (count = read(fd, &c, sizeof(c))) {
-					write(socket, &c, sizeof(c));
-				}
-			}
-			// uses this for images
-			else {
-				// writes image files
-				char * data;
-				data = (char *) malloc (sizeof(char)*sz);		
-				memset(data, 0, sizeof(data));
-
-				FILE * sock = fdopen(socket, "wb");
-				int n;
-
-				size_t result = fread(data, 1, sz, document);
-				if (result != sz) {
-					printf("Reading error.\n");
-				}
-				else {
-					int bytesWritten = 0;
-					if ((bytesWritten = fwrite (data, 1, result, sock)) != sz) {
-						perror("Write");
-					}
-					else {
-						printf("Bytes written: %d\n", bytesWritten);
-					}
-				}
-				
-				fclose(document);
-			}
-			
+			// read the file and write it back
+			while (count = read(fd, &c, sizeof(c))) {
+				write(socket, &c, sizeof(c));
+			}	
 		}
 	}
 }
