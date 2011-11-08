@@ -147,6 +147,7 @@ processRequest(int socket)
 				length++;
 				currString[length-1] = '\0';
 				strcpy(docPath, currString);
+				gotDP = 1;
 			}
 		}
 		// end of header, break out of loop
@@ -165,13 +166,6 @@ processRequest(int socket)
 		}	
 	}
 
-	// just display docPath for my own benefit
-	//printf("docPath is: %s\n", &docPath);
-
-	//char *realPath = realpath(docPath, NULL);
-	//printf("realPath is: %s\n", &realPath);
-	
-	
 	/****************************************
 	 * Get details of request now, i.e.
 	 * where the file lives.
@@ -180,6 +174,10 @@ processRequest(int socket)
 	// first get CWD (where files are)
 	char *myCwd = {0};
 	myCwd = getcwd(myCwd, 256);
+
+	char *myCwd2 = {0};
+	myCwd2 = getcwd(myCwd2, 256);
+	strcat(myCwd2, "/http-root-dir");
 
 	int i = 1;
 	char begin[1024];
@@ -218,9 +216,22 @@ processRequest(int socket)
 		}
 	}
 
-	// just display cwd for my own benefit
-	// printf("cwd is: %s\n", myCwd);
+	/**********************************
+	 * Expand file path.
+	 **********************************/
+	char buf[1024];
+	memset(buf, 0, sizeof(buf));
+	char *realPath = realpath(myCwd, buf);
 
+	if (realPath) {
+		strcpy(myCwd, buf);
+	}
+
+	int len1 = strlen(myCwd);
+	int len2 = strlen(myCwd2);
+
+	if (len1 <= len2) printf("URL is not valid\n");
+	else             printf("URL is valid\n");
 
 	/**********************************
 	 * Now I have to determine
