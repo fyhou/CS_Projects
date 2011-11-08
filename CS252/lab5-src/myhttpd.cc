@@ -35,6 +35,14 @@ const char * usage =
 #include <stdio.h>
 #include <time.h>
 
+#include <fstream>
+#include <iostream>
+#include <iterator>
+#include <vector>
+
+using namespace std;
+
+
 int QueueLength = 5;
 
 // Processes time request
@@ -119,9 +127,11 @@ processRequest(int socket)
 
 	int gotDP = 0;
 	char docPath[1024];
+	memset(docPath, 0, sizeof(docPath));
 	
 	int length = 0;
 	char currString[1024];
+	memset(currString, 0, sizeof(currString));
 	
 	// read request header
 	while (n = read(socket, &newChar, sizeof(newChar))) {			
@@ -156,7 +166,7 @@ processRequest(int socket)
 	}
 
 	// just display docPath for my own benefit
-	printf("docPath is: %s\n", &docPath);
+	// printf("docPath is: %s\n", &docPath);
 	
 	/****************************************
 	 * Get details of request now, i.e.
@@ -171,9 +181,12 @@ processRequest(int socket)
 	char begin[1024];
 	memset(begin, 0, sizeof(begin));
 
+	bool isRoot = false;
+
 	// if "/", just return index.html
 	if (strcmp(docPath, "/") == 0) {
 		strcat(myCwd, "/http-root-dir/htdocs/index.html");
+		isRoot = true;
 	}
 	// if not, check the beginning to see
 	// if it is in one of our folders
@@ -202,7 +215,7 @@ processRequest(int socket)
 	}
 
 	// just display cwd for my own benefit
-	printf("cwd is: %s\n", myCwd);
+	// printf("cwd is: %s\n", myCwd);
 
 
 	/**********************************
@@ -211,7 +224,10 @@ processRequest(int socket)
 	 **********************************/
 	int pathLength = strlen(docPath)-1;
 	int j = 0;
+
 	char fileExt[1024];
+	memset(fileExt, 0, sizeof(fileExt));
+
 	while (docPath[pathLength] != '.') {
 		fileExt[j++] = docPath[pathLength];
 		pathLength--;
@@ -219,31 +235,37 @@ processRequest(int socket)
 	fileExt[j] = '.';
 	fileExt[j+1] = '\0';
 
-	// display file extension for my own benefit
-	printf("file extension is: %s\n", fileExt);
-
 	char contentType[256];
-
+	memset(contentType, 0, sizeof(contentType));
+	bool isText = true;
+	
 	// check file extension and set content type accordingly
-	if (strcmp(fileExt, "lmth.") == 0 || strcmp(fileExt, "/lmth.") == 0) {
+	if (strcmp(fileExt, "lmth.") == 0 || strcmp(fileExt, "/lmth.") == 0 || isRoot == true) {
 		strcpy(contentType, "text/html");
 	}
 	else if (strcmp(fileExt, "fig.") == 0 || strcmp(fileExt, "/fig.") == 0) {
 		strcpy(contentType, "image/gif");
+		isText = false;
 	}
 	else {
 		strcpy(contentType, "text/plain");
 	}
 
 	// display content type for my own benefit
-	printf("content type is: %s\n", contentType);
+	// printf("content type is: %s\n", contentType);
 	
-	/*
+	
 	FILE * document;
-	document = fopen(cwd, "r");
-
+	if (isText == true) {
+		document = fopen(myCwd, "r");
+	}
+	else {
+		document = fopen(myCwd, "rb");
+	}
+	
 	if (document == 0) {
-		const char *notFound = "File not found";
+		//printf("Could not open file.\n");
+		const char *notFound = "No no, we don't gots that file, yo!";
 		write(socket, "HTTP/1.0", strlen("HTTP/1.0"));
 		write(socket, " ", 1);
 		write(socket, "404", 3);
@@ -251,16 +273,99 @@ processRequest(int socket)
 		write(socket, " ", 1);
 		write(socket, "Not", 3);
 		write(socket, " ", 1);
-		write(socket, "Found", 5);
-		write(socket, "\n\r", 2);
+		write(socket, "Found,", 6);
+		write(socket, "\r\n", 2);
 		write(socket, "Server:", 7);
-		write(socket, "Wolf Gang", 9);
-		write(socket, "\n\r", 2);
+		write(socket, " ", 1);
+		write(socket, "Joserver", 9);
+		write(socket, "\r\n", 2);
 		write(socket, "Content-type:", 13);
 		write(socket, " ", 1);
-		write(socket, "text/plain", 10);
-		write(socket, "\n\r", 2);
-		write(socket, "\n\r", 2);
+		write(socket, contentType, sizeof(contentType));
+		write(socket, "\r\n", 2);
+		write(socket, "\r\n", 2);
 		write(socket, notFound, strlen(notFound));
-	}*/
+	}
+	else {
+		//printf("Opened a file.\n");
+		int fd = fileno(document);
+		//printf("fd = %d\n", fd);
+		
+		// stores size of file
+		char szS[1024];
+		memset(szS,0,sizeof(szS));
+		
+		// gets file size
+		fseek(document, 0L, SEEK_END);
+		long sz = ftell(document);
+		fseek(document, 0L, SEEK_SET);
+		sprintf(szS, "%d", sz);
+		// printf("file size: %s\n", szS);
+		
+
+		if (fd == -1) ;
+		else {
+			write(socket, "HTTP/1.0", strlen("HTTP/1.0"));
+			write(socket, " ", 1);
+			write(socket, "200 ", 4);
+			write(socket, "Document", strlen("Document"));
+			write(socket, " ", 1);
+			write(socket, "follows", 7);
+			write(socket, "\r\n", 2);
+			write(socket, "Server:", 7);
+			write(socket, " ", 1);
+			write(socket, "lore", strlen("lore"));
+			write(socket, "\r\n", 2);
+			write(socket, "Content-Type:", strlen("Content-Type:"));
+			write(socket, " ", 1);
+			write(socket, contentType, strlen(contentType));
+			//write(socket, "\r\n", 2);
+			/*write(socket, "Content-Length:", strlen("Content-Length:"));
+			write(socket, " ", 1);
+			write(socket, szS, strlen(szS));*/
+			write(socket, "\r\n", 2);
+			write(socket, "\r\n", 2);
+
+			char c;
+			//memset(c,0,sizeof(c));
+			int count = 0;
+			int f = 0;
+
+			// printf("%s\n", contentType);
+
+			// uses read/write if html or text
+			if (isText == true) {
+				while (count = read(fd, &c, sizeof(c))) {
+					write(socket, &c, sizeof(c));
+				}
+			}
+			// uses this for images
+			else {
+				// writes image files
+				char * data;
+				data = (char *) malloc (sizeof(char)*sz);		
+				memset(data, 0, sizeof(data));
+
+				FILE * sock = fdopen(socket, "wb");
+				int n;
+
+				size_t result = fread(data, 1, sz, document);
+				if (result != sz) {
+					printf("Reading error.\n");
+				}
+				else {
+					int bytesWritten = 0;
+					if ((bytesWritten = fwrite (data, 1, result, sock)) != sz) {
+						perror("Write");
+					}
+					else {
+						printf("Bytes written: %d\n", bytesWritten);
+					}
+				}
+				
+				fclose(document);
+			}
+			
+		}
+	}
 }
