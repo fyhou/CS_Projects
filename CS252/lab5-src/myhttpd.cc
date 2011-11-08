@@ -219,19 +219,23 @@ processRequest(int socket)
 	/**********************************
 	 * Expand file path.
 	 **********************************/
+
+	/**
+		TODO: Send response header for illegal access!
+	**/
 	char buf[1024];
 	memset(buf, 0, sizeof(buf));
 	char *realPath = realpath(myCwd, buf);
 
 	if (realPath) {
 		strcpy(myCwd, buf);
+
+		int len1 = strlen(myCwd);
+		int len2 = strlen(myCwd2);
+
+		if (len1 <= len2) printf("URL is not valid\n");
+		else              printf("URL is valid\n");
 	}
-
-	int len1 = strlen(myCwd);
-	int len2 = strlen(myCwd2);
-
-	if (len1 <= len2) printf("URL is not valid\n");
-	else             printf("URL is valid\n");
 
 	/**********************************
 	 * Now I have to determine
