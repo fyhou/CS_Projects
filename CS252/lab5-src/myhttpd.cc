@@ -51,14 +51,50 @@ void processRequest(int socket);
 int
 main(int argc, char ** argv)
 {
+	int port;
+	int mode = 0; // 0 single, 1 process, 2 threads, 3 threadpool
 	// Print usage if not enough arguments
-	if (argc < 2) {
+	/* if (argc < 2) {
 		fprintf(stderr, "%s", usage);
 		exit(-1);
 	 }
+	*/
+
+	if (argc == 1) {
+		port = 41691;		
+	}
+	else if (argc == 2) {
+		port = atoi(argv[1]); 
+	}
+	else if (argc == 3) {
+		// get port
+		port = atoi(argv[2]);
+
+		// determine mode
+		if (strcmp(argv[1], "-f") == 0) {
+			mode = 1;
+			//printf("mode is 1\n");
+		}
+		else if (strcmp(argv[1], "-t") == 0) {
+			mode = 2;
+			//printf("mode is 2\n");
+		}
+		else if (strcmp(argv[1], "-p") == 0) {
+			mode = 3;		
+			//printf("mode is 3\n");
+		}
+		else {
+			fprintf(stderr, "%s", usage);
+			exit(-1);
+		}
+	}
+	else {
+		fprintf(stderr, "%s", usage);
+		exit(-1);
+	}
 	
 	// Get the port from the arguments
-	int port = atoi(argv[1]);
+	// int port = atoi(argv[1]);
 	
 	// Set the IP address and port for this server
 	struct sockaddr_in serverIPAddress; 
@@ -105,16 +141,31 @@ main(int argc, char ** argv)
 					 (struct sockaddr *)&clientIPAddress,
 					 (socklen_t*)&alen);
 
-		if (slaveSocket < 0) {
-			perror("accept");
-			exit(-1);
+		// single threaded
+		if (mode == 0) {
+			if (slaveSocket < 0) {
+				perror("accept");
+				exit(-1);
+			}
+
+			// Process request.	
+			processRequest(slaveSocket);
+
+			// Close socket
+			close(slaveSocket);
 		}
 
-		// Process request.
-		processRequest(slaveSocket);
+		// process based
+		if (mode == 1) {
+			pid_t slave = fork();
+			if (slave == 0) {
+				processRequest(slaveSocket);
+				close(slaveSocket);
+				exit(EXIT_SUCCESS);
+			}
 
-		// Close socket
-		close(slaveSocket);
+			close(slaveSocket);
+		}
 	}	
 }
 
@@ -220,9 +271,7 @@ processRequest(int socket)
 	 * Expand file path.
 	 **********************************/
 
-	/**
-		TODO: Send response header for illegal access!
-	**/
+	/*
 	char buf[1024];
 	memset(buf, 0, sizeof(buf));
 	char *realPath = realpath(myCwd, buf);
@@ -236,6 +285,7 @@ processRequest(int socket)
 		if (len1 <= len2) printf("URL is not valid\n");
 		else              printf("URL is valid\n");
 	}
+	*/
 
 	/**********************************
 	 * Now I have to determine
@@ -282,7 +332,7 @@ processRequest(int socket)
 	
 	if (document <= 0) {
 		// send 404 if file isn't found
-		const char *notFound = "Sorry, but that file could not be found.";
+		const char *notFound = "File not found.";
 		write(socket, "HTTP/1.0", strlen("HTTP/1.0"));
 		write(socket, " ", 1);
 		write(socket, "404", 3);
