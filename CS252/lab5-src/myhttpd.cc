@@ -47,6 +47,7 @@ int QueueLength = 5;
 
 // Processes time request
 void processRequest(int socket);
+void processRequestThread(int socket);
 
 int
 main(int argc, char ** argv)
@@ -156,7 +157,7 @@ main(int argc, char ** argv)
 		}
 
 		// process based
-		if (mode == 1) {
+		else if (mode == 1) {
 			pid_t slave = fork();
 			if (slave == 0) {
 				processRequest(slaveSocket);
@@ -166,7 +167,25 @@ main(int argc, char ** argv)
 
 			close(slaveSocket);
 		}
+
+		// thread based
+		else if (mode == 2) {
+			// thread attributes initialization 
+			pthread_t tid;
+			pthread_attr_t attr;
+
+			pthread_attr_init( &attr );
+			pthread_attr_setscope(&attr, PTHREAD_SCOPE_SYSTEM);
+
+			// create thread
+			pthread_create(&tid, &attr, (void * (*)(void *)) processRequestThread, (void *) slaveSocket);
+		}
 	}	
+}
+
+void processRequestThread(int socket) {
+	processRequest(socket);
+	close(socket);
 }
 
 void
@@ -245,7 +264,7 @@ processRequest(int socket)
 	// if it is in one of our folders
 	else {	
 		// get the first part of the path
-		while (docPath[i] != '/') {
+		while (docPath[i] != '/' && docPath[i] != '\0') {
 			begin[i-1] = docPath[i];
 			i++;
 		} 
