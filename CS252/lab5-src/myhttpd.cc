@@ -34,24 +34,41 @@ const char * usage =
 #include <string.h>
 #include <stdio.h>
 #include <time.h>
+#include <signal.h>
 
 #include <fstream>
 #include <iostream>
 #include <iterator>
 #include <vector>
 
-using namespace std;
-
+pthread_mutex_t mutex; // the lock
 
 int QueueLength = 5;
 
 // Processes time request
 void processRequest(int socket);
 void processRequestThread(int socket);
+void poolSlave(int socket);
+
+// function to handle killzombie
+extern "C" void killzombie( int sig ) {
+	while(waitpid(-1,NULL,WNOHANG) > 0);
+}
 
 int
 main(int argc, char ** argv)
 {
+	// to handle killzombie;
+	struct sigaction signalAction;
+	signalAction.sa_handler = killzombie;
+	sigemptyset(&signalAction.sa_mask);
+	signalAction.sa_flags=SA_RESTART;
+	int ezz = sigaction(SIGCHLD,&signalAction,NULL);
+	if (ezz) { 
+		perror("sigaction");
+		exit(-1);
+	}
+
 	int port;
 	int mode = 0; // 0 single, 1 process, 2 threads, 3 threadpool
 	// Print usage if not enough arguments
@@ -62,7 +79,7 @@ main(int argc, char ** argv)
 	*/
 
 	if (argc == 1) {
-		port = 41691;		
+		port = 1200;		
 	}
 	else if (argc == 2) {
 		port = atoi(argv[1]); 
@@ -90,6 +107,11 @@ main(int argc, char ** argv)
 		}
 	}
 	else {
+		fprintf(stderr, "%s", usage);
+		exit(-1);
+	}
+
+	if (port < 1024 && port > 65536) {
 		fprintf(stderr, "%s", usage);
 		exit(-1);
 	}
@@ -133,59 +155,103 @@ main(int argc, char ** argv)
 		exit(-1);
 	}
 
+
+	if (mode == 3) {
+		// thread attributes initialization 
+		pthread_t t1, t2, t3, t4, t5;
+		pthread_attr_t attr;
+
+		pthread_attr_init( &attr );
+		pthread_attr_setscope(&attr, PTHREAD_SCOPE_SYSTEM);
+
+		// initalize the lock
+		pthread_mutex_init(&mutex, NULL);
+	
+		pthread_create(&t1, &attr, (void *(*)(void *)) poolSlave, (void *) masterSocket);
+		pthread_create(&t2, &attr, (void *(*)(void *)) poolSlave, (void *) masterSocket);
+		pthread_create(&t3, &attr, (void *(*)(void *)) poolSlave, (void *) masterSocket);
+		pthread_create(&t4, &attr, (void *(*)(void *)) poolSlave, (void *) masterSocket);
+		pthread_create(&t5, &attr, (void *(*)(void *)) poolSlave, (void *) masterSocket);
+
+		pthread_join(t1, NULL);
+	}
+
+	else {
 	// wait 
-	while (1) {
-		// Accept incoming connections
-		struct sockaddr_in clientIPAddress;
-		int alen = sizeof(clientIPAddress);
-		int slaveSocket = accept(masterSocket,
-					 (struct sockaddr *)&clientIPAddress,
-					 (socklen_t*)&alen);
+		while (1) {
+			// Accept incoming connections
+			struct sockaddr_in clientIPAddress;
+			int alen = sizeof(clientIPAddress);
+			int slaveSocket = accept(masterSocket,
+						 (struct sockaddr *)&clientIPAddress,
+						 (socklen_t*)&alen);
 
-		// single threaded
-		if (mode == 0) {
-			if (slaveSocket < 0) {
-				perror("accept");
-				exit(-1);
+			if (slaveSocket == -1) {
+				continue;
 			}
 
-			// Process request.	
-			processRequest(slaveSocket);
+			// single threaded
+			if (mode == 0) {
+				if (slaveSocket < 0) {
+					perror("accept");
+					exit(-1);
+				}
 
-			// Close socket
-			close(slaveSocket);
-		}
-
-		// process based
-		else if (mode == 1) {
-			pid_t slave = fork();
-			if (slave == 0) {
+				// Process request.	
 				processRequest(slaveSocket);
+
+				// Close socket
 				close(slaveSocket);
-				exit(EXIT_SUCCESS);
 			}
 
-			close(slaveSocket);
-		}
+			// process based
+			else if (mode == 1) {
+				pid_t slave = fork();
+				if (slave == 0) {
+					processRequest(slaveSocket);
+					close(slaveSocket);
+					exit(EXIT_SUCCESS);
+				}
 
-		// thread based
-		else if (mode == 2) {
-			// thread attributes initialization 
-			pthread_t tid;
-			pthread_attr_t attr;
+				close(slaveSocket);
+			}
 
-			pthread_attr_init( &attr );
-			pthread_attr_setscope(&attr, PTHREAD_SCOPE_SYSTEM);
+			// thread based
+			else if (mode == 2) {
+				// thread attributes initialization 
+				pthread_t tid;
+				pthread_attr_t attr;
 
-			// create thread
-			pthread_create(&tid, &attr, (void * (*)(void *)) processRequestThread, (void *) slaveSocket);
-		}
-	}	
+				pthread_attr_init( &attr );
+				pthread_attr_setscope(&attr, PTHREAD_SCOPE_SYSTEM);
+
+				// create thread
+				pthread_create(&tid, &attr, (void * (*)(void *)) processRequestThread, (void *) slaveSocket);
+			}
+		}	
+	}
 }
 
 void processRequestThread(int socket) {
 	processRequest(socket);
 	close(socket);
+}
+
+void poolSlave(int socket) {
+	while (1) {
+		// Accept incoming connections
+		struct sockaddr_in clientIPAddress;
+		int alen = sizeof(clientIPAddress);
+	
+		pthread_mutex_lock(&mutex); 
+		int slaveSocket = accept(socket,
+						 (struct sockaddr *)&clientIPAddress,
+						 (socklen_t*)&alen);
+		pthread_mutex_unlock(&mutex); 
+
+		processRequest(slaveSocket);
+		close(slaveSocket);
+	}
 }
 
 void
