@@ -1,12 +1,8 @@
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-
 import javax.swing.*;
-import javax.swing.event.*;
 import java.awt.*;
 import java.awt.event.*;
 
+import java.util.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -267,7 +263,9 @@ public class PurdueCT implements ActionListener{
 	/**
 	 * Faculty Tool 4 GUI (Class Report).
 	 */
+	@SuppressWarnings("unchecked")
 	public void ft4GUI(List<TableRow> data) {
+		Collections.sort(data); 
 		tClass.setColumnSelectionAllowed(false);
 		tClass.setRowSelectionAllowed(false);
 		
