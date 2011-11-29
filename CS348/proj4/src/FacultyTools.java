@@ -184,7 +184,7 @@ public class FacultyTools {
 			stmt = c.createStatement();
 			boolean r = stmt.execute(query);
 			
-			// check if class is in db
+			// check if class is in database
 			if (r) {
 				ResultSet rs = stmt.getResultSet();
 				while (rs.next()) {
@@ -265,5 +265,77 @@ public class FacultyTools {
 		}
 		
 		return 1;
+	}
+
+	/**
+	 * Generates a report of classes
+	 */
+	public List<TableRow> ft4SQL() {
+		List<TableRow> report = new ArrayList<TableRow>();
+		
+		Statement stmt = null;
+		String query = "select * from class where fid='" + fid + "'";
+
+		try {
+			stmt = c.createStatement();
+			boolean r = stmt.execute(query);
+			
+			// iterate through the classes that the faculty teaches
+			if (r) {
+				ResultSet rs = stmt.getResultSet();
+				while (rs.next()) {
+					TableRow t = new TableRow();
+					t.cname = rs.getString("cname");
+					
+					t.meetsAt = rs.getString("meets_at");
+					String hh = t.meetsAt.substring(t.meetsAt.length()-8, t.meetsAt.length()-6);
+					String mi = t.meetsAt.substring(t.meetsAt.length()-5, t.meetsAt.length()-3);			
+					t.meetsAt = hh + ":" + mi;
+					
+					t.room = rs.getString("room");
+					
+					// execute query to count students in that class
+					Statement stmt2 = null;
+					stmt2 = c.createStatement();
+					String query2 = "select count(1) from enrolled where cname='" + t.cname + "'";
+					boolean r2 = stmt2.execute(query2);
+					
+					ResultSet rs2 = stmt2.getResultSet();
+					while (rs2.next()) {
+						t.nStudents = "" + rs2.getInt(1);
+					}
+					stmt2.close();
+					
+					// execute query to count evaluations for that class
+					Statement stmt3 = null;
+					stmt3 = c.createStatement();
+					String query3 = "select count(1) from evaluation where cname='" + t.cname + "'";
+					boolean r3 = stmt3.execute(query3);
+					
+					ResultSet rs3 = stmt3.getResultSet();
+					while (rs3.next()) {
+						t.nEvals = "" + rs3.getInt(1);
+					}
+					stmt3.close();
+					
+					report.add(t);
+					
+					/* debug statements 
+					System.out.println("class name: " + t.cname);
+					System.out.println("meets at:   " + t.meetsAt);
+					System.out.println("room:       " + t.room);
+					System.out.println("# of stud.: " + t.nStudents);
+					System.out.println("# of eval.: " + t.nEvals);
+					*/
+				}
+			}
+			
+			stmt.close();
+		} catch (Exception e) {
+			System.out.println("Error: " + e.getMessage());
+			return report; 
+		}
+		
+		return report;
 	}
 }
