@@ -1,5 +1,5 @@
 
-public class TableRow {
+public class TableRow implements Comparable {
 	public String cname;
 	public String meetsAt;
 	public String room;
@@ -16,5 +16,17 @@ public class TableRow {
 		o[4] = nEvals;
 		
 		return o;
+	}
+
+	@Override
+	public int compareTo(Object t) {
+		TableRow tR = (TableRow) t;
+		// TODO Auto-generated method stub
+		if (this.cname.compareTo(tR.cname) > 0)
+			return 1;
+		else if (this.cname.compareTo(tR.cname)< 0)
+			return -1;
+		else 
+			return 0;
 	}
 }
