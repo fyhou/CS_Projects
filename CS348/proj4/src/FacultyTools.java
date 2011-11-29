@@ -213,7 +213,7 @@ public class FacultyTools {
 			DateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 			Calendar currentDate = Calendar.getInstance();
 			String d = df.format(currentDate.getTime());
-			System.out.println(d);
+			//System.out.println(d);
 			
 			if (r2) {
 				ResultSet rs2 = stmt.getResultSet();
