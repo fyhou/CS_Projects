@@ -268,7 +268,7 @@ public class FacultyTools {
 	}
 
 	/**
-	 * Generates a report of classes
+	 * Generates a report of classes.
 	 */
 	public List<TableRow> ft4SQL() {
 		List<TableRow> report = new ArrayList<TableRow>();
@@ -319,14 +319,6 @@ public class FacultyTools {
 					stmt3.close();
 					
 					report.add(t);
-					
-					/* debug statements 
-					System.out.println("class name: " + t.cname);
-					System.out.println("meets at:   " + t.meetsAt);
-					System.out.println("room:       " + t.room);
-					System.out.println("# of stud.: " + t.nStudents);
-					System.out.println("# of eval.: " + t.nEvals);
-					*/
 				}
 			}
 			
@@ -337,5 +329,94 @@ public class FacultyTools {
 		}
 		
 		return report;
+	}
+
+	/**
+	 * Generates a student report.
+	 */
+	public List<TableRow2> ft5SQL() {
+		List<TableRow2> report = new ArrayList<TableRow2>();
+		
+		Statement stmt = null;
+		String query = "select * from class where fid='" + fid + "'";
+
+		try {
+			stmt = c.createStatement();
+			boolean r = stmt.execute(query);
+			
+			// iterate through the classes that the faculty teaches
+			if (r) {
+				ResultSet rs = stmt.getResultSet();
+				while (rs.next()) {
+					TableRow2 t = new TableRow2();
+					t.cname = rs.getString("cname");
+					t.semester = rs.getString("semester");
+					t.year = "" + rs.getInt("year");
+					
+					// execute query to count students in that class
+					Statement stmt2 = null;
+					stmt2 = c.createStatement();
+					String query2 = "select sname, student.snum from student, enrolled where enrolled.snum = student.snum and enrolled.cname = '" + t.cname + "'";
+					
+					boolean r2 = stmt2.execute(query2);
+					String snum = "";
+
+					ResultSet rs2 = stmt2.getResultSet();
+					while (rs2.next()) {
+						t.sname = rs2.getString("sname");
+						snum = rs2.getString("snum");
+						
+						//System.out.println(t.sname + " has student number " + snum);
+						
+						// execute query to count evaluations for that class
+						Statement stmt3 = null;
+						stmt3 = c.createStatement();
+						String query3 = "select weight, mark from evaluation e inner join grade g on (e.cname = g.cname and e.name = g.name) where g.snum = '" + snum + "'";
+						boolean r3 = stmt3.execute(query3);
+						
+						int totalPercent = 0;
+						List<Integer> grades = new ArrayList<Integer>();
+						boolean hasGrades = false;
+						
+						ResultSet rs3 = stmt3.getResultSet();
+						while (rs3.next()) {
+							int dWeight = rs3.getInt("weight");
+							int dMark = rs3.getInt("mark");
+							
+							int almost = dWeight * dMark;
+							grades.add(almost);
+							
+							hasGrades = true;
+							totalPercent = totalPercent + dWeight;
+						}
+						stmt3.close();
+						
+						if (hasGrades) {
+							int currGrade = 0;
+							for (Integer i: grades) {
+								currGrade = currGrade + (i/totalPercent); 
+							}
+							
+							t.currGrade = currGrade + "";
+							//System.out.println("Current grade for " + t.sname + " in " + t.cname + " is " + t.currGrade);
+						}
+						else {
+							t.currGrade = "N/A";
+							//System.out.println("Current grade for " + t.sname + " in " + t.cname + " is " + t.currGrade);
+						}
+					}
+					stmt2.close();
+		
+					report.add(t);
+				}
+			}
+			
+			stmt.close();
+		} catch (Exception e) {
+			System.out.println("Error: " + e.getMessage());
+			return report; 
+		}
+		
+		return report; 
 	}
 }

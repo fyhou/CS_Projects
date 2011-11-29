@@ -9,6 +9,7 @@ import java.util.List;
 public class PurdueCT implements ActionListener{
 	int user = 0; // 0 = faculty, 1 = student
 	int rowsToClear = 0;
+	int rowsToClear2 = 0;
 	FacultyTools ft = new FacultyTools();
 	StudentTools st = new StudentTools();
 	
@@ -109,7 +110,20 @@ public class PurdueCT implements ActionListener{
 	    public boolean isCellEditable(int rowIndex, int vColIndex) {
 	        return false;
 	    }
-	}; 
+	};
+	
+	// Tool 5 for Faculty Components
+	JFrame ft5Frame = new JFrame("Report of students and grades");
+	JPanel p7 = new JPanel();
+		
+	Object[][] _dummy2 = new Object[100][5];
+	String[] colNames2 = {"Class Name", "Semester", "Year", "Student Name", "Current Grade"};
+	@SuppressWarnings("serial")
+	JTable tStudents = new JTable(_dummy2, colNames2) {
+	    public boolean isCellEditable(int rowIndex, int vColIndex) {
+	        return false;
+	    }
+	};
 	
 	
 	/**
@@ -300,6 +314,45 @@ public class PurdueCT implements ActionListener{
 	}
 	
 	/**
+	 * Faculty Tool 5 GUI (Student Report).
+	 */
+	@SuppressWarnings("unchecked")
+	public void ft5GUI(List<TableRow2> data2) {
+		Collections.sort(data2); 
+		tStudents.setColumnSelectionAllowed(false);
+		tStudents.setRowSelectionAllowed(false);
+		
+		int i = 0;
+		for (i = 0; i <= rowsToClear2; i++) {
+			tStudents.getModel().setValueAt("", i, 0);
+			tStudents.getModel().setValueAt("", i, 1);
+			tStudents.getModel().setValueAt("", i, 2);
+			tStudents.getModel().setValueAt("", i, 3);
+			tStudents.getModel().setValueAt("", i, 4);
+		}
+		
+		ft5Frame.setLayout(new GridLayout(0, 1, 10, 10)); 	
+		p7.setLayout(new GridLayout(0, 1, 10, 10));
+		
+		i = 0;
+	    for (TableRow2 t: data2) {
+	    	tStudents.getModel().setValueAt(t.cname, i, 0);
+	    	tStudents.getModel().setValueAt(t.semester, i, 1);
+	    	tStudents.getModel().setValueAt(t.year, i, 2);
+	    	tStudents.getModel().setValueAt(t.sname, i, 3);
+	    	tStudents.getModel().setValueAt(t.currGrade, i, 4);
+	    	i++;
+	    }
+		
+	    rowsToClear2 = i; // for next time
+	    
+		ft5Frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		ft5Frame.setSize(500,275);
+		ft5Frame.setLocationRelativeTo(null);
+		ft5Frame.setVisible(true);
+	}
+	
+	/**
 	 * Add action listeners for all buttons.
 	 */
 	public void addActionListeners() {
@@ -320,6 +373,9 @@ public class PurdueCT implements ActionListener{
 		
 		p6.add(new JScrollPane(tClass));	
 		ft4Frame.add(p6);
+		
+		p7.add(new JScrollPane(tStudents));
+		ft5Frame.add(p7);
 	}
 	
 	/**
@@ -387,7 +443,10 @@ public class PurdueCT implements ActionListener{
 			return;
 		}
 		else if ("reportStudents".equals(e.getActionCommand())) {
-			fFrame.setVisible(false);
+			List<TableRow2> data = new ArrayList<TableRow2>();
+			data = ft.ft5SQL(); 
+			
+			ft5GUI(data);
 			return;
 		}
 		// FACULTY TOOL 1 BUTTONS
