@@ -7,8 +7,13 @@ import javax.swing.event.*;
 import java.awt.*;
 import java.awt.event.*;
 
+import java.text.*;
+import java.util.ArrayList;
+import java.util.List;
+
 public class PurdueCT implements ActionListener{
 	int user = 0; // 0 = faculty, 1 = student
+	int rowsToClear = 0;
 	FacultyTools ft = new FacultyTools();
 	StudentTools st = new StudentTools();
 	
@@ -98,6 +103,20 @@ public class PurdueCT implements ActionListener{
 	JButton bCancelFT3 = new JButton("Cancel");
 	
 	
+	// Tool 4 for Faculty Components
+	JFrame ft4Frame = new JFrame("Report of classes");
+	JPanel p6 = new JPanel();
+	
+	Object[][] _dummy = new Object[100][5];
+	String[] colNames = {"Class Name", "Meets At", "Room", "# of Students", "# of Evaluations"};
+	@SuppressWarnings("serial")
+	JTable tClass = new JTable(_dummy, colNames) {
+	    public boolean isCellEditable(int rowIndex, int vColIndex) {
+	        return false;
+	    }
+	}; 
+	
+	
 	/**
 	 * Entry point
 	 */
@@ -156,12 +175,6 @@ public class PurdueCT implements ActionListener{
 		createEval.setActionCommand("createEval");
 		reportClasses.setActionCommand("reportClasses");
 		reportStudents.setActionCommand("reportStudents");
-		
-		createClass.addActionListener(this);
-		assignStudents.addActionListener(this);
-		createEval.addActionListener(this);
-		reportClasses.addActionListener(this);
-		reportStudents.addActionListener(this);
 		
 		p2.setLayout(new GridLayout(0, 1, 5, 5));
 		p2.add(welcome);
@@ -253,9 +266,52 @@ public class PurdueCT implements ActionListener{
 	}
 	
 	/**
+	 * Faculty Tool 4 GUI (Class Report).
+	 */
+	public void ft4GUI(List<TableRow> data) {
+		tClass.setColumnSelectionAllowed(false);
+		tClass.setRowSelectionAllowed(false);
+		
+		int i = 0;
+		for (i = 0; i <= rowsToClear; i++) {
+			tClass.getModel().setValueAt("", i, 0);
+	    	tClass.getModel().setValueAt("", i, 1);
+	    	tClass.getModel().setValueAt("", i, 2);
+	    	tClass.getModel().setValueAt("", i, 3);
+	    	tClass.getModel().setValueAt("", i, 4);
+		}
+		
+		ft4Frame.setLayout(new GridLayout(0, 1, 10, 10)); 	
+		p6.setLayout(new GridLayout(0, 1, 10, 10));
+		
+		i = 0;
+	    for (TableRow t: data) {
+	    	tClass.getModel().setValueAt(t.cname, i, 0);
+	    	tClass.getModel().setValueAt(t.meetsAt, i, 1);
+	    	tClass.getModel().setValueAt(t.room, i, 2);
+	    	tClass.getModel().setValueAt(t.nStudents, i, 3);
+	    	tClass.getModel().setValueAt(t.nEvals, i, 4);
+	    	i++;
+	    }
+		
+	    rowsToClear = i; // for next time
+	    
+		ft4Frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		ft4Frame.setSize(500,275);
+		ft4Frame.setLocationRelativeTo(null);
+		ft4Frame.setVisible(true);
+	}
+	
+	/**
 	 * Add action listeners for all buttons.
 	 */
 	public void addActionListeners() {
+		createClass.addActionListener(this);
+		assignStudents.addActionListener(this);
+		createEval.addActionListener(this);
+		reportClasses.addActionListener(this);
+		reportStudents.addActionListener(this);
+		
 		bSubmitFT1.addActionListener(this);
 		bCancelFT1.addActionListener(this);
 		
@@ -264,6 +320,9 @@ public class PurdueCT implements ActionListener{
 		
 		bSubmitFT3.addActionListener(this);
 		bCancelFT3.addActionListener(this);
+		
+		p6.add(new JScrollPane(tClass));	
+		ft4Frame.add(p6);
 	}
 	
 	/**
@@ -323,7 +382,11 @@ public class PurdueCT implements ActionListener{
 			return;
 		}
 		else if ("reportClasses".equals(e.getActionCommand())) {
-			fFrame.setVisible(false);
+			List<TableRow> data = new ArrayList<TableRow>();
+			data = ft.ft4SQL();
+			
+			ft4GUI(data);
+			
 			return;
 		}
 		else if ("reportStudents".equals(e.getActionCommand())) {
