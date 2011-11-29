@@ -59,6 +59,6 @@ create table grade (
 	snum integer,
 	cname varchar2(30),
 	mark integer,
-	type varchar2(30),
-	primary key (snum, type)
+	name varchar2(30),
+	primary key (snum, name, cname)
 );
