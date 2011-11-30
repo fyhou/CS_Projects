@@ -10,6 +10,7 @@ public class PurdueCT implements ActionListener{
 	int rowsToClear = 0;
 	int rowsToClear2 = 0;
 	int rowsToClear3 = 0;
+	int rowsToClear4 = 0;
 	FacultyTools ft = new FacultyTools();
 	StudentTools st = new StudentTools();
 	
@@ -155,6 +156,21 @@ public class PurdueCT implements ActionListener{
 	    }
 	};
 	
+	
+	// Tool 2 for Students
+	JFrame st2Frame = new JFrame("My classes");
+	JPanel p10 = new JPanel();
+	
+	Object[][] _dummy4 = new Object[100][5];
+	String[] colNames4 = {"Semester", "Year", "Class", "Meets At", "Room"};
+	
+	@SuppressWarnings("serial")
+	JTable tClasses = new JTable(_dummy4, colNames4) {
+
+	    public boolean isCellEditable(int rowIndex, int vColIndex) {
+	        return false;
+	    }
+	};
 	
 	/**
 	 * Entry point
@@ -452,6 +468,44 @@ public class PurdueCT implements ActionListener{
 	}
 	
 	/**
+	 * Student Tool 2 GUI (My Classes).
+	 */
+	public void st2GUI(List<ClassTable> data) {
+		Collections.sort(data); 
+		tClasses.setColumnSelectionAllowed(false);
+		tClasses.setRowSelectionAllowed(false);
+		
+		int i = 0;
+		for (i = 0; i <= rowsToClear4; i++) {
+			tClasses.getModel().setValueAt("", i, 0);
+			tClasses.getModel().setValueAt("", i, 1);
+			tClasses.getModel().setValueAt("", i, 2);
+			tClasses.getModel().setValueAt("", i, 3);
+			tClasses.getModel().setValueAt("", i, 4);
+		}
+		
+		st2Frame.setLayout(new GridLayout(0, 1, 10, 10)); 	
+		p10.setLayout(new GridLayout(0, 1, 10, 10));
+		
+		i = 0;
+	    for (ClassTable t: data) {
+	    	tClasses.getModel().setValueAt(t.semester, i, 0);
+	    	tClasses.getModel().setValueAt(t.year, i, 1);
+	    	tClasses.getModel().setValueAt(t.cname, i, 2);
+	    	tClasses.getModel().setValueAt(t.meetsAt, i, 3);
+	    	tClasses.getModel().setValueAt(t.room, i, 4);
+	    	i++;
+	    }
+		
+	    rowsToClear4 = i; // for next time
+	    
+		st2Frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		st2Frame.setSize(520,275);
+		st2Frame.setLocationRelativeTo(null);
+		st2Frame.setVisible(true);
+	}
+	
+	/**
 	 * Add action listeners for all buttons.
 	 */
 	public void addActionListeners() {
@@ -482,6 +536,9 @@ public class PurdueCT implements ActionListener{
 		
 		p9.add(new JScrollPane(tEvals));
 		st1Frame.add(p9);
+		
+		p10.add(new JScrollPane(tClasses));
+		st2Frame.add(p10);
 	}
 	
 	/**
@@ -558,7 +615,6 @@ public class PurdueCT implements ActionListener{
 		}
 		// STUDENT BUTTONS
 		else if ("getCalendar".equals(e.getActionCommand())) {
-			//st1GUI();
 			List<Evaluation> data = new ArrayList<Evaluation>();
 			data = st.st1SQL();
 			
@@ -567,7 +623,10 @@ public class PurdueCT implements ActionListener{
 		}
 		else if ("getClasses".equals(e.getActionCommand())) {
 			//st2GUI();
-			System.out.println("Classes not available.");
+			List<ClassTable> data = new ArrayList<ClassTable>();
+			data = st.st2SQL();
+			
+			st2GUI(data);
 			return;
 		}
 		else if ("getGrades".equals(e.getActionCommand())) {
