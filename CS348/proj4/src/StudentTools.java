@@ -74,7 +74,7 @@ public class StudentTools {
 	}
 	
 	/**
-	 * Get Calendar of evaluations
+	 * Get calendar of evaluations
 	 */
 	public List<Evaluation> st1SQL() {
 		List<Evaluation> cal = new ArrayList<Evaluation>();
@@ -110,6 +110,63 @@ public class StudentTools {
 							e.cname = _rs.getString("cname");
 							
 							cal.add(e);
+						}
+					}
+					else {
+						;
+					}
+				}
+			}
+			else {
+				;
+			}
+		} catch (Exception e) {
+			System.out.println("Error: " + e.getMessage());
+		}
+		
+		return cal;
+	}
+
+	/**
+	 * Get classes
+	 */
+	public List<ClassTable> st2SQL() {
+		List<ClassTable> cal = new ArrayList<ClassTable>();
+		
+		Statement stmt = null;
+		String query = "select cname from enrolled where snum = '" + snum + "'";
+		
+		try {
+			stmt = c.createStatement();
+			boolean r = stmt.execute(query);
+			
+			if (r) {
+				ResultSet rs = stmt.getResultSet();
+				while (rs.next()) {
+					String cname = rs.getString("cname");
+					
+					Statement _stmt = null;
+					String _query = "select * from class where cname = '" + cname + "'";
+					
+					_stmt = c.createStatement();
+					boolean _r = _stmt.execute(_query);
+					
+					if (_r) {
+						ResultSet _rs = _stmt.getResultSet();
+						while (_rs.next()) {
+							ClassTable c = new ClassTable();
+							c.cname = _rs.getString("cname");
+							
+							c.meetsAt = _rs.getString("meets_at");
+							String hh = c.meetsAt.substring(c.meetsAt.length()-8, c.meetsAt.length()-6);
+							String mi = c.meetsAt.substring(c.meetsAt.length()-5, c.meetsAt.length()-3);
+							c.meetsAt = hh + ":" + mi;
+							
+							c.room = _rs.getString("room");
+							c.semester = _rs.getString("semester");
+							c.year = _rs.getString("year");
+							
+							cal.add(c);
 						}
 					}
 					else {
