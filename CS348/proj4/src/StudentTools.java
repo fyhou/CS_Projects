@@ -7,6 +7,9 @@ import java.sql.Statement;
 public class StudentTools {
 	private Connection c;
 	
+	/**
+	 * Establishes a connection with the database
+	 */
 	StudentTools() {
 		c = null;
 		String driverName = "oracle.jdbc.driver.OracleDriver";
