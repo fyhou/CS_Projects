@@ -3,9 +3,12 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 public class StudentTools {
 	private Connection c;
+	String snum = "";
 	
 	/**
 	 * Establishes a connection with the database
@@ -41,7 +44,7 @@ public class StudentTools {
 			return false;
 
 		Statement stmt = null;
-		String query = "select password from student where sname='" + id + "'";
+		String query = "select password, snum from student where sname='" + id + "'";
 		String storedPassword = "";
 		
 		try {
@@ -52,7 +55,8 @@ public class StudentTools {
 				
 				ResultSet rs = stmt.getResultSet();
 				while (rs.next()) {
-					storedPassword = rs.getString(1);
+					storedPassword = rs.getString("password");
+					snum = rs.getString("snum");
 				}
 			}
 			else {
@@ -67,5 +71,60 @@ public class StudentTools {
 		}
 		else 
 			return false;
+	}
+	
+	/**
+	 * Get Calendar of evaluations
+	 */
+	public List<Evaluation> st1SQL() {
+		List<Evaluation> cal = new ArrayList<Evaluation>();
+		
+		Statement stmt = null;
+		String query = "select cname from enrolled where snum = '" + snum + "'";
+		
+		try {
+			stmt = c.createStatement();
+			boolean r = stmt.execute(query);
+			
+			if (r) {
+				ResultSet rs = stmt.getResultSet();
+				while (rs.next()) {
+					String cname = rs.getString("cname");
+					
+					Statement _stmt = null;
+					String _query = "select * from evaluation where cname = '" + cname + "'";
+					
+					_stmt = c.createStatement();
+					boolean _r = _stmt.execute(_query);
+					
+					if (_r) {
+						ResultSet _rs = _stmt.getResultSet();
+						while (_rs.next()) {
+							Evaluation e = new Evaluation();
+							e.name = _rs.getString("name");
+							e.type = _rs.getString("type");
+							e.weight = _rs.getString("weight");
+							e.deadline = _rs.getString("deadline");
+							e.room = _rs.getString("room");
+							e.cname = _rs.getString("cname");
+							
+							cal.add(e);
+							
+							System.out.println("Succesfully added " + e.name + " for " + e.cname + " to calendar.");
+						}
+					}
+					else {
+						;
+					}
+				}
+			}
+			else {
+				;
+			}
+		} catch (Exception e) {
+			System.out.println("Error: " + e.getMessage());
+		}
+		
+		return cal;
 	}
 }
