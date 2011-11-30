@@ -9,6 +9,7 @@ public class PurdueCT implements ActionListener{
 	int user = 0; // 0 = faculty, 1 = student
 	int rowsToClear = 0;
 	int rowsToClear2 = 0;
+	int rowsToClear3 = 0;
 	FacultyTools ft = new FacultyTools();
 	StudentTools st = new StudentTools();
 	
@@ -119,6 +120,36 @@ public class PurdueCT implements ActionListener{
 	String[] colNames2 = {"Class Name", "Semester", "Year", "Student Name", "Current Grade"};
 	@SuppressWarnings("serial")
 	JTable tStudents = new JTable(_dummy2, colNames2) {
+
+	    public boolean isCellEditable(int rowIndex, int vColIndex) {
+	        return false;
+	    }
+	};
+	
+	
+	// Student GUI
+	
+	
+	// Student GUI Components
+	JFrame sFrame = new JFrame("Purdue CT [Student View]");
+	JPanel p8 = new JPanel();
+	
+	JLabel welcomeStudent = new JLabel("");
+	JButton getCalendar = new JButton("Calendar of evaluations");
+	JButton getClasses = new JButton("My classes");
+	JButton getGrades = new JButton("My grades");
+	
+	
+	// Tool 1 for Students
+	JFrame st1Frame = new JFrame("Calendar of evaluations");
+	JPanel p9 = new JPanel();
+	
+	Object[][] _dummy3 = new Object[100][6];
+	String[] colNames3 = {"Name", "Type", "Weight", "Due Date", "Room", "Class"};
+	
+	@SuppressWarnings("serial")
+	JTable tEvals = new JTable(_dummy3, colNames3) {
+
 	    public boolean isCellEditable(int rowIndex, int vColIndex) {
 	        return false;
 	    }
@@ -350,6 +381,77 @@ public class PurdueCT implements ActionListener{
 	}
 	
 	/**
+	 * Faculty View GUI.
+	 */
+	public void studentGUI() {
+		String name = "";
+		if (tfUserID.getText().equals(""))
+			name = "Student";
+		else 
+			name = tfUserID.getText();
+		
+		sFrame.setLayout(new GridLayout(0, 1));
+		welcomeStudent.setText("Welcome, " + name + "!");
+		
+		getCalendar.setActionCommand("getCalendar");
+		getClasses.setActionCommand("getClasses");
+		getGrades.setActionCommand("getGrades");
+		
+		p8.setLayout(new GridLayout(0, 1, 5, 5));
+		p8.add(welcomeStudent);
+		p8.add(getCalendar);
+		p8.add(getClasses);
+		p8.add(getGrades);
+		
+		sFrame.add(p8);
+		
+		sFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		sFrame.setSize(350,280);
+		sFrame.setLocationRelativeTo(null);
+		sFrame.setVisible(true);
+	}
+	
+	/**
+	 * Student Tool 1 GUI (Evaluation Calendar).
+	 */
+	public void st1GUI(List<Evaluation> data) {
+		Collections.sort(data); 
+		tEvals.setColumnSelectionAllowed(false);
+		tEvals.setRowSelectionAllowed(false);
+		
+		int i = 0;
+		for (i = 0; i <= rowsToClear3; i++) {
+			tEvals.getModel().setValueAt("", i, 0);
+			tEvals.getModel().setValueAt("", i, 1);
+			tEvals.getModel().setValueAt("", i, 2);
+			tEvals.getModel().setValueAt("", i, 3);
+			tEvals.getModel().setValueAt("", i, 4);
+			tEvals.getModel().setValueAt("", i, 5);
+		}
+		
+		st1Frame.setLayout(new GridLayout(0, 1, 10, 10)); 	
+		p9.setLayout(new GridLayout(0, 1, 10, 10));
+		
+		i = 0;
+	    for (Evaluation t: data) {
+	    	tEvals.getModel().setValueAt(t.name, i, 0);
+	    	tEvals.getModel().setValueAt(t.type, i, 1);
+	    	tEvals.getModel().setValueAt(t.weight, i, 2);
+	    	tEvals.getModel().setValueAt(t.deadline, i, 3);
+	    	tEvals.getModel().setValueAt(t.room, i, 4);
+	    	tEvals.getModel().setValueAt(t.cname, i, 5);
+	    	i++;
+	    }
+		
+	    rowsToClear3 = i; // for next time
+	    
+		st1Frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		st1Frame.setSize(520,275);
+		st1Frame.setLocationRelativeTo(null);
+		st1Frame.setVisible(true);
+	}
+	
+	/**
 	 * Add action listeners for all buttons.
 	 */
 	public void addActionListeners() {
@@ -373,6 +475,13 @@ public class PurdueCT implements ActionListener{
 		
 		p7.add(new JScrollPane(tStudents));
 		ft5Frame.add(p7);
+		
+		getCalendar.addActionListener(this);
+		getClasses.addActionListener(this);
+		getGrades.addActionListener(this);
+		
+		p9.add(new JScrollPane(tEvals));
+		st1Frame.add(p9);
 	}
 	
 	/**
@@ -401,18 +510,18 @@ public class PurdueCT implements ActionListener{
 			}
 			else {
 				if (st.isValidUser(tfUserID.getText(), pfPassword.getText())) {
-					//studentGUI();
-					System.out.println("Valid user!");
+					studentGUI();
+					tfUserID.setText(null);
+					pfPassword.setText(null);
+					return;
 				}
 				else {
 					JOptionPane.showMessageDialog(login, "Invalid credentials!", "Oops!", JOptionPane.WARNING_MESSAGE);
+					tfUserID.setText(null);
+					pfPassword.setText(null);
 					return;
 				}
 			}
-
-			login.setVisible(false);
-			
-			return;
 		}
 		else if ("Cancel".equals(e.getActionCommand())) {
 			login.setVisible(false);
@@ -445,6 +554,25 @@ public class PurdueCT implements ActionListener{
 			data = ft.ft5SQL(); 
 			
 			ft5GUI(data);
+			return;
+		}
+		// STUDENT BUTTONS
+		else if ("getCalendar".equals(e.getActionCommand())) {
+			//st1GUI();
+			List<Evaluation> data = new ArrayList<Evaluation>();
+			data = st.st1SQL();
+			
+			st1GUI(data);
+			return;
+		}
+		else if ("getClasses".equals(e.getActionCommand())) {
+			//st2GUI();
+			System.out.println("Classes not available.");
+			return;
+		}
+		else if ("getGrades".equals(e.getActionCommand())) {
+			//st3GUI();
+			System.out.println("Grades not available.");
 			return;
 		}
 		// FACULTY TOOL 1 BUTTONS
