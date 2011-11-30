@@ -299,6 +299,8 @@ public class FacultyTools {
 					stmt2 = c.createStatement();
 					String query2 = "select count(1) from enrolled where cname='" + t.cname + "'";
 					boolean r2 = stmt2.execute(query2);
+					if (r2)
+						;
 					
 					ResultSet rs2 = stmt2.getResultSet();
 					while (rs2.next()) {
@@ -311,6 +313,7 @@ public class FacultyTools {
 					stmt3 = c.createStatement();
 					String query3 = "select count(1) from evaluation where cname='" + t.cname + "'";
 					boolean r3 = stmt3.execute(query3);
+					if (r3) ;
 					
 					ResultSet rs3 = stmt3.getResultSet();
 					while (rs3.next()) {
@@ -359,6 +362,7 @@ public class FacultyTools {
 					String query2 = "select sname, student.snum from student, enrolled where enrolled.snum = student.snum and enrolled.cname = '" + t.cname + "'";
 					
 					boolean r2 = stmt2.execute(query2);
+					if (r2) ;
 					String snum = "";
 
 					ResultSet rs2 = stmt2.getResultSet();
@@ -373,6 +377,7 @@ public class FacultyTools {
 						stmt3 = c.createStatement();
 						String query3 = "select weight, mark from evaluation e inner join grade g on (e.cname = g.cname and e.name = g.name) where g.snum = '" + snum + "'";
 						boolean r3 = stmt3.execute(query3);
+						if (r3) ;
 						
 						int totalPercent = 0;
 						List<Integer> grades = new ArrayList<Integer>();

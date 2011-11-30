@@ -3,7 +3,6 @@ import java.awt.*;
 import java.awt.event.*;
 
 import java.util.*;
-import java.util.ArrayList;
 import java.util.List;
 
 public class PurdueCT implements ActionListener{
@@ -277,7 +276,6 @@ public class PurdueCT implements ActionListener{
 	/**
 	 * Faculty Tool 4 GUI (Class Report).
 	 */
-	@SuppressWarnings("unchecked")
 	public void ft4GUI(List<TableRow> data) {
 		Collections.sort(data); 
 		tClass.setColumnSelectionAllowed(false);
@@ -316,7 +314,6 @@ public class PurdueCT implements ActionListener{
 	/**
 	 * Faculty Tool 5 GUI (Student Report).
 	 */
-	@SuppressWarnings("unchecked")
 	public void ft5GUI(List<TableRow2> data2) {
 		Collections.sort(data2); 
 		tStudents.setColumnSelectionAllowed(false);
@@ -381,6 +378,7 @@ public class PurdueCT implements ActionListener{
 	/**
 	 * Event handler for everything.
 	 */
+	@SuppressWarnings("deprecation")
 	public void actionPerformed (ActionEvent e) {
 		int err = 0;
 		
