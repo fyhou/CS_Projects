@@ -60,7 +60,7 @@ public class StudentTools {
 				}
 			}
 			else {
-				// student not in db
+				// student not in database
 			}
 		} catch (Exception e) {
 			System.out.println("Error: " + e.getMessage());
@@ -105,12 +105,11 @@ public class StudentTools {
 							e.type = _rs.getString("type");
 							e.weight = _rs.getString("weight");
 							e.deadline = _rs.getString("deadline");
+							e.deadline = e.deadline.substring(0, 10);
 							e.room = _rs.getString("room");
 							e.cname = _rs.getString("cname");
 							
 							cal.add(e);
-							
-							System.out.println("Succesfully added " + e.name + " for " + e.cname + " to calendar.");
 						}
 					}
 					else {
