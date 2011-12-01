@@ -351,15 +351,15 @@ public class FacultyTools {
 			if (r) {
 				ResultSet rs = stmt.getResultSet();
 				while (rs.next()) {
-					TableRow2 t = new TableRow2();
-					t.cname = rs.getString("cname");
-					t.semester = rs.getString("semester");
-					t.year = "" + rs.getInt("year");
+					//TableRow2 t = new TableRow2();
+					String cN = rs.getString("cname");
+					String sem = rs.getString("semester");
+					String year = "" + rs.getInt("year");
 					
 					// execute query to count students in that class
 					Statement stmt2 = null;
 					stmt2 = c.createStatement();
-					String query2 = "select sname, student.snum from student, enrolled where enrolled.snum = student.snum and enrolled.cname = '" + t.cname + "'";
+					String query2 = "select sname, student.snum from student, enrolled where enrolled.snum = student.snum and enrolled.cname = '" + cN + "'";
 					
 					boolean r2 = stmt2.execute(query2);
 					if (r2) ;
@@ -367,10 +367,15 @@ public class FacultyTools {
 
 					ResultSet rs2 = stmt2.getResultSet();
 					while (rs2.next()) {
+						TableRow2 t = new TableRow2();
+						t.cname = cN;
+						t.semester = sem;
+						t.year = year;
+						
 						t.sname = rs2.getString("sname");
 						snum = rs2.getString("snum");
 						
-						//System.out.println(t.sname + " has student number " + snum);
+						//System.out.println(t.sname + " is in class " + t.cname);
 						
 						// execute query to count evaluations for that class
 						Statement stmt3 = null;
@@ -404,23 +409,31 @@ public class FacultyTools {
 							
 							t.currGrade = currGrade + "";
 							//System.out.println("Current grade for " + t.sname + " in " + t.cname + " is " + t.currGrade);
+							report.add(t);
+							
+							for (TableRow2 t2: report) {
+								System.out.println(t2.sname + " has a " + t2.currGrade + " in " + t2.cname + ".");
+							}
+							System.out.println("\n");
 						}
 						else {
 							t.currGrade = "N/A";
 							//System.out.println("Current grade for " + t.sname + " in " + t.cname + " is " + t.currGrade);
+							//report.add(t);
 						}
 					}
 					stmt2.close();
-		
-					report.add(t);
 				}
 			}
 			
 			stmt.close();
 		} catch (Exception e) {
-			System.out.println("Error: " + e.getMessage());
-			return report; 
+			System.out.println("Error: " + e.getMessage()); 
 		}
+		
+		/*for (TableRow2 t: report) {
+			System.out.println(t.sname + " has a " + t.currGrade + " in " + t.cname + ".");
+		}*/
 		
 		return report; 
 	}
