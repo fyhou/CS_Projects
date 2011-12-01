@@ -466,7 +466,23 @@ public class PurdueCT implements ActionListener{
 		p9.setLayout(new GridLayout(0, 1, 10, 10));
 		
 		i = 0;
+		String last = "";
+		
 	    for (Evaluation t: data) {
+	    	if (last.equals("")) {
+	    		last = t.cname;
+	    	}
+	    	
+	    	if (last.equals(t.cname) == false) {
+	    		tEvals.getModel().setValueAt("", i, 0);
+	    		tEvals.getModel().setValueAt("", i, 1);
+	    		tEvals.getModel().setValueAt("", i, 2);
+	    		tEvals.getModel().setValueAt("", i, 3);
+	    		tEvals.getModel().setValueAt("", i, 4);
+	    		tEvals.getModel().setValueAt("", i, 5);
+	    		i++;
+	    	}
+	    	
 	    	tEvals.getModel().setValueAt(t.name, i, 0);
 	    	tEvals.getModel().setValueAt(t.type, i, 1);
 	    	tEvals.getModel().setValueAt(t.weight, i, 2);
@@ -474,6 +490,8 @@ public class PurdueCT implements ActionListener{
 	    	tEvals.getModel().setValueAt(t.room, i, 4);
 	    	tEvals.getModel().setValueAt(t.cname, i, 5);
 	    	i++;
+	    	
+	    	last = t.cname; 
 	    }
 		
 	    rowsToClear3 = i; // for next time
@@ -505,6 +523,7 @@ public class PurdueCT implements ActionListener{
 		p10.setLayout(new GridLayout(0, 1, 10, 10));
 		
 		i = 0;
+
 	    for (ClassTable t: data) {
 	    	tClasses.getModel().setValueAt(t.semester, i, 0);
 	    	tClasses.getModel().setValueAt(t.year, i, 1);

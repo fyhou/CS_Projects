@@ -191,7 +191,7 @@ public class StudentTools {
 					String cname = rs.getString("cname");
 					
 					Statement _stmt = null;
-					String _query = "select e.weight, g.mark, e.name from evaluation e inner join grade g on (e.cname = '"+cname+"' and e.name = g.name) where g.snum = '" + snum + "'";
+					String _query = "select e.weight, g.mark, e.name from evaluation e inner join grade g on (e.cname = '"+cname+"' and e.name = g.name and e.cname = g.cname) where g.snum = '" + snum + "'";
 					_stmt = c.createStatement();
 					boolean _r = _stmt.execute(_query);
 					
