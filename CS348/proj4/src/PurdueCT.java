@@ -11,6 +11,7 @@ public class PurdueCT implements ActionListener{
 	int rowsToClear2 = 0;
 	int rowsToClear3 = 0;
 	int rowsToClear4 = 0;
+	int rowsToClear5 = 0;
 	FacultyTools ft = new FacultyTools();
 	StudentTools st = new StudentTools();
 	
@@ -166,6 +167,22 @@ public class PurdueCT implements ActionListener{
 	
 	@SuppressWarnings("serial")
 	JTable tClasses = new JTable(_dummy4, colNames4) {
+
+	    public boolean isCellEditable(int rowIndex, int vColIndex) {
+	        return false;
+	    }
+	};
+	
+	
+	// Tool 3 for Students
+	JFrame st3Frame = new JFrame("My grades");
+	JPanel p11 = new JPanel();
+	
+	Object[][] _dummy5 = new Object[100][4];
+	String[] colNames5 = {"Class Name", "Evaluation", "Weight", "Mark"};
+	
+	@SuppressWarnings("serial")
+	JTable tGrades = new JTable(_dummy5, colNames5) {
 
 	    public boolean isCellEditable(int rowIndex, int vColIndex) {
 	        return false;
@@ -506,6 +523,50 @@ public class PurdueCT implements ActionListener{
 	}
 	
 	/**
+	 * Student Tool 3 GUI (My Grades).
+	 */
+	public void st3GUI(List<Grade> data) {
+		Collections.sort(data); 
+		tGrades.setColumnSelectionAllowed(false);
+		tGrades.setRowSelectionAllowed(false);
+		
+		int i = 0;
+		for (i = 0; i <= rowsToClear5; i++) {
+			tGrades.getModel().setValueAt("", i, 0);
+			tGrades.getModel().setValueAt("", i, 1);
+			tGrades.getModel().setValueAt("", i, 2);
+			tGrades.getModel().setValueAt("", i, 3);
+		}
+		
+		st3Frame.setLayout(new GridLayout(0, 1, 10, 10)); 	
+		p11.setLayout(new GridLayout(0, 1, 10, 10));
+		
+		i = 0;
+	    for (Grade t: data) {
+	    	tGrades.getModel().setValueAt(t.cname, i, 0);
+	    	tGrades.getModel().setValueAt(t.name, i, 1);
+	    	tGrades.getModel().setValueAt(t.weight, i, 2);
+	    	tGrades.getModel().setValueAt(t.mark, i, 3);
+	    	i++;
+	    	
+	    	if (t.weight.equals("N/A")) {
+	    		tGrades.getModel().setValueAt("", i, 0);
+	    		tGrades.getModel().setValueAt("", i, 1);
+	    		tGrades.getModel().setValueAt("", i, 2);
+	    		tGrades.getModel().setValueAt("", i, 3);
+	    		i++;
+	    	}
+	    }
+		
+	    rowsToClear5 = i; // for next time
+	    
+		st3Frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		st3Frame.setSize(520,275);
+		st3Frame.setLocationRelativeTo(null);
+		st3Frame.setVisible(true);
+	}
+	
+	/**
 	 * Add action listeners for all buttons.
 	 */
 	public void addActionListeners() {
@@ -539,6 +600,9 @@ public class PurdueCT implements ActionListener{
 		
 		p10.add(new JScrollPane(tClasses));
 		st2Frame.add(p10);
+		
+		p11.add(new JScrollPane(tGrades));
+		st3Frame.add(p11);
 	}
 	
 	/**
@@ -631,7 +695,10 @@ public class PurdueCT implements ActionListener{
 		}
 		else if ("getGrades".equals(e.getActionCommand())) {
 			//st3GUI();
-			System.out.println("Grades not available.");
+			List<Grade> data = new ArrayList<Grade>();
+			data = st.st3SQL();
+			
+			st3GUI(data);
 			return;
 		}
 		// FACULTY TOOL 1 BUTTONS
