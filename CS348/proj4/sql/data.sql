@@ -38,4 +38,4 @@ insert into grade values (1, 'CS200', 92, 'Final');
 
 insert into message values ('You all get As!', 'CS100');
 insert into message values ('Free pizza in class today!', 'CS100');
-insert into message values ('This class has no people in it.', 'CS200');
+insert into message values ('This class is a front for a knitting club.', 'CS200');
