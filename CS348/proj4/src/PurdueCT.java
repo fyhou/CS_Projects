@@ -43,6 +43,7 @@ public class PurdueCT implements ActionListener{
 	JButton createEval = new JButton("Create/Modify an evaluation");
 	JButton reportClasses = new JButton("Report of classes");
 	JButton reportStudents = new JButton("Report of students and grades");
+	JButton sendMessage = new JButton("Send message to class");
 	
 	
 	// Tool 1 for Faculty Components
@@ -128,6 +129,18 @@ public class PurdueCT implements ActionListener{
 	    }
 	};
 	
+	// Send Message GUI Components
+	JFrame sendFrame = new JFrame("Send message to class"); 
+	JPanel sendPanel = new JPanel();
+	
+	JLabel lClass = new JLabel ("Class: ");
+	JTextField tfClass = new JTextField();
+	
+	JLabel lMessage = new JLabel("Message: ");
+	JTextField tfMessage = new JTextField();
+	
+	JButton bSend = new JButton("Send");
+	JButton bCancelMessage = new JButton("Cancel");
 	
 	// Student GUI
 	
@@ -247,6 +260,7 @@ public class PurdueCT implements ActionListener{
 		createEval.setActionCommand("createEval");
 		reportClasses.setActionCommand("reportClasses");
 		reportStudents.setActionCommand("reportStudents");
+		sendMessage.setActionCommand("sendMessage");
 		
 		p2.setLayout(new GridLayout(0, 1, 5, 5));
 		p2.add(welcome);
@@ -255,6 +269,7 @@ public class PurdueCT implements ActionListener{
 		p2.add(createEval);
 		p2.add(reportClasses);
 		p2.add(reportStudents);
+		p2.add(sendMessage);
 		
 		fFrame.add(p2);
 		
@@ -414,7 +429,33 @@ public class PurdueCT implements ActionListener{
 	}
 	
 	/**
-	 * Faculty View GUI.
+	 * Send message GUI.
+	 */
+	public void sendMessageGUI() {
+		sendFrame.setLayout(new GridLayout(0,1));
+		sendPanel.setLayout(new GridLayout(0,2));
+		
+		bSend.setActionCommand("sendOkay");
+		bCancelMessage.setActionCommand("sendCancel");
+		
+		sendPanel.add(lClass);
+		sendPanel.add(tfClass);
+		sendPanel.add(lMessage);
+		sendPanel.add(tfMessage);
+		sendPanel.add(bSend);
+		sendPanel.add(bCancelMessage);
+		
+		sendFrame.add(sendPanel);
+		
+		sendFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		sendFrame.setSize(300,150);
+		sendFrame.setLocationRelativeTo(null);
+		sendFrame.setVisible(true);
+	}
+	
+	
+	/**
+	 * Student View GUI.
 	 */
 	public void studentGUI() {
 		String name = "";
@@ -594,6 +635,7 @@ public class PurdueCT implements ActionListener{
 		createEval.addActionListener(this);
 		reportClasses.addActionListener(this);
 		reportStudents.addActionListener(this);
+		sendMessage.addActionListener(this);
 		
 		bSubmitFT1.addActionListener(this);
 		bCancelFT1.addActionListener(this);
@@ -622,6 +664,9 @@ public class PurdueCT implements ActionListener{
 		
 		p11.add(new JScrollPane(tGrades));
 		st3Frame.add(p11);
+		
+		bSend.addActionListener(this);
+		bCancelMessage.addActionListener(this);
 	}
 	
 	/**
@@ -694,6 +739,30 @@ public class PurdueCT implements ActionListener{
 			data = ft.ft5SQL(); 
 			
 			ft5GUI(data);
+			return;
+		}
+		else if ("sendMessage".equals(e.getActionCommand())){
+			sendMessageGUI();
+		}
+		else if ("sendOkay".equals(e.getActionCommand())){
+			boolean success = ft.sendMessage(tfClass.getText(), tfMessage.getText());
+			
+			if (!success) {
+				JOptionPane.showMessageDialog(sendFrame, "Your message could not be sent!", "Oops!", JOptionPane.WARNING_MESSAGE);
+			}
+			
+			tfClass.setText(null);
+			tfMessage.setText(null);
+			
+			if (success)
+				sendFrame.setVisible(false);
+			
+			return;		
+		}
+		else if ("sendCancel".equals(e.getActionCommand())){
+			tfClass.setText(null);
+			tfMessage.setText(null);
+			sendFrame.setVisible(false);
 			return;
 		}
 		// STUDENT BUTTONS
