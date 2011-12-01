@@ -62,3 +62,10 @@ create table grade (
 	name varchar2(30),
 	primary key (snum, name, cname)
 );
+
+-- create MESSAGE table --
+create table message (
+	message varchar2(400),
+	cname varchar2(30),
+	primary key (message, cname)
+);
