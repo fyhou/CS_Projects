@@ -208,6 +208,7 @@ public class StudentTools {
 							hasGrades = true;
 							Grade g = new Grade();
 							
+							g.cname = cname;
 							g.mark = _rs.getString("mark");
 							g.name = _rs.getString("name");
 							g.weight = _rs.getString("weight");
@@ -230,6 +231,7 @@ public class StudentTools {
 						}
 						
 						Grade curr = new Grade();
+						curr.cname = cname;
 						curr.mark = currGrade + "";
 						curr.name = "Current Grade";
 						curr.weight = "N/A";
