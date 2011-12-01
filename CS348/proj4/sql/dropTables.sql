@@ -10,3 +10,4 @@ drop table student;
 drop table faculty;
 drop table class;
 drop table grade;
+drop table message;
