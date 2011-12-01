@@ -249,4 +249,47 @@ public class StudentTools {
 		
 		return grades;
 	}
+
+	/**
+	 * Get messages
+	 */
+	public List<Message> getMessages() {
+		List<Message> messages = new ArrayList<Message>();
+		
+		Statement stmt = null;
+		String query = "select cname from enrolled where snum = '" + snum + "'";
+		
+		try {
+			stmt = c.createStatement();
+			boolean r = stmt.execute(query);
+			
+			if (r) {
+				ResultSet rs = stmt.getResultSet();
+				while (rs.next()) {
+					String cname = rs.getString("cname");
+					
+					Statement _stmt = null;
+					String _query = "select * from message where cname = '" + cname + "'";
+					
+					_stmt = c.createStatement();
+					boolean _r = _stmt.execute(_query);
+					
+					if (_r) {
+						ResultSet _rs = _stmt.getResultSet();
+						while (_rs.next()) {
+							Message m = new Message();
+							m.cname = _rs.getString("cname");
+							m.message = _rs.getString("message");
+							
+							messages.add(m);
+						}
+					}
+				}
+			}
+		} catch (Exception e) {
+			System.out.println("Error: " + e.getMessage());
+		}
+		
+		return messages;
+	}
 };
