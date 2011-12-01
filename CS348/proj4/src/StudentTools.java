@@ -112,13 +112,7 @@ public class StudentTools {
 							cal.add(e);
 						}
 					}
-					else {
-						;
-					}
 				}
-			}
-			else {
-				;
 			}
 		} catch (Exception e) {
 			System.out.println("Error: " + e.getMessage());
@@ -169,8 +163,78 @@ public class StudentTools {
 							cal.add(c);
 						}
 					}
-					else {
-						;
+				}
+			}
+		} catch (Exception e) {
+			System.out.println("Error: " + e.getMessage());
+		}
+		
+		return cal;
+	}
+	
+	/**
+	 * Get classes
+	 */
+	public List<Grade> st3SQL() {
+		List<Grade> grades = new ArrayList<Grade>();
+		
+		Statement stmt = null;
+		String query = "select cname from enrolled where snum = '" + snum + "'";
+		
+		try {
+			stmt = c.createStatement();
+			boolean r = stmt.execute(query);
+			
+			if (r) {
+				ResultSet rs = stmt.getResultSet();
+				while (rs.next()) {
+					String cname = rs.getString("cname");
+					
+					Statement _stmt = null;
+					String _query = "select e.weight, g.mark, e.name from evaluation e inner join grade g on (e.cname = '"+cname+"' and e.name = g.name) where g.snum = '" + snum + "'";
+					_stmt = c.createStatement();
+					boolean _r = _stmt.execute(_query);
+					
+					int totalPercent = 0;
+					int dWeight = 0;
+					int dMark = 0;
+					
+					List<Integer> marks = new ArrayList<Integer>();
+					boolean hasGrades = false;
+					
+					if (_r) {
+						ResultSet _rs = _stmt.getResultSet();
+						while (_rs.next()) {
+							hasGrades = true;
+							Grade g = new Grade();
+							
+							g.mark = _rs.getString("mark");
+							g.name = _rs.getString("name");
+							g.weight = _rs.getString("weight");
+							
+							grades.add(g);
+							
+							dWeight = Integer.parseInt(g.weight);
+							dMark = Integer.parseInt(g.mark);
+							int notQuite = dWeight * dMark;
+							
+							marks.add(notQuite);
+							totalPercent = totalPercent + dWeight;
+						}
+					}
+					
+					if (hasGrades) {
+						int currGrade = 0;
+						for (Integer i: marks) {
+							currGrade = currGrade + (i/totalPercent); 
+						}
+						
+						Grade curr = new Grade();
+						curr.mark = currGrade + "";
+						curr.name = "Current Grade";
+						curr.weight = "N/A";
+						
+						grades.add(curr);
 					}
 				}
 			}
@@ -181,6 +245,6 @@ public class StudentTools {
 			System.out.println("Error: " + e.getMessage());
 		}
 		
-		return cal;
+		return grades;
 	}
-}
+};
