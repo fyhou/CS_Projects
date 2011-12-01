@@ -424,4 +424,54 @@ public class FacultyTools {
 		
 		return report; 
 	}
+
+	/**
+	 * Send message to a class.
+	 */
+	public boolean sendMessage(String cname, String message) {
+		if (cname.equals("") || message.equals(""))
+			return false;
+		
+		Statement stmt = null;
+		String query = "select * from class where cname='" + cname + "'";
+		String storedFID = "";
+		boolean ready = false;
+		//System.out.println("Designed query where cname = " + cname + " and where fid = " + fid + ".");
+		try {
+			stmt = c.createStatement();
+			boolean r = stmt.execute(query);
+			//System.out.println("Executed query...");
+			
+			// check if class is in database
+			if (r) {
+				ResultSet rs = stmt.getResultSet();
+				while (rs.next()) {
+					storedFID = rs.getString("fid");	
+					
+					// if class is already in database, check if faculty teaches it
+					if (fid.equals(storedFID)) {
+						ready = true;
+						break;
+					}
+					else {
+						System.out.println("does not teach class");
+						return false; 
+					}
+				}
+			}
+			
+			if (ready) {
+				String insert = "insert into message values('" + message + "', '" + cname + "')";
+				stmt.executeUpdate(insert);
+				stmt.close();
+				return true;
+			}
+			else {
+				return false;
+			}
+		} catch (Exception e) {
+			System.out.println("Error: " + e.getMessage());
+			return false;
+		}
+	}
 }
