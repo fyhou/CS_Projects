@@ -25,11 +25,17 @@ insert into evaluation values ('Final', 'F', 50, to_date('03/15/13', 'MM/DD/YY')
 
 insert into enrolled values ('1', 'CS100');
 insert into enrolled values ('1', 'CS200');
+insert into enrolled values ('2', 'CS100');
 
 insert into grade values (1, 'CS100', 90, 'Homework 1');
 insert into grade values (1, 'CS100', 100, 'Homework 2');
 insert into grade values (1, 'CS100', 85, 'Midterm');
 insert into grade values (1, 'CS100', 93, 'Final');
+
+insert into grade values (2, 'CS100', 78, 'Homework 1');
+insert into grade values (2, 'CS100', 69, 'Homework 2');
+insert into grade values (2, 'CS100', 72, 'Midterm');
+insert into grade values (2, 'CS100', 85, 'Final');
 
 insert into grade values (1, 'CS200', 76, 'Homework 1');
 insert into grade values (1, 'CS200', 89, 'Homework 2');
