@@ -1,0 +1,29 @@
+Author:  Joe Martella
+Class:   CS 348
+Project: Purdue CT (Project 4)
+Date:    12/01/2012
+
+Instructions: 
+	- Open project in Eclipse (main method is located in PurdueCT.java)
+	- Probably need to add .jar file to compilation path:
+		- In Eclipse, right click proj4 -> Properties -> Java Build Path -> Libraries -> Add External JARs and add file that is in proj4/tools/
+	- Run program in Eclipse
+
+Database schema:
+	faculty (fid, fname, password) where fid is primary key
+	class (cname, semester, year, meets_at, room, fid) where cname is primary key
+	enrolled (snum, cname) where (snum, cname) is primary key, snum refrences student(snum) and cname references class(cname)
+	evaluation (name, type, weight, deadline, room, cname) where (name, cname) is primary and cname references class(cname)
+	grade (snum, cname, mark, name) where (snum, name, cname) is primary key
+	message (message, cname) where (message, cname) is primary key
+
+Users:
+	- Faculty (user name / password):
+		- F1 / F1
+		- F2 / F2
+	- Student (user name / password):
+		- S1 / S1
+		- S2 / S2
+
+Optional Features Implemented:
+	- I implemented both the ability to send mesages to classes for faculty and getting all messages of classes that a student is enrolled in for students.
