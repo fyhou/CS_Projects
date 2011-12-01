@@ -411,10 +411,10 @@ public class FacultyTools {
 							//System.out.println("Current grade for " + t.sname + " in " + t.cname + " is " + t.currGrade);
 							report.add(t);
 							
-							for (TableRow2 t2: report) {
-								System.out.println(t2.sname + " has a " + t2.currGrade + " in " + t2.cname + ".");
-							}
-							System.out.println("\n");
+							//for (TableRow2 t2: report) {
+							//	System.out.println(t2.sname + " has a " + t2.currGrade + " in " + t2.cname + ".");
+							//}
+							//System.out.println("\n");
 						}
 						else {
 							t.currGrade = "N/A";
