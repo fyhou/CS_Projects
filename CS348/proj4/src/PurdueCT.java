@@ -153,6 +153,7 @@ public class PurdueCT implements ActionListener{
 	JButton getCalendar = new JButton("Calendar of evaluations");
 	JButton getClasses = new JButton("My classes");
 	JButton getGrades = new JButton("My grades");
+	JButton getMessages = new JButton("My messages");
 	
 	
 	// Tool 1 for Students
@@ -470,12 +471,14 @@ public class PurdueCT implements ActionListener{
 		getCalendar.setActionCommand("getCalendar");
 		getClasses.setActionCommand("getClasses");
 		getGrades.setActionCommand("getGrades");
+		getMessages.setActionCommand("getMessages");
 		
 		p8.setLayout(new GridLayout(0, 1, 5, 5));
 		p8.add(welcomeStudent);
 		p8.add(getCalendar);
 		p8.add(getClasses);
 		p8.add(getGrades);
+		p8.add(getMessages);
 		
 		sFrame.add(p8);
 		
@@ -655,6 +658,7 @@ public class PurdueCT implements ActionListener{
 		getCalendar.addActionListener(this);
 		getClasses.addActionListener(this);
 		getGrades.addActionListener(this);
+		getMessages.addActionListener(this);
 		
 		p9.add(new JScrollPane(tEvals));
 		st1Frame.add(p9);
