@@ -12,6 +12,7 @@ public class PurdueCT implements ActionListener{
 	int rowsToClear3 = 0;
 	int rowsToClear4 = 0;
 	int rowsToClear5 = 0;
+	int rowsToClear6 = 0;
 	FacultyTools ft = new FacultyTools();
 	StudentTools st = new StudentTools();
 	
@@ -197,6 +198,20 @@ public class PurdueCT implements ActionListener{
 	
 	@SuppressWarnings("serial")
 	JTable tGrades = new JTable(_dummy5, colNames5) {
+
+	    public boolean isCellEditable(int rowIndex, int vColIndex) {
+	        return false;
+	    }
+	};
+	
+	JFrame messageFrame = new JFrame("My messages");
+	JPanel p12 = new JPanel();
+	
+	Object[][] _dummy6 = new Object[100][4];
+	String[] colNames6 = {"Class Name", "Message"};
+	
+	@SuppressWarnings("serial")
+	JTable tMessages = new JTable(_dummy6, colNames6) {
 
 	    public boolean isCellEditable(int rowIndex, int vColIndex) {
 	        return false;
@@ -630,6 +645,39 @@ public class PurdueCT implements ActionListener{
 	}
 	
 	/**
+	 * Student Tool 3 GUI (My Grades).
+	 */
+	public void showMessages(List<Message> data) {
+		Collections.sort(data); 
+		tMessages.setColumnSelectionAllowed(false);
+		tMessages.setRowSelectionAllowed(false);
+		
+		int i = 0;
+		for (i = 0; i <= rowsToClear6; i++) {
+			tMessages.getModel().setValueAt("", i, 0);
+			tMessages.getModel().setValueAt("", i, 1);
+
+		}
+		
+		messageFrame.setLayout(new GridLayout(0, 1, 10, 10)); 	
+		p12.setLayout(new GridLayout(0, 1, 10, 10));
+		
+		i = 0;
+	    for (Message t: data) {
+	    	tMessages.getModel().setValueAt(t.cname, i, 0);
+	    	tMessages.getModel().setValueAt(t.message, i, 1);
+	    	i++;
+	    }
+		
+	    rowsToClear6 = i; // for next time
+	    
+	    messageFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+	    messageFrame.setSize(520,275);
+	    messageFrame.setLocationRelativeTo(null);
+	    messageFrame.setVisible(true);
+	}
+	
+	/**
 	 * Add action listeners for all buttons.
 	 */
 	public void addActionListeners() {
@@ -668,6 +716,9 @@ public class PurdueCT implements ActionListener{
 		
 		p11.add(new JScrollPane(tGrades));
 		st3Frame.add(p11);
+		
+		p12.add(new JScrollPane(tMessages));
+		messageFrame.add(p12);
 		
 		bSend.addActionListener(this);
 		bCancelMessage.addActionListener(this);
@@ -791,6 +842,14 @@ public class PurdueCT implements ActionListener{
 			data = st.st3SQL();
 			
 			st3GUI(data);
+			return;
+		}
+		else if ("getMessages".equals(e.getActionCommand())) {
+			//st3GUI();
+			List<Message> data = new ArrayList<Message>();
+			data = st.getMessages();
+			
+			showMessages(data);
 			return;
 		}
 		// FACULTY TOOL 1 BUTTONS
