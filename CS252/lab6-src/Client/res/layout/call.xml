@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/widget30"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.00"
+        android:text=" "
+        android:textSize="30sp"
+        android:gravity="center"
+        android:padding="10px">
+    	</TextView>
+    
+    <TextView
+        android:id="@+id/widget30"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.00"
+        android:text="Active Call"
+        android:textSize="30sp"
+        android:gravity="center"
+        android:padding="10px">
+    	</TextView>
+
+    <TextView
+        android:id="@+id/widget31"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.00"
+        android:text="with"
+        android:gravity="center"
+        android:padding="10px">
+    	</TextView>
+
+    <TextView
+        android:id="@+id/callerName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="User"
+        android:textSize="40sp"
+        android:padding="10px">
+    	</TextView>
+
+    <TextView
+        android:id="@+id/widget30"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.00"
+        android:text=" "
+        android:textSize="30sp"
+        android:gravity="center"
+        android:padding="50px">
+    	</TextView>
+
+    <Button
+        android:id="@+id/widget33"
+        android:layout_width="284dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="10px"
+        android:text="Hang Up" />
+
+</LinearLayout>
