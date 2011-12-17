@@ -1,0 +1,16 @@
+/**
+ * CS 251 - Project 5 - SAP (Shortest Ancestral Path)
+ *
+ * @author Joseph Martella
+ *
+ * @professor Neville
+ *
+ * @date April 8, 2011
+ *
+ * @compile with javac SAP.java
+ * @execute with java  SAP
+ */
+
+public class SAP {
+
+}
