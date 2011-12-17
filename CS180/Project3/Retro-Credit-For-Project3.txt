@@ -1,0 +1,9 @@
+Requirement: A customer cannot reserve a purchased ticket.
+ 
+Problem: My initial code failed this requirement because my releaseTicket() method was not synchronized.
+
+Solution: I synchronized the method. 
+
+#### 
+
+

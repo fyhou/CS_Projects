@@ -1,0 +1,7 @@
+@recipe
+Joe
+@ingredients
+2 cup(s)  of blood
+@directions
+Drink.
+@end

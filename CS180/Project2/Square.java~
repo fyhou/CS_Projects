@@ -1,0 +1,41 @@
+public class Square extends Rectangle
+{  
+    public Square (double width)
+    {
+        super(width, 0);
+    }
+    
+    /**
+     * checks equality of squares
+     * 
+     * @return a boolean illustrating equality
+     */
+    public boolean equals(Shape s)
+    {
+        if (s == null)
+            return false;
+        
+        Rectangle r = (Rectangle) s;
+        
+        if (r.width == width)
+        {
+            if ((r.width == height))
+            {
+                return true;
+            }
+            else
+            {
+                return false; 
+            }                
+        }
+        else 
+            return false;
+    }
+        
+        public int fitsInside(Shape s)
+        {
+            return 1;
+        }
+    }
+    
+    

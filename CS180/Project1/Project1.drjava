@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<drjava version="drjava-20090821-r5004">
+  <project autorefresh="false" main="Driver" root="" work="">
+    <createjar file=""/>
+    <source>
+      <file active="true" name="Driver.java" package="" timestamp="02-Feb-2010 17:31:48">
+        <select from="488" to="488"/>
+        <scroll column="1045" row="0"/>
+      </file>
+      <file name="SecretString.java" package="" timestamp="02-Feb-2010 17:26:41">
+        <select from="488" to="488"/>
+        <scroll column="1045" row="0"/>
+      </file>
+    </source>
+    <included/>
+    <excluded/>
+    <collapsed/>
+    <classpath/>
+    <breakpoints/>
+    <watches/>
+    <bookmarks/>
+  </project>
+</drjava>
