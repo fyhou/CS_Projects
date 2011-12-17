@@ -1,0 +1,18 @@
+// check spaces or new lines to indicate new word
+
+#include <stdio.h>
+
+int counter = 0;
+char c;
+
+int main(int argc, char ** argv) {
+	printf("Program to seperate text to words. Type a string and ctrl-d to exit.\n");
+	while (c != EOF){
+		c = getchar();
+		if (c == ' ' || c == '\n'){
+			counter += 1;
+		}
+	}
+	printf("Words total = %d\n", counter);
+	return 0;
+}

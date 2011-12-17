@@ -1,0 +1,82 @@
+#!/bin/bash
+
+(make clean; make)
+
+total=0
+totalmax=0
+
+rm -f total.txt *out total.txt
+
+# Test driver
+function runtest {
+  prog=$1
+  args=$2
+  testinput=$3
+  grade=$4
+  inputdescr=
+  if [ "$testinput" != "none" ]; then
+      inputdescr=" < $testinput"
+  fi
+  descr="$prog $args $inputdescr"
+  
+  echo "======= $descr ==========="
+  $prog $args < $testinput > $prog.out
+  $prog.org $args< $testinput > $prog.org.out
+  diff $prog.out $prog.org.out > diff.out
+  if [ $? -eq 0 ]; then
+      cat $prog.out
+      echo Test passed...;
+      printf "%-36s: %-3d of %-3d\n" "$descr :" $grade $grade >> total.txt
+      total=`expr $total + $grade`;
+  else
+      echo "*****Test Failed*****";
+      echo ------ Your Output ----------
+      cat $prog.out
+      echo ------ Expected Output ------
+      cat $prog.org.out
+      echo ------ Difference -----------
+      cat diff.out
+      echo -----------------------------
+      printf "%-36s: %-3d of %-3d\n" "$descr :" 0 $grade >> total.txt
+  fi
+  totalmax=`expr $totalmax + $grade`;
+}
+
+# List of tests running
+runtest convert "" none 2
+runtest convert "10" none 2
+runtest convert "10 10" none 2
+runtest convert "10 10" none 2
+runtest convert "10 10 10" none 3
+runtest convert "16 10 FF" none 3
+runtest convert "16 10 100" none 3
+runtest convert "10 8 20" none 2
+runtest convert "10 2 127" none 3
+runtest convert "10 16 8191" none 3
+runtest convert "10 25 100077900" none 3
+runtest convert "2 16 100010001111" none 3
+runtest convert "5 10 1234" none 2
+runtest convert "5 10 123456" none 2
+runtest getpalin "" none 3
+runtest getpalin "8" none 3
+runtest getpalin "11" none 3
+runtest getpalin "23" none 3
+runtest getpalin "89" none 3
+runtest getpalin "88" none 4
+runtest getpalin "878" none 4
+runtest getpalin "900" none 4
+runtest getpalin "1900" none 4
+runtest arrange "" arr1.txt 8
+runtest arrange "" arr2.txt 8
+runtest arrange "" arr3.txt 9
+runtest arrange "" arr4.txt 9
+
+echo
+echo
+echo   "-------------------------------------------------"
+echo   "CS240: Lab 2. $USER   "
+echo   "-------------------------------------------------"
+cat total.txt
+echo   "-------------------------------------------------"
+echo   "                              Total: " $total of $totalmax
+

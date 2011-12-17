@@ -1,0 +1,274 @@
+/********************************************
+* Number Conversions: Part 1 of Lab 2       *
+* written by Joe Martella		    *
+* September 19, 2010			    *
+*********************************************/
+
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+
+#define MAXBASE 35
+#define MAXDIGITS 100
+
+int convertToBase10 (char [], char []);			// converts number to base 10	
+int convertFromBase10(int, int, char []);		// converts number from base 10 to desired base
+
+/*******************************************
+* Main function that takes in args from    *
+* command line; converts number from one   *
+* base to another base.                    *
+* MF 					   *
+********************************************/
+int main(int argc, char **argv)
+{
+	int baseFrom, baseTo, number;					// base start, base end, the number
+	char baseFromS[32], baseToS[32], numberS[32], converted[100];   // arrays to hold above
+	int base10;							// holds the base10 of the number
+	int i = 0;							// counter
+
+	// if correct usage, assign argv's to ints and strings
+	// strcpy copies a string into a char array
+	if (argc == 4){
+		baseFrom = atoi(argv[1]);
+		strcpy(baseFromS, argv[1]);
+		baseTo = atoi(argv[2]);
+		strcpy(baseToS, argv[2]);
+		number = atoi(argv[3]);
+		strcpy(numberS, argv[3]);
+	}
+	else
+		printf("Usage:  convert <basefrom> <baseto> <number>\n");	
+	
+	base10 = convertToBase10 (baseFromS, numberS); 			// tries to convert number to base10
+
+	if (base10 == -1){
+		printf("Number read in base %d: %s\n", baseFrom, argv[3]);
+		printf("Wrong digit in number.\n");
+	}
+	else if (base10 != NULL){
+		printf("Number read in base %d: %s\n", baseFrom, argv[3]);
+		printf("Converted to base 10: %d\n", base10);
+		printf("Converted to base %d: ", baseTo); 
+		int r_len = convertFromBase10 (baseTo, base10, converted);
+		// prints the converted number (letters and numbers)
+		for (i = 0; i < r_len; i++){
+			printf("%c", converted[i]);
+		}
+		printf("\n");
+	}
+
+	exit(0);
+}
+
+/***********************************************
+* @param bF[] base from array		       *
+* @param n[] number array 		       *
+* @return int base 10 conversion of number     *
+* F1					       *
+************************************************/
+int convertToBase10 (char bF[], char n[])
+{
+	int n_len = strlen(n);		// length of number
+	int bF_i = atoi(bF);		// the starting base
+	int i = 0;			// counter
+	int j = 0;			// counter
+	int n_10 = 0;			// holds the number converted to base 10
+	int bF_exp = 1;			// for powers	
+	int stack[100];			// holds numbers from number
+	int test = 0;			// used to check if digit is allowed in number
+
+	// checks each element of the number array to make
+	// sure the digit is allowed for that base; if not
+	// a -1 is returned to let the main function know
+	// the number is invalid
+	for (i = 0; i < n_len; i++){
+		if (n[i] == 'A'){
+			if (10 >= bF_i)
+				return -1;
+		}
+		else if (n[i] == 'B'){
+			if (11 >= bF_i)
+				return -1;
+		}
+		else if (n[i] == 'C'){
+			if (12 >= bF_i)
+				return -1;
+		}
+		else if (n[i] == 'D'){
+			if (13 >= bF_i)
+				return -1;
+		}
+		else if (n[i] == 'E'){
+			if (14 >= bF_i)
+				return -1;
+		}
+		else if (n[i] == 'F'){
+			if (15 >= bF_i)
+				return -1;
+		}
+		else if (n[i] == 'G'){
+			if (16 >= bF_i)
+				return -1;
+		}
+		else if (n[i] == 'H'){
+			if (17 >= bF_i)
+				return -1;
+		}
+		else if (n[i] == 'I'){
+			if (18 >= bF_i)	
+				return -1;
+		}
+		else if (n[i] == 'J'){
+			if (19 >= bF_i)
+				return -1;
+		}
+		else if (n[i] == 'K'){
+			if (20 >= bF_i)
+				return -1;
+		}
+		else if (n[i] == 'L'){
+			if (21 >= bF_i)
+				return -1;
+		}
+		else if (n[i] == 'M'){
+			if (22 >= bF_i)
+				return -1;
+		}
+		else if (n[i] == 'N'){
+			if (23 >= bF_i)
+				return -1;
+		}
+		else if (n[i] == 'O'){
+			if (24 >= bF_i)
+				return -1;
+		}
+		else {
+			test = (int) (n[i] - '0');
+			if (test >= bF_i)
+				return -1;
+		}			
+	}
+
+	for (i = 0; i < n_len; i++){
+		if (n[i] >= '0' && n[i] <= '9'){
+			stack[i] = (int) (n[i] - '0');
+		}
+		else if (n[i] == 'A')
+			stack[i] = 10;
+		else if (n[i] == 'B')
+			stack[i] = 11;
+		else if (n[i] == 'C')
+			stack[i] = 12;
+		else if (n[i] == 'D')
+			stack[i] = 13;
+		else if (n[i] == 'E')
+			stack[i] = 14;
+		else if (n[i] == 'F')
+			stack[i] = 15;
+		else if (n[i] == 'G')
+			stack[i] = 16;
+		else if (n[i] == 'H')
+			stack[i] = 17;
+		else if (n[i] == 'I')
+			stack[i] = 18;
+		else if (n[i] == 'J')
+			stack[i] = 19;
+		else if (n[i] == 'K')
+			stack[i] = 20;
+		else if (n[i] == 'L')
+			stack[i] = 21;
+		else if (n[i] == 'M')
+			stack[i] = 22;
+		else if (n[i] == 'N')
+			stack[i] = 23;
+		else if (n[i] == 'O')
+			stack[i] = 24;
+	}
+
+
+	// calculation to base 10
+	for (i = 0; i < n_len; i++){
+		for (j = 0; j < (n_len - i); j++){
+			if (j == 0)	
+				bF_exp = bF_exp;
+			else
+				bF_exp *= bF_i;
+		}
+		n_10 += (stack[i]*bF_exp);
+		bF_exp = 1;
+	}
+
+	// returns base 10 of number
+	return n_10;
+}
+
+/**********************************************
+* @param baseTo base converting to	      *
+* @param n_10 base 10 of the number	      *
+* @return int converted number		      *
+* F2					      *
+***********************************************/
+int convertFromBase10 (int bT, int n_10, char converted[])
+{
+	int quotient = n_10;			// stores quotient
+	int remainder = 1;			// stores remainder of q/bT
+	int remainders[100];			// stores all the remainders
+	int *rptr;				// points to remainders 
+	int i = 0;				// counter
+	int r_len = 0;				// length of remainders
+	char insertion;				// the remainder in its char form to place in converted[]
+	int insertion_i;			// the remainder in its numeric form
+
+	while (quotient != 0) {
+		remainder = quotient % bT;
+		quotient = quotient / bT;
+		remainders[i] = remainder;
+		i++;
+		r_len++;
+	}
+
+	rptr = &remainders[r_len-1];
+
+	// flips array
+	for (i = 0; i < r_len; i++) {
+		insertion_i = *rptr;
+		if (insertion_i == 10)
+			insertion = 'A';
+		else if (insertion_i == 11)
+			insertion = 'B';
+		else if (insertion_i == 12)
+			insertion = 'C';
+		else if (insertion_i == 13)
+			insertion = 'D';
+		else if (insertion_i == 14)
+			insertion = 'E';
+		else if (insertion_i == 15)
+			insertion = 'F';
+		else if (insertion_i == 16)
+			insertion = 'G';
+		else if (insertion_i == 17)
+			insertion = 'H';
+		else if (insertion_i == 18)
+			insertion = 'I';
+		else if (insertion_i == 19)
+			insertion = 'J';
+		else if (insertion_i == 20)
+			insertion = 'K';
+		else if (insertion_i == 21)
+			insertion = 'L';
+		else if (insertion_i == 22)
+			insertion = 'M';
+		else if (insertion_i == 23)
+			insertion = 'N';
+		else if (insertion_i == 24)
+			insertion = 'O';
+		else
+			insertion = *rptr + '0';
+		converted[i] = insertion;
+		rptr--;	
+	}
+	
+	return r_len;
+}	
+

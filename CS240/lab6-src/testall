@@ -1,0 +1,126 @@
+#!/bin/bash
+
+if [ $# -ne 1 ]
+then
+  echo "Usage: `basename $0` port"
+  exit 1
+fi
+
+#echo "====================== TESTALL SCRIPT LAB6 ========================"
+#echo
+#echo "The testall script will take about 12mins to run. Most of this time is"
+#echo "calling the sleep command to make the test repeatable."
+#echo
+#echo "We recommend you to concentrate on passing one test at a time"
+#echo "and comment all the tests except the one you are testing."
+#echo
+#echo "When you are done, uncomment all the tests and run testall again".
+#echo
+#echo "<Press enter>"
+#read
+#echo "Hints: "
+#echo
+#echo "a) To run only a single test, edit the file testall"
+#echo "   and comment out the 'runtest' lines of the tests you do not"
+#echo "   want to run. Make sure to uncomment the lines and run all tests"
+#echo "   before you turnin your files."
+#echo
+#echo "   Example:"
+#echo "     #runtest test-client1.sh \"\" none 12"
+#echo "     runtest test-client2.sh \"\" none 12"
+#echo "     #runtest test-client3.sh \"\" none 12"
+#echo
+#echo "b) You can pause the output by typing "
+#echo "     testall | less "
+#echo "   and then type <space> to go down or <ctrl-b> to go up."
+#echo
+#echo "It is OK to discuss the solutions of the homework but you are supposed to work"
+#echo "individually. Copying code is considered academic dishonesty. We have ways to"
+#echo "find it and it could be penalized by failing the course and being reported to the"
+#echo "Dean of Students. Also, the material you learn in this lab will be in the final exam."
+#echo
+#echo "You can comment out this message if you do not want it to show everytime you run testall."
+#echo "<Press enter>"
+#read
+#echo
+PORT=$1
+
+(make clean; make)
+rm -f *.out outfile*t total.txt
+
+echo Killing any server running
+PIDS=`/bin/ps -u $USER | grep talk-ser | awk '{print $1;}'`
+kill -9 $PIDS >& /dev/null
+
+sleep 2
+
+total=0
+totalmax=0
+
+rm -f total.txt *out total.txt infile* fifo*
+
+# Test driver
+function runtest {
+  prog=$1
+  args=$2
+  testinput=$3
+  grade=$4
+  inputdescr=
+  if [ "$testinput" != "none" ]; then
+      inputdescr=" < $testinput"
+  fi
+  descr="$prog $args $inputdescr"
+  
+  echo "======= $descr ==========="
+  rm -f outfile $prog.out $prog.org.out
+  ./$prog talk-client $PORT $args  > $prog.out
+  cp outfile $prog.out
+  rm -f outfile
+  ./$prog talk-client.org $PORT $args > $prog.org.out
+  cp outfile $prog.org.out
+  diff $prog.out $prog.org.out > diff.out
+  if [ $? -eq 0 ]; then
+      cat $prog.out
+      echo Test passed...;
+      printf "%-36s: %-3d of %-3d\n" "$descr " $grade $grade >> total.txt
+      total=`expr $total + $grade`;
+  else
+      echo "*****Test Failed*****";
+      echo ------ Output with your talk-client ----------
+      cat $prog.out
+      echo ------ Expected Output with talk-client.org ------
+      cat $prog.org.out
+      echo ------ Difference -----------
+      cat diff.out
+      echo -----------------------------
+      printf "%-36s: %-3d of %-3d\n" "$descr " 0 $grade >> total.txt
+  fi
+  totalmax=`expr $totalmax + $grade`;
+  echo
+}
+
+# List of tests running
+runtest test-client1.sh "" none 8
+runtest test-client11.sh "" none 8
+runtest test-client12.sh "" none 8
+runtest test-client2.sh "" none 8
+runtest test-client3.sh "" none 8
+runtest test-client4.sh "" none 8
+runtest test-client5.sh "" none 8
+runtest test-client6.sh "" none 8
+runtest test-client7.sh "" none 9
+runtest test-client8.sh "" none 9
+runtest test-client9.sh "" none 9
+runtest test-client10.sh "" none 9
+
+
+echo
+echo
+echo   "-------------------------------------------------"
+echo   "CS240: Lab 6. $USER   "
+echo   "-------------------------------------------------"
+cat total.txt
+echo   "-------------------------------------------------"
+echo   "                              Total: " $total of $totalmax
+
+rm -f *.out outfile* total.txt infile* fifo*

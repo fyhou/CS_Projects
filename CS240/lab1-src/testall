@@ -1,0 +1,68 @@
+#!/bin/bash
+
+(make clean; make)
+
+total=0
+totalmax=0
+
+rm -f total.txt *out total.txt
+
+# Test driver
+function runtest {
+  prog=$1
+  args=$2
+  testinput=$3
+  grade=$4
+  descr=$5
+  echo
+  echo ======= $prog $args : $descr ===========
+  $prog $args < $testinput > $prog.out
+  $prog.org $args< $testinput > $prog.org.out
+  diff $prog.out $prog.org.out > diff.out
+  if [ $? -eq 0 ]; then
+      echo Test passed...;
+      printf "%-36s: %-3d of %-3d\n" "$prog $args: $descr" $grade $grade >> total.txt
+      total=`expr $total + $grade`;
+  else
+      echo "*****Test Failed*****";
+      echo ------ Your Output ----------
+      cat $prog.out
+      echo ------ Expected Output ------
+      cat $prog.org.out
+      echo ------ Difference -----------
+      cat diff.out
+      echo -----------------------------
+      printf "%-36s: %-3d of %-3d\n" "$prog $args: $descr" 0 $grade >> total.txt
+  fi
+  totalmax=`expr $totalmax + $grade`;
+}
+
+# List of tests running
+runtest countlines "" in1 5 "countlines < in1"
+runtest countlines "" in2 5 "countlines < in2"
+runtest countlines "" hamlet 10 "countlines < hamlet"
+runtest towords "" in1 5 "towords < in1"
+runtest towords "" in2 5 "towords < in2"
+runtest towords "" hamlet 10 "towords < hamlet"
+runtest rpncalc "" none 5 ""
+runtest rpncalc "2 3 +" none 5 ""
+runtest rpncalc "2 3 - 4 + " none 5 ""
+runtest rpncalc "2 3 x 5 / 4 -" none 5 ""
+runtest rpncalc "2.0 3.2 / 5.3 x 4 +" none 5 ""
+runtest rpncalc "3.0 7 -4 - 5 x +" none 5 ""
+runtest rpncalc "-2.9 3 x 5.2 /" none 5 ""
+runtest rpncalc "3.14 2 / cos 2 x" none 5 ""
+runtest rpncalc "3.14 2 / sin 2 + 3.14 2 / cos 2 x -" none 5 ""
+runtest rpncalc "2 3 pow exp log" none 5 ""
+runtest rpncalc "2 3 5" none 5 ""
+runtest rpncalc "2 3 5 + + +" none 5 ""
+
+echo
+echo
+echo   "-------------------------------------------------"
+echo   "CS240: Lab 1. $USER   "
+echo   "-------------------------------------------------"
+cat total.txt
+echo   "-------------------------------------------------"
+echo   "                              Total: " $total of $totalmax
+
