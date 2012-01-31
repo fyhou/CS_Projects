@@ -1,0 +1,7 @@
+@recipe
+Recipe name here
+@ingredients
+ cup(s)  of 
+@directions
+
+@end

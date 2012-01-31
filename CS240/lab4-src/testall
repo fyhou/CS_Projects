@@ -1,0 +1,117 @@
+#!/bin/bash
+
+(make clean; make)
+
+total=0
+totalmax=0
+
+rm -f total.txt *out total.txt
+
+# Test driver
+function runtest {
+  prog=$1
+  args=$2
+  testinput=$3
+  grade=$4
+  inputdescr=
+  if [ "$testinput" != "none" ]; then
+      inputdescr=" < $testinput"
+  fi
+  descr="$prog $args $inputdescr"
+  
+  echo "======= $descr ==========="
+  $prog $args < $testinput > $prog.out
+  $prog.org $args< $testinput > $prog.org.out
+  diff $prog.out $prog.org.out > diff.out
+  if [ $? -eq 0 ]; then
+      cat $prog.out
+      echo Test passed...;
+      printf "%-36s: %-3d of %-3d\n" "$descr " $grade $grade >> total.txt
+      total=`expr $total + $grade`;
+  else
+      echo "*****Test Failed*****";
+      echo ------ Your Output ----------
+      cat $prog.out
+      echo ------ Expected Output ------
+      cat $prog.org.out
+      echo ------ Difference -----------
+      cat diff.out
+      echo -----------------------------
+      printf "%-36s: %-3d of %-3d\n" "$descr " 0 $grade >> total.txt
+  fi
+  totalmax=`expr $totalmax + $grade`;
+  echo
+}
+
+# List of tests running
+#runtest test_resizable_table "test1" none 3
+#runtest test_resizable_table "test2" none 3
+#runtest test_resizable_table "test3" none 3
+#runtest test_resizable_table "test4" none 3
+#runtest test_resizable_table "test5" none 3
+#runtest test_resizable_table "test6" none 3
+#runtest test_resizable_table "test7" none 3
+#runtest test_resizable_table "test8" none 4
+#runtest test_resizable_table "test9" none 4
+#runtest test_resizable_table "test10" none 4
+#runtest test_resizable_table "test11" none 3
+#runtest test_resizable_table "test12" none 3
+#runtest test_linked_list "test1" none 3
+#runtest test_linked_list "test2" none 3
+#runtest test_linked_list "test3" none 3
+#runtest test_linked_list "test4" none 3
+#runtest test_linked_list "test5" none 3
+#runtest test_linked_list "test6" none 3
+#runtest test_linked_list "test7" none 4
+#runtest test_linked_list "test8" none 4
+#runtest test_linked_list "test9" none 4
+#runtest test_linked_list "test10" none 4
+#runtest test_linked_list "test11" none 3
+#runtest test_linked_list "test12" none 3
+runtest test_mystring "test1" none 3
+runtest test_mystring "test2" none 3
+runtest test_mystring "test3" none 3
+runtest test_mystring "test4" none 3
+runtest test_mystring "test5" none 3
+runtest test_mystring "test6" none 3
+runtest test_mystring "test7" none 3
+
+check-strfunc.sh
+if [ $? -eq 0 ]; then
+  echo
+else
+  total=`expr $total - 20`;
+  echo "Use string library in mystring.c (-20pts)" >>  total.txt
+fi
+
+echo
+echo
+echo   "-------------------------------------------------"
+echo   "CS240: Lab 4. $USER   "
+echo   "-------------------------------------------------"
+cat total.txt
+echo   "-------------------------------------------------"
+echo   "                              Total: " $total of $totalmax
+
+echo
+echo "Hints: "
+echo
+echo "a) To run only a single test, edit the file testall"
+echo "   and comment out the 'runtest' lines of the tests you do not"
+echo "   want to run. Make sure to uncomment the lines and run all tests"
+echo "   before you turnin your files."
+echo
+echo "b) You can pause the output by typing "
+echo "     testall | less "
+echo "   and then type <space> to go down or <ctrl-b> to go up."
+echo
+echo "c) You can also run an individual test by copying and pasting the test. "
+echo "   Example:"
+echo "     test_linked_list test7"
+echo
+echo "It is OK to discuss the solutions of the homework but you are suppose to work"
+echo "individually. Copying code is considered academic dishonesty. We have ways to"
+echo "find it and it could be penalized by failing the course and being reported to the"
+echo "Dean of Students. Also, the material you learn in this lab will be in the final exam."
+echo
+echo

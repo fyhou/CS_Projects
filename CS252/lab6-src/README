@@ -1,0 +1,49 @@
+CS 252 - Programming Assignment 6
+VOIP Android
+December 8, 2011
+
+Joe Martella (jmartel@purdue.edu)
+Junyoung Justin Kim (kim302@purdue.edu)
+Matt McCormick (mbmccorm@purdue.edu)
+Shing Jay Ong (ong0@purdue.edu)
+
+Files used in project:
+
+Server
+------
+- Server.java - initializes DirectoryServer and creates VoiceServers
+- DirectoryServer.java - keeps a record of the users in the directory and connections
+- DirectoryServerConnection.java - handles XML sent from the client to the server
+- VoiceServer.java - handles the sending and receiving of packets between clients
+- VoiceServerConnection.java - stores the IP address of the device and port number it's using
+- HeartbeatMonitor.java - monitors the users in the directory to make sure they're still alive
+- User.java - stores user data
+
+Client
+------
+- CallActivity.java - shows the user who they are in a call with
+- CallReceiver.java - BroadcastReceiver so we can send hangup notice to DirectoryActivity
+- DirectoryActivity.java - shows the directory to the user as a selectable list to make calls
+- DirectoryClient.java - handles the sending of XML from the client to the server
+- DirectoryClientListener.java - listens for XML from the server to the client
+- HeartbeatClient.java - sends a heartbeat to the server every 5 seconds to let it know it's alive
+- MainActivity.java - login screen; allows the user to select a username and server address
+- User.java - holds user information
+- VoicePlayer.java - plays the voice received from the server through the phone's speaker
+- VoiceRecorder.java - records voice from the user and sends it to the server
+
+Features that work:
+- All of them.
+
+Features that do not work:
+- None of them.
+
+Extra features:
+- Ringtones
+- Uses XML for communication
+- We have a robust source control page
+	- https://github.com/purdue-cs252-group/lab06
+	- have a wiki, issues page, multiple working branches
+- Doesn't allow users to call themselves 
+- DOesn't allow users to call other users that are in a call
+

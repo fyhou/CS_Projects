@@ -1,0 +1,22 @@
+Requirement: Good Design: Clean breakdown of the program into classes
+ 
+Problem: My initial code failed this requirement because my code was all in one class.
+
+Solution: I separated my code into two files; one for each window. Recipes were it’s own file. 
+
+#### 
+
+Requirement: Good Design: Clean breakdown of classes into methods.
+
+Problem: My initial code failed this requirement because my code didn’t have separate event handles for separate tasks, separate methods for separate windows, separate the “More Ingredients” button’s method from the rest of the recipe window, or have separate methods for reading/writing.
+
+Solution: Many of these were fixed when fixing the first problem, but I made sure to separate my code into new methods (it was all there, but just in one method). 
+
+#### 
+
+Requirement: Can successfully add a recipe with multiple ingredients.
+
+Problem: My initial code failed this requirement because my code didn’t seemed to delete previous ingredients from somewhere after a new recipe was created, then sometimes magically appear in the next recipe added.
+
+Solution: This problem also seemed to be fixed when I created the separate classes for the recipes. 
+

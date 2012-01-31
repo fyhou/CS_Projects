@@ -1,0 +1,28 @@
+@recipe
+joe
+@ingredients
+20 cup(s)  of sugar
+2 tsp.  of sdfj
+@directions
+Mix and eat.
+@end
+@recipe
+jay
+@ingredients
+23 gallon(s)  of sfdfdfdfdf
+2 tsp.  of sdfj
+44 tub(s)  of butter
+@directions
+Stir it up and eat.
+@end
+@recipe 
+joe2
+@ingredients
+1 Tub(s) of a
+2 Gallon(s) of b
+3 Barrel(s) of c
+4 Pint(s) of d
+5 Gallon(s) of e
+@directions 
+letters
+@end

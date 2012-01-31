@@ -1,0 +1,8 @@
+donothing text
+&a data
+b bss
+d bss
+&c stack
+&ptr stack
+ptr heap
+&local stack

@@ -1,0 +1,7 @@
+addFirst john
+addFirst mark
+addLast kelly
+addLast susan
+print
+removeFirst
+print
