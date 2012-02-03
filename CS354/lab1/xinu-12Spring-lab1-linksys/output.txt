@@ -1,0 +1,32 @@
+Joseph Martella
+CS 354 Lab 1 
+February 4, 2012
+
+Task 2.1 Output (without spawned processes):
+Process name: Main process
+Process priority: 20
+Process stack size: 65536
+Process stack address: 81ffffa0
+
+Task 2.3 Output (with spawned processes):
+Process name: Main process
+Process priority: 20
+Process stack size: 65536
+Process stack address: 81ffff08
+
+Process name: process 1
+Process priority: 20
+Process stack size: 1000
+Process stack address: 81feff20
+
+Process name: process 2
+Process priority: 20
+Process stack size: 950
+Process stack address: 81fefb38
+
+
+** The Main Process is outputted because it is a running process in the system.
+I asked my TA during my PSO if this process was to be included in the output and
+he told me it was fine. However, I do make a check in my system call if whether
+or not the process is the null process that is always running and do not print
+it if it is. This was an interesting lab and I look forward to the next one!
