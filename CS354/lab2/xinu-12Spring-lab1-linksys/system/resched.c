@@ -2,6 +2,8 @@
 
 #include <xinu.h>
 
+int ROUND_ROBIN = 1;  
+
 /*------------------------------------------------------------------------
  *  resched  -  Reschedule processor to highest priority eligible process
  *------------------------------------------------------------------------
@@ -23,14 +25,21 @@ void	resched(void)		/* assumes interrupts are disabled	*/
 	ptold = &proctab[currpid];
 
 	if (ptold->prstate == PR_CURR) {  /* process remains running */
-		if (ptold->prprio > firstkey(readylist)) {
-			return;
+
+		if (ROUND_ROBIN == 0) {
+			if (ptold->prprio > firstkey(readylist)) {
+				return;
+			}
 		}
 
 		/* Old process will no longer remain current */
 
 		ptold->prstate = PR_READY;
-		insert(currpid, readylist, ptold->prprio);
+
+		if (ROUND_ROBIN == 0)
+			insert(currpid, readylist, ptold->prprio);
+		else
+			insert(currpid, readylist, 0);
 	}
 
 	/* Force context switch to highest priority ready process */

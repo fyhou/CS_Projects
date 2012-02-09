@@ -1,0 +1,32 @@
+Joseph Matella
+CS 354
+Lab 2 (Task 1)
+2/9/12
+
+To illustrate starvation in the existing XINU Scheduling algorithm, I spawned two process in 
+my main function. Each process executed the same function (called test) which simply printed
+the argument that was passed to it to the screen indefinitely. The first process had argument 
+'A' and thesecond process had argument 'B'. The first process has a priority of 20, and the 
+second had a priority of 19. The expected result was that I would just see many As and no Bs.
+That's what happened, illustrating starvation since the second process was never given CPU 
+time to execute since the priority was lower than the first process. The code is below:
+
+// main function
+int main(int argc, char **argv)
+{
+	void test(char c);
+
+	resume(create(test, 1000, 20, "process 1", 1, 'A'));  // first process with higher priority
+	resume(create(test, 1000, 19, "process 2", 1, 'B'));  // second process with lower priority
+	
+	return OK;
+}
+
+// print c infinitely
+void test(char c) 
+{
+	while (1) 
+	{
+		kprintf("%c\n\r", c);
+	}
+}

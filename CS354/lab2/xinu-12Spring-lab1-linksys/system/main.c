@@ -11,7 +11,20 @@
 
 int main(int argc, char **argv)
 {
-	kprintf("Hello World!\n");
+	void test(char c);
+
+	resume(create(test, 1000, 20, "process 1", 1, 'J'));
+	resume(create(test, 1000, 10, "process 2", 1, 'M'));
 	
 	return OK;
+}
+
+void test(char c) 
+{
+	int i = 0;
+	while (i < 200) 
+	{
+		kprintf("%c\n\r", c);
+		i++;
+	}
 }
