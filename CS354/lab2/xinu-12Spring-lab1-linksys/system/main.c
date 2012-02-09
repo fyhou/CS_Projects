@@ -22,9 +22,12 @@ int main(int argc, char **argv)
 void test(char c) 
 {
 	int i = 0;
-	while (i < 200) 
+	while (i < 100) 
 	{
 		kprintf("%c\n\r", c);
 		i++;
+
+		if (i == 20 && c != 'X' && c != 'M')
+			resume(create(test, 1000, 15, "process 3", 1, 'X'));
 	}
 }

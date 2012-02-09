@@ -2,7 +2,7 @@
 
 #include <xinu.h>
 
-int ROUND_ROBIN = 1;  
+int ROUND_ROBIN = 1;  // value of 1 means FCFS is active, 0 is default algo
 
 /*------------------------------------------------------------------------
  *  resched  -  Reschedule processor to highest priority eligible process

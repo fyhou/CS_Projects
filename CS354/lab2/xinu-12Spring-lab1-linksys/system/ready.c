@@ -2,6 +2,8 @@
 
 #include <xinu.h>
 
+extern int ROUND_ROBIN; // defined in resched.c
+
 qid16	readylist;			/* index of ready list		*/
 
 /*------------------------------------------------------------------------
@@ -23,7 +25,11 @@ status	ready(
 
 	prptr = &proctab[pid];
 	prptr->prstate = PR_READY;
-	insert(pid, readylist, prptr->prprio);
+
+	if (ROUND_ROBIN == 0) 
+		insert(pid, readylist, prptr->prprio);
+	else
+		insert(pid, readylist, 0);
 
 	if (resch == RESCHED_YES) {
 		resched();
