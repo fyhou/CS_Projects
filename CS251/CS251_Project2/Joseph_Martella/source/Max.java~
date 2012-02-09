@@ -1,4 +1,0 @@
-public class Max {
-    public static int max (Node first) {
-    }
-}
