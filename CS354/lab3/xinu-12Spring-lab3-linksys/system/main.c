@@ -40,16 +40,8 @@ void pipeTest (pid32 end1, pid32 end2)
 	int result = pipconnect(x, end1, end2);
 	kprintf("pipconnect() result = %d\n\r", result);
 
-	char test[9] = "sabbatica";
-	result = pipwrite(x, test, 9);
-	kprintf("pipwrite() result = %d\n\r", result);
-
-	char test2[2] = "jo";
-	result = pipwrite(x, test2, 2);
-	kprintf("pipwrite() result = %d\n\r", result);
-	
-	char test3[4] = "poop";
-	result = pipwrite(x, test3, 4);
+	char test[4] = "test";
+	result = pipwrite(x, test, 4);
 	kprintf("pipwrite() result = %d\n\r", result);
 }
 
