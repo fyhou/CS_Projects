@@ -16,7 +16,7 @@ syscall pipwrite(int32 pip, char *buf, uint32 len) {
 	int i = 0;  // keep track of length
 	int pos = pipeptr->pos;
 
-	int available = PIPE_SIZE - pos;
+	int available = PIPE_SIZE - pos + 1;
 	if (available <= 0) 
 	{
 		for (i = 0; i < len; i++)
