@@ -241,6 +241,7 @@ extern	syscall	yield(void);
 
 extern syscall pipcreate(void);
 extern syscall pipdelete(int32);
+extern syscall pipconnect(int32, pid32, pid32);
 
 /* NETWORK BYTE ORDER CONVERSION NOT NEEDED ON A BIG-ENDIAN COMPUTER */
 #define	htons(x)	(x)

@@ -14,7 +14,7 @@ syscall pipcreate() {
 			pipenextid = 0;
 		}
 
-		/* check tabl entry that corresponds to that ID */
+		/* check table entry that corresponds to that ID */
 		pipeptr = &pipelist[pipenum];
 		if (pipeptr->pipestate == PIPE_FREE) {
 			pipeptr->pipestate = PIPE_USED;

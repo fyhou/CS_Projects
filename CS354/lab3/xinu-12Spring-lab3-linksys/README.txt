@@ -4,4 +4,5 @@ Things I've done so far:
 	- initialized variables at top
 	- initialized NPIPE pipes
 - Added pipe.h in xinu.h
-- Created pipcreate.c
+- Created pipcreate.c and tested
+- Created pipdelete.c and tested

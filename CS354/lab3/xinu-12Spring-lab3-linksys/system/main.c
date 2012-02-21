@@ -11,31 +11,43 @@
 
 int main(int argc, char **argv)
 {
-	void pipeTest(int num);
-	void pipeDestroy(void);
+	void pipeTest(pid32 end1, pid32 end2);
+	void producerOrConsumer(int pORc);
 
-	resume(create(pipeTest, 1000, 20, "test", 1, 10));
-	//resume(create(pipeDestroy, 1000, 19, "destroy", 0));
-	
+	pid32 end1, end2;
+
+	resume(end2 = create(producerOrConsumer, 1000, 20, "producer", 1, 1));
+	resume(end1 = create(producerOrConsumer, 1000, 20, "consumer", 1, 0));
+	resume(create(pipeTest, 1000, 19, "test", 2, end1, end2));
+
 	return OK;
 }
 
-void pipeTest (int num) 
+void pipeTest (pid32 end1, pid32 end2, int makePipe) 
 {
-	int i = 0;
+	int num = 1;  // pipes to make
+	int i = 0;    // iterator
+	int32 x = 11; // pipe ID
+
 	for (i = 0; i < num; i++)
 	{
-		int32 x = pipcreate();
+		x = pipcreate();
 		kprintf("Pipe %d created by process %d!\n\r", x, getpid());
 	}
 
-	int result = pipdelete(0);
-	kprintf("pipdelete() result = %d\n\r", result);
+	int result = pipconnect(x, end1, end2);
+	kprintf("pipconnect() result = %d\n\r", result);
 }
 
-void pipeDestroy(void) 
+void producerOrConsumer(int pORc)
 {
-	int result = pipdelete(0);
-	kprintf("pipdelete() result = %d\n\r", result);
+	if (pORc)
+	{
+		return;
+	}
+	else 
+	{
+		return;
+	}
 }
 
