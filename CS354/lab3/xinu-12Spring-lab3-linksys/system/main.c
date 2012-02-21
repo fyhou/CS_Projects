@@ -4,10 +4,12 @@
 #include <stdio.h>
 
 /************************************************************************/
-/*									*/
-/* main - main program for testing Xinu					*/
-/*									*/
+/*																		*/
+/* main - main program for testing Xinu									*/
+/*																		*/
 /************************************************************************/
+
+int32 x = 11;
 
 int main(int argc, char **argv)
 {
@@ -23,11 +25,11 @@ int main(int argc, char **argv)
 	return OK;
 }
 
-void pipeTest (pid32 end1, pid32 end2, int makePipe) 
+void pipeTest (pid32 end1, pid32 end2) 
 {
 	int num = 1;  // pipes to make
 	int i = 0;    // iterator
-	int32 x = 11; // pipe ID
+	x = 11;       // pipe ID
 
 	for (i = 0; i < num; i++)
 	{
@@ -37,6 +39,14 @@ void pipeTest (pid32 end1, pid32 end2, int makePipe)
 
 	int result = pipconnect(x, end1, end2);
 	kprintf("pipconnect() result = %d\n\r", result);
+
+	char test[11] = "sabbaticals";
+	result = pipwrite(x, test, 11);
+	kprintf("pipwrite() result = %d\n\r", result);
+
+	char test2[1] = "j";
+	result = pipwrite(x, test2, 1);
+	kprintf("pipwrite() result = %d\n\r", result);
 }
 
 void producerOrConsumer(int pORc)

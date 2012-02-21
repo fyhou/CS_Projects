@@ -18,9 +18,10 @@ syscall pipcreate() {
 		pipeptr = &pipelist[pipenum];
 		if (pipeptr->pipestate == PIPE_FREE) {
 			pipeptr->pipestate = PIPE_USED;
-			pipeptr->ptssem = semcreate(PIPE_SIZE);
-			pipeptr->ptrsem = semcreate(0);
+			pipeptr->psem = semcreate(PIPE_SIZE);
+			pipeptr->csem = semcreate(0);
 			pipeptr->ownerPID = getpid();
+			pipeptr->pos  = 0;
 			restore(mask);
 			return(pipenum);
 		}

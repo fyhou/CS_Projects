@@ -15,8 +15,9 @@ syscall pipdelete(int32 pip) {
 	/* free up the pipe */
 	pipeptr = &pipelist[pip];
 	pipeptr->pipestate = PIPE_FREE;
-	semreset(pipeptr->ptssem, PIPE_SIZE);
-	semreset(pipeptr->ptrsem, 0);
+	pipeptr->pos  = 0;
+	semreset(pipeptr->psem, PIPE_SIZE);
+	semreset(pipeptr->csem, 0);
 		
 
 	/* set next available to the one just freed and return */

@@ -43,6 +43,8 @@ C_FILES += ascdate.c
 C_FILES += pipcreate.c
 C_FILES += pipdelete.c
 C_FILES += pipconnect.c
+C_FILES += pipdisconnect.c
+C_FILES += pipwrite.c
 
 # Main program
 C_FILES += main.c

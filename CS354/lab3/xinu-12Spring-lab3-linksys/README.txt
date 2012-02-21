@@ -4,5 +4,10 @@ Things I've done so far:
 	- initialized variables at top
 	- initialized NPIPE pipes
 - Added pipe.h in xinu.h
+- Added syscalls into include/prototypes.h
+- Added compilation stuff into system/Makefile
 - Created pipcreate.c and tested
 - Created pipdelete.c and tested
+- Created pipconnect.c and tested
+- Created pipdisconnect.c and tested
+- Created pipwrite.c and tested **MUST CHANGE ERROR CHECK BEFORE TESTING**
