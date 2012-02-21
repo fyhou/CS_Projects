@@ -36,6 +36,7 @@ syscall pipwrite(int32 pip, char *buf, uint32 len) {
 	}
 	else if (available <= len)
 	{
+		kprintf("sem count = %d\r\n", semtab[pipeptr->psem].scount);
 		for (i = 0; i < available; i++)
 		{
 
@@ -55,7 +56,7 @@ syscall pipwrite(int32 pip, char *buf, uint32 len) {
 	}
 	else 
 	{
-		kprintf("sem count = %d", semtab[pipeptr->psem].scount);
+		kprintf("sem count = %d\r\n", semtab[pipeptr->psem].scount);
 		for (i = 0; i < len; i++)
 		{
 			kprintf("i = %d, len = %d\n\r", i, len);
@@ -65,9 +66,6 @@ syscall pipwrite(int32 pip, char *buf, uint32 len) {
 				pipeptr->pos = pos;
 			signal(pipeptr->csem);
 		}
-
-		kprintf("PIPWRITE: buffer = %s\n\r", pipeptr->buffer);
-		kprintf("PIPWRITE: pos    = %d\n\r", pipeptr->pos);
 
 		restore(mask);
 		return(len);
