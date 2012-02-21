@@ -1,5 +1,5 @@
 #define NPIPE 10
-#define PIPE_SIZE 10
+#define PIPE_SIZE 256
 
 #define PIPE_FREE 1
 #define PIPE_USED 2
