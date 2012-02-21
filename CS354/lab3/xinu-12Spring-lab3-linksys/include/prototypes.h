@@ -240,6 +240,7 @@ extern	void	xdone(void);
 extern	syscall	yield(void);
 
 extern syscall pipcreate(void);
+extern syscall pipdelete(int32);
 
 /* NETWORK BYTE ORDER CONVERSION NOT NEEDED ON A BIG-ENDIAN COMPUTER */
 #define	htons(x)	(x)

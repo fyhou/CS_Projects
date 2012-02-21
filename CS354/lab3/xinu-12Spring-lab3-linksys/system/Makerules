@@ -41,6 +41,7 @@ C_FILES += kprintf.c debug.c
 C_FILES += ascdate.c
 
 C_FILES += pipcreate.c
+C_FILES += pipdelete.c
 
 # Main program
 C_FILES += main.c

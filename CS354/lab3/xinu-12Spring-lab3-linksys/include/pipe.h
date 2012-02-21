@@ -18,4 +18,4 @@ struct pipe {
 extern struct pipe pipelist[];   /* list of free pipes */
 extern int32 pipenextid;         /* next pipe ID to try when looking for a new one */
 
-#define isbadpipe(pipeid) ((pipeid)<0 || (portid)>=NPIPE)  
+#define isbadpipeid(pipeid) ((pipeid)<0 || (pipeid)>=NPIPE)  
