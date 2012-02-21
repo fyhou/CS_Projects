@@ -35,7 +35,7 @@ syscall pipwrite(int32 pip, char *buf, uint32 len) {
 		restore(mask);
 		return(len);
 	}
-	else if (available < len)
+	else if (available <= len)
 	{
 		kprintf("check2\n\r");
 		for (i = 0; i < available; i++)
