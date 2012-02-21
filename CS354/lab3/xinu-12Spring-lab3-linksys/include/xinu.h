@@ -21,3 +21,4 @@
 #include <date.h>
 #include <shell.h>
 #include <prototypes.h>
+#include <pipe.h>

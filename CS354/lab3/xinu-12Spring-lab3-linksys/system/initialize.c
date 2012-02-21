@@ -19,11 +19,13 @@ static	void sysinit(void);	/* initializes system structures	*/
 struct	procent	proctab[NPROC];	/* Process table			*/
 struct	sentry	semtab[NSEM];	/* Semaphore table			*/
 struct	memblk	memlist;	/* List of free memory blocks		*/
+struct  pipe    pipelist[NPIPE]; /* list of free pipes */
 
 /* Active system status */
 
 int	prcount;		/* Total number of live processes	*/
 pid32	currpid;		/* ID of currently executing process	*/
+int32 pipenextid;   /* ID of next available pipe */
 
 /* Memory bounds set by startup.S */
 
@@ -105,6 +107,8 @@ static	void	sysinit(void)
 	struct	sentry	*semptr;	/* prr to semaphore table entry	*/
 	struct	memblk	*memptr;	/* ptr to memory block		*/
 
+	//struct pipe *pipeptr;       /* ptr to pipe entry */
+
 	/* Initialize system variables */
 
 	/* Count the Null process as the first process in the system */
@@ -156,6 +160,13 @@ static	void	sysinit(void)
 		semptr->scount = 0;
 		semptr->squeue = newqueue();
 	}
+
+	/* Initialize pipes */
+	for (i = 0; i < NPIPE; i++) {
+		pipelist[i].pipestate = PIPE_FREE;
+	}
+	pipenextid = 0;
+
 
 	/* Initialize buffer pools */
 

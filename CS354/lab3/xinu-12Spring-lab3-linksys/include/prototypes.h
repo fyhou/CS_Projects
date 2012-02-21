@@ -239,6 +239,8 @@ extern	void	xdone(void);
 /* in file yield.c */
 extern	syscall	yield(void);
 
+extern syscall pipcreate(void);
+
 /* NETWORK BYTE ORDER CONVERSION NOT NEEDED ON A BIG-ENDIAN COMPUTER */
 #define	htons(x)	(x)
 #define	htonl(x)	(x)
