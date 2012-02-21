@@ -55,6 +55,7 @@ syscall pipwrite(int32 pip, char *buf, uint32 len) {
 	}
 	else 
 	{
+		kprintf("sem count = %d", (pipeptr->psem).scount);
 		for (i = 0; i < len; i++)
 		{
 			kprintf("i = %d, len = %d\n\r", i, len);
