@@ -19,6 +19,7 @@ syscall pipwrite(int32 pip, char *buf, uint32 len) {
 	int available = PIPE_SIZE - pos;
 	if (available <= 0) 
 	{
+		kprintf("check1\n\r");
 		for (i = 0; i < len; i++)
 		{
 			wait(pipeptr->psem);
@@ -36,6 +37,7 @@ syscall pipwrite(int32 pip, char *buf, uint32 len) {
 	}
 	else if (available < len)
 	{
+		kprintf("check2\n\r");
 		for (i = 0; i < available; i++)
 		{
 
@@ -55,6 +57,7 @@ syscall pipwrite(int32 pip, char *buf, uint32 len) {
 	}
 	else 
 	{
+		kprintf("check3\n\r");
 		for (i = 0; i < len; i++)
 		{
 			wait(pipeptr->psem);
