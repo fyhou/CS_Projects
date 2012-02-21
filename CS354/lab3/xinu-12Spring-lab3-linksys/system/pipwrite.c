@@ -38,12 +38,13 @@ syscall pipwrite(int32 pip, char *buf, uint32 len) {
 	{
 		for (i = 0; i < available; i++)
 		{
-			wait(pipeptr->psem);
-				pipeptr->buffer[pos] = buf[i];
-				pos++; 
-				pipeptr->pos = pos;
-			signal(pipeptr->csem);
+
+			pipeptr->buffer[pos] = buf[i];
+			pos++; 
+			pipeptr->pos = pos;
 		}
+
+		semtab[pipeptr->psem].count = 0;
 
 		kprintf("PIPWRITE: buffer = %s\n\r", pipeptr->buffer);
 		kprintf("PIPWRITE: pos    = %d\n\r", pipeptr->pos);
