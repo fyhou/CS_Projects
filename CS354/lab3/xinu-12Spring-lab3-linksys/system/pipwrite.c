@@ -47,6 +47,8 @@ syscall pipwrite(int32 pip, char *buf, uint32 len) {
 
 		semtab[pipeptr->psem].scount = 0;
 		semtab[pipeptr->csem].scount = PIPE_SIZE;
+		
+		kprintf("PIPWRITE: PIPE_SIZE = %d\n\r", PIPE_SIZE);
 
 		kprintf("PIPWRITE: buffer = %s\n\r", pipeptr->buffer);
 		kprintf("PIPWRITE: pos    = %d\n\r", pipeptr->pos);
