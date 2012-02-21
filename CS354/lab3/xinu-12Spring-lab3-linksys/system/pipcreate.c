@@ -15,11 +15,11 @@ syscall pipcreate() {
 		}
 
 		/* check tabl entry that corresponds to that ID */
-		pipe = &pipelist[pipenum];
-		if (pipe->pipestate = PIPE_FREE {
-			pipe->pipestate = PIPE_USED;
-			pipe->ptssem = semcreate(PIPE_SIZE);
-			pipe->ptrsem = semcreate(0);
+		pipeptr = &pipelist[pipenum];
+		if (pipeptr->pipestate == PIPE_FREE) {
+			pipeptr->pipestate = PIPE_USED;
+			pipeptr->ptssem = semcreate(PIPE_SIZE);
+			pipeptr->ptrsem = semcreate(0);
 			restore(mask);
 			return(pipenum);
 		}

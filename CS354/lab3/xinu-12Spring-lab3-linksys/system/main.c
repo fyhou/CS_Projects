@@ -11,18 +11,19 @@
 
 int main(int argc, char **argv)
 {
-	umsg32 retval;
+	void test(int num);
 
-	/* Creating a shell process */
-
-	resume(create(shell, 4096, 1, "shell", 1, CONSOLE));
-
-	retval = recvclr();
-	while (TRUE) {
-		retval = receive();
-		kprintf("\n\n\rMain process recreating shell\n\n\r");
-		resume(create(shell, 4096, 1, "shell", 1, CONSOLE));
-	}
-
+	resume(create(test, 1000, 10, "process 2", 1, 11));
+	
 	return OK;
+}
+
+void test (int num) 
+{
+	int i = 0;
+	for (i = 0; i < num; i++)
+	{
+		int32 x = pipcreate();
+		kprintf("Pipe %d created!\n\r", x);
+	}
 }

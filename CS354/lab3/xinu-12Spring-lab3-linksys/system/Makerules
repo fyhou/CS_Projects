@@ -40,6 +40,8 @@ C_FILES += kprintf.c debug.c
 # Files for time and date manipulation
 C_FILES += ascdate.c
 
+C_FILES += pipcreate.c
+
 # Main program
 C_FILES += main.c
 
