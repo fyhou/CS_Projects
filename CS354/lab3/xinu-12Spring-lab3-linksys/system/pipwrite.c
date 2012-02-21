@@ -36,7 +36,7 @@ syscall pipwrite(int32 pip, char *buf, uint32 len) {
 	}
 	else if (available <= len)
 	{
-		for (i = 0; i < available; i++)
+		for (i = 0; i < available - 1; i++)
 		{
 
 			pipeptr->buffer[pos] = buf[i];
