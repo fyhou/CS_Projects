@@ -10,6 +10,7 @@ struct pipe {
 	sid32   ptssem;          /* sender semaphore */
 	sid32   ptrsem;          /* receiver semaphore */
 	int32   pip;       	     /* pipe ID */
+	pid32   ownerPID;        /* owner PID */
 	pid32   end1;            /* one end of the pipe */
     pid32   end2;            /* other end of the pipe */
 	char buffer[PIPE_SIZE];  /* buffer */

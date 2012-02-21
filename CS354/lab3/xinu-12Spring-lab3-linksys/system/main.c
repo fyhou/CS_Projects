@@ -11,24 +11,31 @@
 
 int main(int argc, char **argv)
 {
-	void pipeShit(int num);
+	void pipeTest(int num);
+	void pipeDestroy(void);
 
-	resume(create(pipeShit, 1000, 20, "piper", 1, 10));
+	resume(create(pipeTest, 1000, 20, "test", 1, 10));
+	//resume(create(pipeDestroy, 1000, 19, "destroy", 0));
 	
 	return OK;
 }
 
-void pipeShit (int num) 
+void pipeTest (int num) 
 {
 	int i = 0;
 	for (i = 0; i < num; i++)
 	{
 		int32 x = pipcreate();
-		kprintf("Pipe %d created!\n\r", x);
+		kprintf("Pipe %d created by process %d!\n\r", x, getpid());
 	}
 
-	pipdelete(3);
-	int32 x = pipcreate();
-	kprintf("Pipe %d created again!\n\r", x);
+	int result = pipdelete(0);
+	kprintf("pipdelete() result = %d\n\r", result);
+}
+
+void pipeDestroy(void) 
+{
+	int result = pipdelete(0);
+	kprintf("pipdelete() result = %d\n\r", result);
 }
 

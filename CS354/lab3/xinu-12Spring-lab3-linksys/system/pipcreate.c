@@ -20,6 +20,7 @@ syscall pipcreate() {
 			pipeptr->pipestate = PIPE_USED;
 			pipeptr->ptssem = semcreate(PIPE_SIZE);
 			pipeptr->ptrsem = semcreate(0);
+			pipeptr->ownerPID = getpid();
 			restore(mask);
 			return(pipenum);
 		}
