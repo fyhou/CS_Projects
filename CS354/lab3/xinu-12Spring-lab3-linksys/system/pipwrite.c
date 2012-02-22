@@ -6,8 +6,7 @@ syscall pipwrite(int32 pip, char *buf, uint32 len) {
 
 	mask = disable();
 
-	// add || (pipeptr = &pipelist[pip])->end2 != getpid() to condition when done
-	if (isbadpipeid(pip) || (pipeptr = &pipelist[pip])->pipestate != PIPE_CONNECTED || (pipeptr = &pipelist[pip])->ownerPID != getpid()) {
+	if (isbadpipeid(pip) || (pipeptr = &pipelist[pip])->pipestate != PIPE_CONNECTED || (pipeptr = &pipelist[pip])->ownerPID != getpid() || (pipeptr = &pipelist[pip])->end2 != getpid()) {
 		restore(mask);
 		return(SYSERR);
 	}
