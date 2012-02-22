@@ -66,6 +66,7 @@ void consume(void)
 		for (i = 0; i < N; i++) 
 		{
 			pipread(x, buff, 15);
+			kprintf("Message from pipe: %s", buff);
 		}
 		suspend(getpid());
 	}
