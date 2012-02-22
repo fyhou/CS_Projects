@@ -42,7 +42,6 @@ void pipeTest (pid32 end1, pid32 end2)
 
 	char writeMe[13] = "Hello, world!";
 	result = pipwrite(x, writeMe, 13);
-	kprintf("pipwrite() result = %d\n\r\n\r", result);
 	
 	char readMe[13];
 	result = pipread(x, readMe, 13);
