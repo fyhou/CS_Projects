@@ -19,17 +19,14 @@ int main(int argc, char **argv)
 	
 	pid32 end1, end2;
 
-	end2 = create(produce, 1000, 20, "producer", 0);  // writer
-	end1 = create(consume, 1000, 20, "consumer", 0);  // reader
+	resume(end2 = create(produce, 1000, 20, "producer", 0));  // writer
+	resume(end1 = create(consume, 1000, 20, "consumer", 0));  // reader
 	
 	kprintf("PIDs = %d, %d\n\r", end2, end1);
 	
 	x = pipcreate();
 	int result = pipconnect(x, end1, end2);
 	kprintf("Pipe connection resulted in: %d\n\r", result);
-	
-	resume(end2);
-	resume(end1);
 	
 	char c;
 
