@@ -19,8 +19,8 @@ int main(int argc, char **argv)
 	
 	pid32 end1, end2;
 
-	resume(end2 = create(produce, 1000, 20, "producer", 0));  // writer
-	resume(end1 = create(consume, 1000, 20, "consumer", 0));  // reader
+	end2 = create(produce, 1000, 20, "producer", 0);  // writer
+	end1 = create(consume, 1000, 20, "consumer", 0);  // reader
 	
 	kprintf("PIDs = %d, %d\n\r", end2, end1);
 	
@@ -29,6 +29,9 @@ int main(int argc, char **argv)
 	kprintf("Pipe connection resulted in: %d\n\r", result);
 	
 	char c;
+	
+	resume(end2);
+	resume(end1); 
 
 	while ((c = getc(stdin)) != 'q') 
 	{
