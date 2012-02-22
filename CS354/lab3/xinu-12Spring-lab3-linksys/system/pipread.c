@@ -58,7 +58,7 @@ syscall pipread(int32 pip, char *buf, uint32 len) {
         			buf[i] = pipeptr->buffer[i];
 				pos--;
 				pipeptr->pos = pos;
-			signal(pipeptr->psem);
+			signaln(pipeptr->psem);
 		}
 
 		restore(mask);
