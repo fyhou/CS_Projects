@@ -9,55 +9,52 @@
 /*																		*/
 /************************************************************************/
 
-int32 x = 11;
+int32 x = 0;     // pipe ID
+int32 N = 10;    // amount of lines to show at a time
 
 int main(int argc, char **argv)
 {
-	void pipeTest(pid32 end1, pid32 end2);
-	void producerOrConsumer(int pORc);
+	void owner(pid32 end1, pid32 end2);
+	void produce(void);
+	void consume(void);
 
 	pid32 end1, end2;
 
-	resume(end2 = create(producerOrConsumer, 1000, 20, "producer", 1, 1));
-	resume(end1 = create(producerOrConsumer, 1000, 20, "consumer", 1, 0));
-	resume(create(pipeTest, 1000, 19, "test", 2, end1, end2));
+	/*end2 = create(produce, 1000, 20, "producer", 0);  // writer
+	end1 = create(consume, 1000, 20, "consumer", 0);  // reader
+	
+	x = pipcreate();
+	pipconnect(x, end1, end2);
+
+	resume(end2);
+	resume(end1);*/
+	
+	char c;
+	
+	while ((c = getchar()) != 'q') 
+	{
+		kprintf("char = %c\n\r", c);
+	}
 
 	return OK;
 }
 
-void pipeTest (pid32 end1, pid32 end2) 
+void produce(void)
 {
-	int num = 1;  // pipes to make
-	int i = 0;    // iterator
-	x = 11;       // pipe ID
-
-	for (i = 0; i < num; i++)
+	while(1) 
 	{
-		x = pipcreate();
-		kprintf("Pipe %d created by process %d!\n\r", x, getpid());
-	}
-
-	int result = pipconnect(x, end1, end2);
-	kprintf("pipconnect() result = %d\n\r", result);
-	
-	char writeMe[6] = "Hello!";
-	result = pipwrite(x, writeMe, 6);
-	
-	char readMe[13];
-	result = pipread(x, readMe, 13);
-	kprintf("pipread() result = %d\n\r", result);
-	kprintf("readMe = %s\n\r", readMe);
-}
-
-void producerOrConsumer(int pORc)
-{
-	if (pORc)
-	{
-		return;
-	}
-	else 
-	{
-		return;
+		int i = 0;
+		for (i = 0; i < N; i++) 
+		{
+			
+		}
 	}
 }
 
+void consume(void)
+{
+	while(1)
+	{
+		
+	}
+}
