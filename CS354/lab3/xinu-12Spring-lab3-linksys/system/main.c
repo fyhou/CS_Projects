@@ -30,10 +30,10 @@ int main(int argc, char **argv)
 	resume(end1);*/
 	
 	char c;
-	control(0, TCMODER);
+
 	while (1 == 1) 
 	{
-		c = ttyGetc(&devtab[0]);
+		c = getchar();
 		kprintf("char = %c\n\r", c);
 	}
 
