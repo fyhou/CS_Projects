@@ -40,8 +40,8 @@ void pipeTest (pid32 end1, pid32 end2)
 	int result = pipconnect(x, end1, end2);
 	kprintf("pipconnect() result = %d\n\r", result);
 
-	char writeMe[13] = "Hello, world!";
-	result = pipwrite(x, writeMe, 13);
+	char writeMe[6] = "Hello!";
+	result = pipwrite(x, writeMe, 6);
 	
 	char readMe[13];
 	result = pipread(x, readMe, 13);
