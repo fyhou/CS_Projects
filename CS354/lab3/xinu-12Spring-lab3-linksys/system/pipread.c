@@ -66,7 +66,7 @@ syscall pipread(int32 pip, char *buf, uint32 len) {
 			signal(pipeptr->psem);
 		}
 		
-		buf[last] = '\0';
+		//buf[last] = '\0';
 
 		restore(mask);
 		return(len);
