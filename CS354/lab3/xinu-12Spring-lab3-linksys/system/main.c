@@ -33,7 +33,7 @@ int main(int argc, char **argv)
 	
 	while (1 == 1) 
 	{
-		c = ttyGetc(devptr);
+		c = ttyGetc(0);
 		kprintf("char = %c\n\r", c);
 	}
 
