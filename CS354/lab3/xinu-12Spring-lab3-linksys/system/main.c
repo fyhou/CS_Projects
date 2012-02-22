@@ -44,7 +44,7 @@ void pipeTest (pid32 end1, pid32 end2)
 	result = pipwrite(x, test, 4);
 	kprintf("pipwrite() result = %d\n\r", result);
 	
-	char test[260] = "test";
+	char test2[260] = "test";
 	result = pipwrite(x, test2, 260);
 	kprintf("pipwrite() result = %d\n\r", result);
 }
