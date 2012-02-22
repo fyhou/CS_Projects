@@ -19,25 +19,22 @@ int main(int argc, char **argv)
 	
 	pid32 end1, end2;
 
-	kprintf("About to create producer and consumer processes...\n\r");
 	resume(end2 = create(produce, 1000, 20, "producer", 0));  // writer
 	resume(end1 = create(consume, 1000, 20, "consumer", 0));  // reader
-	kprintf("Succuessfully created producer and consumer processes...\n\r");
 	
 	x = pipcreate();
-	kprintf("Pipe creation resulted in: %d\n\r", x);
 	int result = pipconnect(x, end1, end2);
 	kprintf("Pipe connection resulted in: %d\n\r", result);
 	
 	char c;
 
-	while ((c = getc(stdin)) != 'q') 
+	/*while ((c = getc(stdin)) != 'q') 
 	{
 		if (c== '\n')
 		{
 			resume(end1);
 		}
-	}
+	}*/
 
 	kprintf("User terminated program...\n\r");
 	return OK;
