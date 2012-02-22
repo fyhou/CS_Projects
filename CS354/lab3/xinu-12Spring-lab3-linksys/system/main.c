@@ -18,7 +18,7 @@ int main(int argc, char **argv)
 	void produce(void);
 	void consume(void);
 
-	pid32 end1, end2;
+	//pid32 end1, end2;
 
 	/*end2 = create(produce, 1000, 20, "producer", 0);  // writer
 	end1 = create(consume, 1000, 20, "consumer", 0);  // reader
@@ -55,6 +55,6 @@ void consume(void)
 {
 	while(1)
 	{
-		
+		;
 	}
 }
