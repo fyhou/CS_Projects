@@ -33,7 +33,7 @@ int main(int argc, char **argv)
 
 	while (1 == 1) 
 	{
-		c = _getch();
+		c = getc();
 		
 		if (c == 'q') 
 		{
