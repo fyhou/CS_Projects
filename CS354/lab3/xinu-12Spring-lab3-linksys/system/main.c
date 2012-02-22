@@ -26,9 +26,9 @@ int main(int argc, char **argv)
 	int result = pipconnect(x, end1, end2);
 	kprintf("Pipe connection resulted in: %d\n\r", result);
 	
-	char c;
+	/*char c;
 
-	/*while ((c = getc(stdin)) != 'q') 
+	while ((c = getc(stdin)) != 'q') 
 	{
 		if (c== '\n')
 		{
