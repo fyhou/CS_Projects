@@ -39,14 +39,14 @@ void pipeTest (pid32 end1, pid32 end2)
 
 	int result = pipconnect(x, end1, end2);
 	kprintf("pipconnect() result = %d\n\r", result);
-
-	char writeMe[6] = "Hello!";
-	result = pipwrite(x, writeMe, 6);
 	
 	char readMe[13];
 	result = pipread(x, readMe, 13);
 	kprintf("pipread() result = %d\n\r", result);
 	kprintf("readMe = %s\n\r", readMe);
+	
+	char writeMe[6] = "Hello!";
+	result = pipwrite(x, writeMe, 6);
 }
 
 void producerOrConsumer(int pORc)
