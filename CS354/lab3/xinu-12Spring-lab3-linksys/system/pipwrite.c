@@ -16,7 +16,7 @@ syscall pipwrite(int32 pip, char *buf, uint32 len) {
 		{
 			kprintf("err2\r\n");
 		}
-		if (pipeptr = &pipelist[pip])->ownerPID != getpid()) {
+		if ((pipeptr = &pipelist[pip])->ownerPID != getpid()) {
 			kprintf("err3\r\n");
 		}
 		if ((pipeptr = &pipelist[pip])->end2 != getpid()) {
