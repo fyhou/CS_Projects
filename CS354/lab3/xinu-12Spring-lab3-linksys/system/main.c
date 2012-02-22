@@ -24,6 +24,7 @@ int main(int argc, char **argv)
 	
 	x = pipcreate();
 	int result = pipconnect(x, end1, end2);
+	if (result == -1) kprintf("pipconnect error\n\r");
 	
 	char c;
 	
@@ -50,7 +51,7 @@ void produce(void)
 	while(1) 
 	{
 		int result = pipwrite(x, buff, 15);
-		if (result == -1) kprintf("pipwrite error: %d\r\n", result);
+		if (result == -1) kprintf("pipwrite error\r\n");
 	}
 }
 
