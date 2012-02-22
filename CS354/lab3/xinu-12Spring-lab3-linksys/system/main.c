@@ -45,7 +45,6 @@ int main(int argc, char **argv)
 
 void produce(void)
 {
-	sleep(2000);
 	kprintf("Producer is awake!\n\r");
 	
 	char buff[15] = "Hello, world!\n\r";
@@ -63,7 +62,6 @@ void produce(void)
 
 void consume(void)
 {
-	sleep(2000);
 	kprintf("Consumer is awake!\n\r");
 	
 	char buff[15];
