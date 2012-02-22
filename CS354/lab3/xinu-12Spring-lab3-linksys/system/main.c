@@ -33,7 +33,7 @@ int main(int argc, char **argv)
 	
 	while (1 == 1) 
 	{
-		c = fgetc();
+		c = fgetc(stdin);
 		kprintf("char = %c\n\r", c);
 	}
 
