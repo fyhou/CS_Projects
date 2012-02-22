@@ -26,8 +26,9 @@ int main(int argc, char **argv)
 	kprintf("Succuessfully created producer and consumer processes...\n\r");
 	
 	x = pipcreate();
+	kprintf("Pipe creation resulted in: %d\n\r", x);
 	int result = pipconnect(x, end1, end2);
-	kprintf("Pipe creation resulted in: %d\n\r", result);
+	kprintf("Pipe connection resulted in: %d\n\r", result);
 
 	kprintf("About to resume processes...\n\r");
 	resume(end2);
