@@ -58,6 +58,7 @@ syscall pipread(int32 pip, char *buf, uint32 len) {
 		for (i = 0; i < len; i++)
 		{
 			wait(pipeptr->csem);
+				kprintf("PIPREAD: char = %c\n\r", pipeptr->buffer[i]);
         			buf[i] = pipeptr->buffer[i];
 				pos--;
 				pipeptr->pos = pos;
