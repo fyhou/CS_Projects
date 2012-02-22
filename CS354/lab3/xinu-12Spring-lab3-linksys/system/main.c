@@ -50,7 +50,7 @@ void produce(void)
 	while(1) 
 	{
 		int result = pipwrite(x, buff, 15);
-		if (result == -1) kprintf("pipwrite error\r\n");
+		if (result == -1) kprintf("pipwrite error: %d\r\n", result);
 	}
 }
 
