@@ -53,7 +53,9 @@ void produce(void)
 	char buff[15] = "Hello, world!\n\r";
 	while(1) 
 	{
-		pipwrite(x, buff, 15);
+		int result = pipwrite(x, buff, 15);
+		
+		if (result == -1) kprintf("pipwrite error\r\n");
 	}
 }
 
@@ -68,7 +70,8 @@ void consume(void)
 		int i = 0;
 		for (i = 0; i < N; i++) 
 		{
-			pipread(x, buff, 15);
+			int result = pipread(x, buff, 15);
+			if (result == -1) kprintf("pipwrite error\r\n");
 			kprintf("Message from pipe: %s", buff);
 		}
 		suspend(getpid());
