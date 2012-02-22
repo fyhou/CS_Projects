@@ -57,8 +57,6 @@ syscall pipwrite(int32 pip, char *buf, uint32 len) {
 				pipeptr->pos = pos;
 			signal(pipeptr->csem);
 		}
-		
-		kprintf("PIPWRITE: buffer = %s\n\r", pipeptr->buffer);
 
 		restore(mask);
 		return(len);
