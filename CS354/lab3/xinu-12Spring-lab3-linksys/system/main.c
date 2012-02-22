@@ -38,7 +38,6 @@ int main(int argc, char **argv)
 		if (c== '\n')
 		{
 			resume(end1);
-			resume(end2);
 		}
 	}
 
@@ -59,7 +58,6 @@ void produce(void)
 			int result = pipwrite(x, buff, 15);
 			if (result == -1) kprintf("pipwrite error\r\n");
 		}
-		suspend(getpid());
 	}
 }
 
