@@ -37,7 +37,7 @@ int main(int argc, char **argv)
 		
 		if (c == 'q') 
 		{
-			return;
+			return 0;
 		}
 		
 		kprintf("char = %c\n\r", c);
