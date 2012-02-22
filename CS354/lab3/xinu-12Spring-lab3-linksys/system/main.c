@@ -14,7 +14,6 @@ int32 N = 10;    // amount of lines to show at a time
 
 int main(int argc, char **argv)
 {
-	void owner(pid32 end1, pid32 end2);
 	void produce(void);
 	void consume(void);
 	
@@ -49,11 +48,8 @@ void produce(void)
 	char buff[15] = "Hello, world!\n\r";
 	while(1) 
 	{
-		int i = 0;
-		for (i = 0; i < N; i++) 
-		{
-			pipwrite(x, buff, 15);
-		}
+		pipwrite(x, buff, 15);
+		kprintf("%s", buff);
 	}
 }
 
