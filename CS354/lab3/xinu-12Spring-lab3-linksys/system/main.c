@@ -31,7 +31,7 @@ int main(int argc, char **argv)
 	
 	char c;
 	
-	while ((c = getchar()) != 'q') 
+	while ((c = getch()) != 'q') 
 	{
 		kprintf("char = %c\n\r", c);
 	}
