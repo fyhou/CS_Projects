@@ -74,7 +74,7 @@ void consume(void)
 		for (i = 0; i < N; i++) 
 		{
 			int result = pipread(x, buff, 15);
-			if (result == -1) kprintf("pipwrite error\r\n");
+			if (result == -1) kprintf("pipread error\r\n");
 			kprintf("Message from pipe: %s", buff);
 		}
 		suspend(getpid());
