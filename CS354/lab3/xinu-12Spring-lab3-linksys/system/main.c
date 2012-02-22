@@ -34,6 +34,12 @@ int main(int argc, char **argv)
 	while (1 == 1) 
 	{
 		c = getchar();
+		
+		if (c == 'q') 
+		{
+			return;
+		}
+		
 		kprintf("char = %c\n\r", c);
 	}
 
