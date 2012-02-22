@@ -17,8 +17,7 @@ int main(int argc, char **argv)
 	void owner(pid32 end1, pid32 end2);
 	void produce(void);
 	void consume(void);
-
-	control(0, TC_MODER);
+	
 	//pid32 end1, end2;
 
 	/*end2 = create(produce, 1000, 20, "producer", 0);  // writer
@@ -32,16 +31,12 @@ int main(int argc, char **argv)
 	
 	char c;
 
-	while (1 == 1) 
+	while ((c = getc(stdin)) != 'q') 
 	{
-		c = getc(stdin);
-		
-		if (c == 'q') 
+		if (c== '\n')
 		{
-			return 0;
+			kprintf("Enter was pressed, nigga!\n\r");
 		}
-		
-		kprintf("char = %c\n\r", c);
 	}
 
 	return OK;
