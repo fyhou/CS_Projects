@@ -26,7 +26,7 @@ int main(int argc, char **argv)
 	int result = pipconnect(x, end1, end2);
 	kprintf("Pipe connection resulted in: %d\n\r", result);
 	
-	/*char c;
+	char c;
 
 	while ((c = getc(stdin)) != 'q') 
 	{
@@ -34,7 +34,7 @@ int main(int argc, char **argv)
 		{
 			resume(end1);
 		}
-	}*/
+	}
 
 	kprintf("User terminated program...\n\r");
 	return OK;
@@ -42,16 +42,21 @@ int main(int argc, char **argv)
 
 void produce(void)
 {
+	sleep(2000);
+	kprintf("Producer is awake!\n\r");
+	
 	char buff[15] = "Hello, world!\n\r";
 	while(1) 
 	{
 		pipwrite(x, buff, 15);
-		kprintf("%s", buff);
 	}
 }
 
 void consume(void)
 {
+	sleep(2000);
+	kprintf("Consumer is awake!\n\r");
+	
 	char buff[15];
 	while(1)
 	{
