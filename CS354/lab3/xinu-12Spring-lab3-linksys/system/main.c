@@ -51,6 +51,7 @@ void produce(void)
 	char buff[15] = "Hello, world!\n\r";
 	while(1) 
 	{
+		int i = 0;
 		for (i = 0; i < N; i++)
 		{
 			int result = pipwrite(x, buff, 15);
