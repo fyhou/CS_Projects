@@ -20,14 +20,19 @@ int main(int argc, char **argv)
 	
 	pid32 end1, end2;
 
+	kprintf("About to create producer and consumer processes...\n\r");
 	end2 = create(produce, 1000, 20, "producer", 0);  // writer
 	end1 = create(consume, 1000, 20, "consumer", 0);  // reader
+	kprintf("Succuessfully created producer and consumer processes...\n\r");
 	
 	x = pipcreate();
-	pipconnect(x, end1, end2);
+	int result = pipconnect(x, end1, end2);
+	kprintf("Pipe creation resulted in: %d\n\r", result);
 
+	kprintf("About to resume processes...\n\r");
 	resume(end2);
 	resume(end1);
+	kprintf("Successfully resumed processes...\n\r");
 	
 	char c;
 
