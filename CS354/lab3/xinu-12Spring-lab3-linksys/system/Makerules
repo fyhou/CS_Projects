@@ -45,6 +45,7 @@ C_FILES += pipdelete.c
 C_FILES += pipconnect.c
 C_FILES += pipdisconnect.c
 C_FILES += pipwrite.c
+C_FILES += pipread.c
 
 # Main program
 C_FILES += main.c
