@@ -18,6 +18,7 @@ int main(int argc, char **argv)
 	void produce(void);
 	void consume(void);
 
+	control(0, TC_MODER);
 	//pid32 end1, end2;
 
 	/*end2 = create(produce, 1000, 20, "producer", 0);  // writer
