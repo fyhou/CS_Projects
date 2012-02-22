@@ -18,16 +18,16 @@ int main(int argc, char **argv)
 	void produce(void);
 	void consume(void);
 	
-	//pid32 end1, end2;
+	pid32 end1, end2;
 
-	/*end2 = create(produce, 1000, 20, "producer", 0);  // writer
+	end2 = create(produce, 1000, 20, "producer", 0);  // writer
 	end1 = create(consume, 1000, 20, "consumer", 0);  // reader
 	
 	x = pipcreate();
 	pipconnect(x, end1, end2);
 
 	resume(end2);
-	resume(end1);*/
+	resume(end1);
 	
 	char c;
 
@@ -35,7 +35,7 @@ int main(int argc, char **argv)
 	{
 		if (c== '\n')
 		{
-			kprintf("Enter was pressed, nigga!\n\r");
+			resume(end1);
 		}
 	}
 
@@ -44,20 +44,27 @@ int main(int argc, char **argv)
 
 void produce(void)
 {
+	char buff[15] = "Hello, world!\n\r";
 	while(1) 
 	{
 		int i = 0;
 		for (i = 0; i < N; i++) 
 		{
-			
+			pipwrite(x, buff, 15);
 		}
 	}
 }
 
 void consume(void)
 {
+	char buff[15];
 	while(1)
 	{
-		;
+		int i = 0;
+		for (i = 0; i < N; i++) 
+		{
+			pipread(x, buff, 15);
+		}
+		suspend(getpid());
 	}
 }
