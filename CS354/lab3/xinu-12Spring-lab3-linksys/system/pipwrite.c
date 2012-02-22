@@ -8,21 +8,6 @@ syscall pipwrite(int32 pip, char *buf, uint32 len) {
 
 	if (isbadpipeid(pip) || (pipeptr = &pipelist[pip])->pipestate != PIPE_CONNECTED || (pipeptr = &pipelist[pip])->end2 != getpid()) {
 		
-		if (isbadpipeid(pip)) 
-		{
-			kprintf("err1\r\n");
-		}
-		if ((pipeptr = &pipelist[pip])->pipestate != PIPE_CONNECTED)
-		{
-			kprintf("err2\r\n");
-		}
-		if ((pipeptr = &pipelist[pip])->ownerPID != getpid()) {
-			kprintf("err3\r\n");
-		}
-		if ((pipeptr = &pipelist[pip])->end2 != getpid()) {
-			kprintf("err4\r\n");
-		}
-		
 		restore(mask);
 		return(SYSERR);
 	}
