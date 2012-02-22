@@ -44,6 +44,7 @@ int main(int argc, char **argv)
 		}
 	}
 
+	kprintf("User terminated program...\n\r");
 	return OK;
 }
 
