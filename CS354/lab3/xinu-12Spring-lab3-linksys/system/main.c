@@ -47,6 +47,9 @@ void pipeTest (pid32 end1, pid32 end2)
 	char test2[2] = "fu";
 	result = pipwrite(x, test2, 2);
 	kprintf("pipwrite() result = %d\n\r", result);
+	
+	result = pipwrite(x, test2, 2);
+	kprintf("pipwrite() result = %d\n\r", result);
 }
 
 void producerOrConsumer(int pORc)
