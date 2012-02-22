@@ -16,7 +16,7 @@ syscall pipread(int32 pip, char *buf, uint32 len) {
 	int i = 0;  // keep track of length
 	int pos = pipeptr->pos;
 
-	int charInBuff = pos + 1;
+	int charInBuff = pos;
 	if (charInBuff == 0) 
 	{
 		for (i = 0; i < len; i++)
