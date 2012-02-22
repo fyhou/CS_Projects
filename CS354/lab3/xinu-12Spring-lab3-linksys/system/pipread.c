@@ -6,7 +6,7 @@ syscall pipread(int32 pip, char *buf, uint32 len) {
 
 	mask = disable();
 
-	if (isbadpipeid(pip) || (pipeptr = &pipelist[pip])->pipestate != PIPE_CONNECTED || (pipeptr = &pipelist[pip])->ownerPID != getpid() || (pipeptr = &pipelist[pip])->end1 != getpid()) {
+	if (isbadpipeid(pip) || (pipeptr = &pipelist[pip])->pipestate != PIPE_CONNECTED || (pipeptr = &pipelist[pip])->end1 != getpid()) {
 		restore(mask);
 		return(SYSERR);
 	}
