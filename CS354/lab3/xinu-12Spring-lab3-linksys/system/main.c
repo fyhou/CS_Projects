@@ -47,10 +47,12 @@ void produce(void)
 {
 	kprintf("Producer is awake!\n\r");
 	
-	char buff[15] = "Hello, world!\n\r";
-	while(1) 
+	int i = 0;
+	char buff[3] = "n\n\r";
+	for (i = 0; i < 100; i++) 
 	{
-		int result = pipwrite(x, buff, 15);
+		buff[0] = i;
+		int result = pipwrite(x, buff, 3);
 		if (result == -1) kprintf("pipwrite error\r\n");
 	}
 }
