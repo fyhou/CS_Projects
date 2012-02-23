@@ -17,7 +17,6 @@ syscall pipwrite(int32 pip, char *buf, uint32 len) {
 	int writePos = pipeptr->writePos;
 	int readPos = pipeptr->readPos;
 
-	// edit this
 	int orientation = writePos - readPos;
 	int available;
 	
