@@ -56,10 +56,10 @@ void consume(void)
 		int i = 0;
 		for (i = 0; i < N; i++) 
 		{
-			int result = pipread(x, buff, 15);
+			int result = pipread(x, buff, 4);
 			if (result == -1) kprintf("pipread error\r\n");
 			kprintf("%s", buff);
 		}
-		suspend(getpid());
+		//suspend(getpid());
 	}
 }
