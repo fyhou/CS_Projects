@@ -30,7 +30,7 @@ syscall pipwrite(int32 pip, char *buf, uint32 len) {
 	}
 	else 
 	{
-		availalbe = PIPE_SIZE - writePos;
+		available = PIPE_SIZE - writePos;
 	}
 	
 	
