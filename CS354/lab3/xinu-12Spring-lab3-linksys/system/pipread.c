@@ -40,7 +40,9 @@ syscall pipread(int32 pip, char *buf, uint32 len) {
 			wait(pipeptr->csem);
         			buf[i] = pipeptr->buffer[i];
 				readPos++; 
-				pipeptr->readPos = readPos;
+				
+				if (pipeptr->readPos == PIPE_SIZE) pipeptr->readPos = 0;
+				else pipeptr->readPos = readPos;
 			signal(pipeptr->psem);
 		}
 
@@ -55,7 +57,9 @@ syscall pipread(int32 pip, char *buf, uint32 len) {
 				//kprintf("PIPREAD (A): char = %c\n\r", pipeptr->buffer[i]);
 				buf[i] = pipeptr->buffer[i];
 				readPos++; 
-				pipeptr->readPos = readPos;
+				
+				if (pipeptr->readPos == PIPE_SIZE) pipeptr->readPos = 0;
+				else pipeptr->readPos = readPos;
 			signal(pipeptr->psem);
 		}
 		
@@ -70,7 +74,9 @@ syscall pipread(int32 pip, char *buf, uint32 len) {
 				//kprintf("PIPREAD (B): char = %c\n\r", pipeptr->buffer[i]);
         			buf[i] = pipeptr->buffer[i];
 				readPos++;
-				pipeptr->readPos = readPos;
+				
+				if (pipeptr->readPos == PIPE_SIZE) pipeptr->readPos = 0;
+				else pipeptr->readPos = readPos;
 			signal(pipeptr->psem);
 		}
 
