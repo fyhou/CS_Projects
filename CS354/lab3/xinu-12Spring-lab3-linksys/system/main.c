@@ -38,7 +38,7 @@ void produce(void)
 	char buff[2];
 	for (i = 0; i < 100; i++) 
 	{
-		if (i < 10) sprintf(buff, "%0d\n\r", i);
+		if (i < 10) sprintf(buff, "0%d\n\r", i);
 		else sprintf(buff, "%d\n\r", i);
 		
 		int result = pipwrite(x, buff, 2);
