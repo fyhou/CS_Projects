@@ -31,15 +31,6 @@ int main(int argc, char **argv)
 	ready(end2, 1);
 	ready(end1, 1); 
 
-	while ((c = getc(stdin)) != 'q') 
-	{
-		if (c== '\n')
-		{
-			resume(end1);
-		}
-	}
-
-	kprintf("User terminated program...\n\r");
 	return OK;
 }
 
