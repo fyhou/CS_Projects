@@ -69,7 +69,7 @@ syscall pipwrite(int32 pip, char *buf, uint32 len) {
 		{
 			wait(pipeptr->psem);
 				pipeptr->buffer[writePos] = buf[i];
-				kprintf("shit i wrote: %s\n\r", pipeptr->buffer[writePos]);
+				//kprintf("shit i wrote: %s\n\r", pipeptr->buffer[writePos]);
 				writePos++; 
 				pipeptr->writePos = writePos;
 			signal(pipeptr->csem);
