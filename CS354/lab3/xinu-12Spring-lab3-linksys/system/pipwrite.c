@@ -53,13 +53,12 @@ syscall pipwrite(int32 pip, char *buf, uint32 len) {
 		for (i = 0; i < available; i++)
 		{
 
-			pipeptr->buffer[writePos] = buf[i];
-			writePos++; 
-			pipeptr->writePos = writePos;
+			wait(pipeptr->psem);
+				pipeptr->buffer[writePos] = buf[i];
+				writePos++; 
+				pipeptr->writePos = writePos;
+			signal(pipeptr->csem);
 		}
-
-		semtab[pipeptr->psem].scount = 0;
-		semtab[pipeptr->csem].scount = PIPE_SIZE;
 
 		restore(mask);
 		return(available);
