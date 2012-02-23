@@ -21,7 +21,8 @@ syscall pipcreate() {
 			pipeptr->psem = semcreate(PIPE_SIZE);
 			pipeptr->csem = semcreate(0);
 			pipeptr->ownerPID = getpid();
-			pipeptr->pos  = 0;
+			pipeptr->writePos  = 0;
+			pipeptr->readPos  = 0;
 			restore(mask);
 			return(pipenum);
 		}
