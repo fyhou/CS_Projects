@@ -13,9 +13,25 @@ syscall pipread(int32 pip, char *buf, uint32 len) {
 
 	pipeptr = &pipelist[pip];
 	int i = 0;  // keep track of length
-	int pos = pipeptr->pos;
+	int writePos = pipeptr->writePos;
+	int readPos = pipeptr->readPos;
 
-	int charInBuff = pos;
+	int orientation = writePos - readPos;
+	int charInBuff;
+	
+	if (orientation > 0) 
+	{
+		charInBuff = readPos;
+	}
+	if else (orientaiton < 0)
+	{
+		charInBuff = PIPE_SIZE - readPos + writePos;
+	}
+	else 
+	{
+		charInBuff = 0;
+	}
+
 	if (charInBuff == 0) 
 	{
 
@@ -23,8 +39,8 @@ syscall pipread(int32 pip, char *buf, uint32 len) {
 		{
 			wait(pipeptr->csem);
         			buf[i] = pipeptr->buffer[i];
-				pos--; 
-				pipeptr->pos = pos;
+				readPos++; 
+				pipeptr->readPos = readPos;
 			signal(pipeptr->psem);
 		}
 
@@ -35,14 +51,13 @@ syscall pipread(int32 pip, char *buf, uint32 len) {
 	{
 		for (i = 0; i < charInBuff; i++)
 		{
-			//kprintf("PIPREAD (A): char = %c\n\r", pipeptr->buffer[i]);
-			buf[i] = pipeptr->buffer[i];
-			pos--; 
-			pipeptr->pos = pos;
+			wait(pipeptr->csem);
+				//kprintf("PIPREAD (A): char = %c\n\r", pipeptr->buffer[i]);
+				buf[i] = pipeptr->buffer[i];
+				readPos++; 
+				pipeptr->readPos = readPos;
+			signal(pipeptr->psem);
 		}
-		
-		semtab[pipeptr->csem].scount = 0;
-		semtab[pipeptr->psem].scount = PIPE_SIZE;
 		
 		restore(mask);
 		return(charInBuff);
@@ -54,8 +69,8 @@ syscall pipread(int32 pip, char *buf, uint32 len) {
 			wait(pipeptr->csem);
 				//kprintf("PIPREAD (B): char = %c\n\r", pipeptr->buffer[i]);
         			buf[i] = pipeptr->buffer[i];
-				pos--;
-				pipeptr->pos = pos;
+				readPos++;
+				pipeptr->readPos = readPos;
 			signal(pipeptr->psem);
 		}
 
