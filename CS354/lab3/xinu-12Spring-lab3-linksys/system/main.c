@@ -48,10 +48,10 @@ void produce(void)
 	kprintf("Producer is awake!\n\r");
 	
 	int i = 0;
-	char buff[1];
+	char buff[4];
 	for (i = 0; i < 100; i++) 
 	{
-		sprintf(buff, "%d", i);
+		sprintf(buff, "%d\n\r", i);
 		int result = pipwrite(x, buff, 1);
 		if (result == -1) kprintf("pipwrite error\r\n");
 	}
