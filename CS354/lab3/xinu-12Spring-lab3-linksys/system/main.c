@@ -48,11 +48,11 @@ void produce(void)
 	kprintf("Producer is awake!\n\r");
 	
 	int i = 0;
-	char buff[3] = "n\n\r";
+	char buff[1];
 	for (i = 0; i < 100; i++) 
 	{
-		buff[0] = i;
-		int result = pipwrite(x, buff, 3);
+		buff = i;
+		int result = pipwrite(x, buff, 1);
 		if (result == -1) kprintf("pipwrite error\r\n");
 	}
 }
@@ -69,7 +69,7 @@ void consume(void)
 		{
 			int result = pipread(x, buff, 15);
 			if (result == -1) kprintf("pipread error\r\n");
-			kprintf("Message from pipe: %s", buff);
+			kprintf("%s", buff);
 		}
 		suspend(getpid());
 	}
