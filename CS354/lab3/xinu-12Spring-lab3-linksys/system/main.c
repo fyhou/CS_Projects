@@ -51,7 +51,7 @@ void produce(void)
 	char buff[1];
 	for (i = 0; i < 100; i++) 
 	{
-		buff = i;
+		buff[0] = i;
 		int result = pipwrite(x, buff, 1);
 		if (result == -1) kprintf("pipwrite error\r\n");
 	}
