@@ -41,7 +41,9 @@ int main(int argc, char **argv)
 		}
 		else if (c == 'q')
 		{
-			kprintf("Done!\n\r");
+			kprintf("\n\rGoodbye.\n\r");
+			kill(end1);
+			kill(end2);
 			break;
 		}
 	}
