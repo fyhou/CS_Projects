@@ -52,7 +52,7 @@ syscall pipread(int32 pip, char *buf, uint32 len) {
 		for (i = 0; i < charInBuff; i++)
 		{
 			wait(pipeptr->csem);
-				kprintf("PIPREAD (A): char = %c\n\r", pipeptr->buffer[i]);
+				//kprintf("PIPREAD (A): char = %c\n\r", pipeptr->buffer[i]);
 				buf[i] = pipeptr->buffer[i];
 				readPos++; 
 				pipeptr->readPos = readPos;
@@ -67,7 +67,7 @@ syscall pipread(int32 pip, char *buf, uint32 len) {
 		for (i = 0; i < len; i++)
 		{
 			wait(pipeptr->csem);
-				kprintf("PIPREAD (B): char = %c\n\r", pipeptr->buffer[i]);
+				//kprintf("PIPREAD (B): char = %c\n\r", pipeptr->buffer[i]);
         			buf[i] = pipeptr->buffer[i];
 				readPos++;
 				pipeptr->readPos = readPos;
