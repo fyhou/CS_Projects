@@ -26,8 +26,6 @@ int main(int argc, char **argv)
 	int result = pipconnect(x, end1, end2);
 	if (result == -1) kprintf("pipconnect error\n\r");
 	
-	char c;
-	
 	ready(end2, 1);
 	ready(end1, 1); 
 
