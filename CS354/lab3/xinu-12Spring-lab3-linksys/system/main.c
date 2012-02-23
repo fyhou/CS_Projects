@@ -41,7 +41,7 @@ void produce(void)
 		if (i < 10) sprintf(buff, "0%d\n\r", i);
 		else sprintf(buff, "%d\n\r", i);
 		
-		int result = pipwrite(x, buff, 2);
+		int result = pipwrite(x, buff, 4);
 		if (result == -1) kprintf("pipwrite error\r\n");
 	}
 }
@@ -54,9 +54,9 @@ void consume(void)
 		int i = 0;
 		for (i = 0; i < N; i++) 
 		{
-			int result = pipread(x, buff, 2);
+			int result = pipread(x, buff, 4);
 			if (result == -1) kprintf("pipread error\r\n");
-			kprintf("Read from pipe: %s\n\r", buff);
+			kprintf("Read from pipe: %s", buff);
 		}
 		//suspend(getpid());
 	}
