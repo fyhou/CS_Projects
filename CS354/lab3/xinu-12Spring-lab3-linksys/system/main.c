@@ -54,7 +54,7 @@ void consume(void)
 		{
 			int result = pipread(x, buff, 4);
 			if (result == -1) kprintf("pipread error\r\n");
-			kprintf("%s", buff);
+			kprintf("Read from pipe: %s", buff);
 		}
 		//suspend(getpid());
 	}
