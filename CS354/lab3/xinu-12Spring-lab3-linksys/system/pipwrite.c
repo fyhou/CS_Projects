@@ -24,7 +24,7 @@ syscall pipwrite(int32 pip, char *buf, uint32 len) {
 	{
 		available = PIPE_SIZE - writePos + readPos;
 	}
-	if else (orientaiton < 0)
+	else if (orientation < 0)
 	{
 		available = readPos - writePos;
 	}
