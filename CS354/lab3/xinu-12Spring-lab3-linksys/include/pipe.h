@@ -14,7 +14,8 @@ struct pipe {
 	pid32   end1;            /* one end of the pipe */
     pid32   end2;            /* other end of the pipe */
 	char buffer[PIPE_SIZE];  /* buffer */
-	int     pos;             /* current position in buffer */
+	int writePos;
+	int readPos;
 }; 
 
 extern struct pipe pipelist[];   /* list of free pipes */
