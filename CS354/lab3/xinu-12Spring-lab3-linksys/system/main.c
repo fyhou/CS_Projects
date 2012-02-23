@@ -31,11 +31,18 @@ int main(int argc, char **argv)
 	
 	char c;
 	
-	while ((c = getchar()) != 'q') 
+	while (1) 
 	{
+		c = getchar();
+		
 		if (c == '\n') 
 		{
 			resume(end1);
+		}
+		else if (c == 'q')
+		{
+			kprintf("Done!\n\r");
+			break;
 		}
 	}
 
