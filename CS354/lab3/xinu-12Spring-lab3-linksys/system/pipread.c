@@ -7,7 +7,7 @@ syscall pipread(int32 pip, char *buf, uint32 len) {
 	mask = disable();
 
 	if (isbadpipeid(pip) || isbadpid(getpid()) || (pipeptr = &pipelist[pip])->pipestate != PIPE_CONNECTED || (pipeptr = &pipelist[pip])->end1 != getpid()) {
-		if (isbadpid(getpid()) 
+		if (isbadpid(getpid()))
 		{
 			kprintf("PIPREAD: Owner had bad PID!\n\r");
 		}
