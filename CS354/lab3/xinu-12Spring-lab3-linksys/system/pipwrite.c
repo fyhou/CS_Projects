@@ -9,7 +9,7 @@ syscall pipwrite(int32 pip, char *buf, uint32 len) {
 	if (isbadpipeid(pip) || isbadpid(getpid()) || (pipeptr = &pipelist[pip])->pipestate != PIPE_CONNECTED || (pipeptr = &pipelist[pip])->end2 != getpid()) {
 		if (isbadpid(getpid())
 		{
-			kprintf("Owner had bad PID!\n\r");
+			kprintf("PIPWRITE: Owner had bad PID!\n\r");
 		}
 		
 		restore(mask);
