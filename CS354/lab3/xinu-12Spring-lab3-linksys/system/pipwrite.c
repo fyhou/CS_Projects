@@ -14,17 +14,35 @@ syscall pipwrite(int32 pip, char *buf, uint32 len) {
 
 	pipeptr = &pipelist[pip];
 	int i = 0;  // keep track of length
-	int pos = pipeptr->pos;
+	int writePos = pipeptr->writePos;
+	int readPos = pipeptr->readPos;
 
-	int available = PIPE_SIZE - pos;
+	// edit this
+	int orientation = writePos - readPos;
+	int available;
+	
+	if (orientation > 0) 
+	{
+		available = PIPE_SIZE - writePos + readPos;
+	}
+	if else (orientaiton < 0)
+	{
+		available = readPos - writePos;
+	}
+	else 
+	{
+		availalbe = PIPE_SIZE - writePos;
+	}
+	
+	
 	if (available <= 0) 
 	{
 		for (i = 0; i < len; i++)
 		{
 			wait(pipeptr->psem);
-				pipeptr->buffer[pos] = buf[i];
-				pos++; 
-				pipeptr->pos = pos;
+				pipeptr->buffer[writePos] = buf[i];
+				writePos++; 
+				pipeptr->writePos = writePos;
 			signal(pipeptr->csem);
 		}
 
@@ -36,9 +54,9 @@ syscall pipwrite(int32 pip, char *buf, uint32 len) {
 		for (i = 0; i < available; i++)
 		{
 
-			pipeptr->buffer[pos] = buf[i];
-			pos++; 
-			pipeptr->pos = pos;
+			pipeptr->buffer[writePos] = buf[i];
+			writePos++; 
+			pipeptr->writePos = writePos;
 		}
 
 		semtab[pipeptr->psem].scount = 0;
@@ -52,9 +70,9 @@ syscall pipwrite(int32 pip, char *buf, uint32 len) {
 		for (i = 0; i < len; i++)
 		{
 			wait(pipeptr->psem);
-				pipeptr->buffer[pos] = buf[i];
-				pos++; 
-				pipeptr->pos = pos;
+				pipeptr->buffer[writePos] = buf[i];
+				writePos++; 
+				pipeptr->writePos = writePos;
 			signal(pipeptr->csem);
 		}
 
