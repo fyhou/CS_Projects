@@ -23,7 +23,7 @@ syscall pipread(int32 pip, char *buf, uint32 len) {
 	{
 		charInBuff = readPos;
 	}
-	else if (orientaiton < 0)
+	else if (orientation < 0)
 	{
 		charInBuff = PIPE_SIZE - readPos + writePos;
 	}
