@@ -41,9 +41,14 @@ int main(int argc, char **argv)
 		}
 		else if (c == 'q')
 		{
-			kprintf("\n\rGoodbye.\n\r");
+			pipdisconnect(x);
+			pipdelete(x);
+			
 			kill(end1);
 			kill(end2);
+			
+			kprintf("\n\rGoodbye.\n\r");
+		
 			break;
 		}
 	}
