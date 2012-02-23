@@ -28,6 +28,16 @@ int main(int argc, char **argv)
 	
 	ready(end2, 1);
 	ready(end1, 1); 
+	
+	char c;
+	
+	while ((c = getchar()) != 'q') 
+	{
+		if (c == '\n') 
+		{
+			resume(end1);
+		}
+	}
 
 	return OK;
 }
@@ -36,7 +46,7 @@ void produce(void)
 {
 	int i = 0;
 	char buff[2];
-	for (i = 0; i < 300; i++) 
+	for (i = 0; i < 100; i++) 
 	{
 		if (i < 10) sprintf(buff, "0%d\n\r", i);
 		else sprintf(buff, "%d\n\r", i);
@@ -58,6 +68,6 @@ void consume(void)
 			if (result == -1) kprintf("pipread error\r\n");
 			kprintf("Read from pipe: %s\n\r", buff);
 		}
-		//suspend(getpid());
+		suspend(getpid());
 	}
 }
