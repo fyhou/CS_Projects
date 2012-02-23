@@ -52,7 +52,7 @@ void produce(void)
 	for (i = 0; i < 100; i++) 
 	{
 		sprintf(buff, "%d\n\r", i);
-		int result = pipwrite(x, buff, 1);
+		int result = pipwrite(x, buff, 4);
 		if (result == -1) kprintf("pipwrite error\r\n");
 	}
 }
