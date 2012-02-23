@@ -38,9 +38,7 @@ void produce(void)
 	char buff[4];
 	for (i = 0; i < 100; i++) 
 	{
-		kprintf("i = %d\n\r", i);
 		sprintf(buff, "%d\n\r", i);
-		kprintf("buff = %s\n\r", buff);
 		int result = pipwrite(x, buff, 4);
 		if (result == -1) kprintf("pipwrite error\r\n");
 	}
