@@ -21,7 +21,7 @@ syscall pipread(int32 pip, char *buf, uint32 len) {
 	
 	if (orientation > 0) 
 	{
-		charInBuff = readPos;
+		charInBuff = writePos - readPos;
 	}
 	else if (orientation < 0)
 	{
