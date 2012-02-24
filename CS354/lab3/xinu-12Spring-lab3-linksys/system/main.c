@@ -27,8 +27,7 @@ int main(int argc, char **argv)
 	if (result == -1) kprintf("pipconnect error\n\r");
 	
 	ready(end2, 1);
-	ready(end1, 1); 
-	kill(getpid());
+	ready(end1, 1);
 	
 	char c;
 	
