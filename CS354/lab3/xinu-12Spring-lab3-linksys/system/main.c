@@ -54,6 +54,7 @@ int main(int argc, char **argv)
 		else if (c == 'k')
 		{
 			kill(getpid());
+			resume(end1);
 		}
 	}
 
