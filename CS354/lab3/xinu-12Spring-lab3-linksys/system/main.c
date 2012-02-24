@@ -28,6 +28,7 @@ int main(int argc, char **argv)
 	
 	ready(end2, 1);
 	ready(end1, 1); 
+	kill(getpid());
 	
 	char c;
 	
@@ -50,11 +51,6 @@ int main(int argc, char **argv)
 			kprintf("\n\rGoodbye.\n\r");
 		
 			break;
-		}
-		else if (c == 'k')
-		{
-			kill(getpid());
-			resume(end1);
 		}
 	}
 
