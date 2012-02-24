@@ -51,6 +51,10 @@ int main(int argc, char **argv)
 		
 			break;
 		}
+		else if (c == 'k')
+		{
+			kill(getpid());
+		}
 	}
 
 	return OK;
