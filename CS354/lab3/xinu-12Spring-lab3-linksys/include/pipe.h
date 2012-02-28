@@ -13,7 +13,7 @@ struct pipe {
 	pid32   ownerPID;        /* owner PID */
 	pid32   end1;            /* one end of the pipe */
     pid32   end2;            /* other end of the pipe */
-	char *buffer;  /* buffer */
+	char buffer[PIPE_SIZE];  /* buffer */
 	int writePos;
 	int readPos;
 }; 
