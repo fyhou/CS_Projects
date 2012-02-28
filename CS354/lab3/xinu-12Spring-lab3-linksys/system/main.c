@@ -60,7 +60,7 @@ void produce(void)
 {
 	int i = 0;
 	char buff[2];
-	for (i = 0; i < 100; i++) 
+	for (i = 0; i < 15; i++) 
 	{
 		if (i < 10) sprintf(buff, "0%d\n\r", i);
 		else sprintf(buff, "%d\n\r", i);
