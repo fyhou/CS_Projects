@@ -44,7 +44,6 @@ syscall pipread(int32 pip, char *buf, uint32 len) {
 		{
 			wait(pipeptr->csem);
 				if (pipeptr->pipestate != PIPE_CONNECTED) {
-					kprintf("pipe gone\n\r");
 					return SYSERR;
 				}
 				
@@ -65,7 +64,6 @@ syscall pipread(int32 pip, char *buf, uint32 len) {
 		{
 			wait(pipeptr->csem);
 				if (pipeptr->pipestate != PIPE_CONNECTED) {
-					kprintf("pipe gone\n\r");
 					return SYSERR;
 				}
 				
@@ -86,7 +84,6 @@ syscall pipread(int32 pip, char *buf, uint32 len) {
 		{
 			wait(pipeptr->csem);
 				if (pipeptr->pipestate != PIPE_CONNECTED) {
-					kprintf("pipe gone\n\r");
 					return SYSERR;
 				}
 				
