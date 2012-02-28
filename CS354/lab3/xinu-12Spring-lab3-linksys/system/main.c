@@ -68,7 +68,9 @@ void produce(void)
 {
 	kprintf("in produce\n\r");
 	int i = 0;
+	kprintf("in produce2\n\r");
 	char buff[2];
+	kprintf("in produce3\n\r");
 	for (i = 0; i < 15; i++) 
 	{
 		if (i < 10) sprintf(buff, "0%d\n\r", i);
