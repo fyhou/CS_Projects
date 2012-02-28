@@ -66,6 +66,7 @@ int main(int argc, char **argv)
 
 void produce(void)
 {
+	kprintf("in produce\n\r");
 	int i = 0;
 	char buff[2];
 	for (i = 0; i < 15; i++) 
@@ -85,6 +86,7 @@ void produce(void)
 
 void consume(void)
 {
+	kprintf("in consume\n\r");
 	char buff[2];
 	while(1)
 	{
