@@ -33,10 +33,10 @@ int main(int argc, char **argv)
 	int result = pipconnect(x, end1, end2);
 	if (result == -1) kprintf("pipconnect error\n\r");
 	
-	kprintf("fuck4\n\r");
+	kprintf("fuck4 %d %d\n\r", end2, end1);
 	
-	resume(end2);
-	resume(end1);
+	ready(end2, 1);
+	ready(end1, 1);
 	
 	kprintf("fuck5\n\r");
 	
