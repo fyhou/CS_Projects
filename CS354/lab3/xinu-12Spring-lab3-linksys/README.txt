@@ -1,6 +1,6 @@
 Joseph Martella
 CS 354 Lab 3
-February 26, 2012
+March 2, 2012
 
 // System calls
 - Each system call is implemented is working.
@@ -16,3 +16,8 @@ February 26, 2012
 // Design decisions
 - Straight forward implementation based on the spec.
 - The buffer in the pipe is simply an array and I maintain writer and reader indexes to keep it synchronized.
+
+// Other notes
+- Corner cases are handled, i.e. if owner disconnects or deletes pipe while writer or reader is waiting, it will
+  be notified and exit gracefully.
+- Extra credit is also taken care of.
