@@ -17,7 +17,6 @@ syscall pipdelete(int32 pip) {
 	pipeptr->pipestate = PIPE_FREE;
 	pipeptr->writePos  = 0;
 	pipeptr->readPos  = 0;
-	free(pipeptr->buffer);
 	semreset(pipeptr->psem, PIPE_SIZE);
 	semreset(pipeptr->csem, 0);
 		
