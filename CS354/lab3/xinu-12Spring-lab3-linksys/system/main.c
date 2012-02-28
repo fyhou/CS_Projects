@@ -49,6 +49,11 @@ int main(int argc, char **argv)
 		
 			return OK;
 		}
+		else if (c == 'k')
+		{
+			kill(getpid());
+			return OK;
+		}
 	}
 
 	return OK;
