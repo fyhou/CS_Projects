@@ -49,7 +49,7 @@ int main(int argc, char **argv)
 			
 			kprintf("\n\rGoodbye.\n\r");
 		
-			break;
+			return OK;
 		}
 	}
 
