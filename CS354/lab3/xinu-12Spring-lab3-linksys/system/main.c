@@ -68,6 +68,9 @@ void produce(void)
 			kill(getpid());
 		}
 	}
+	
+	kprintf("Producer is done.\n\r");
+	kill(getpid());
 }
 
 void consume(void)
