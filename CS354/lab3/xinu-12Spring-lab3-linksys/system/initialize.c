@@ -164,7 +164,6 @@ static	void	sysinit(void)
 	/* Initialize pipes */
 	for (i = 0; i < NPIPE; i++) {
 		pipelist[i].pipestate = PIPE_FREE;
-		pipelist[i].buffer = (char *) malloc (sizeof(char) * PIPE_SIZE);
 	}
 	pipenextid = 0;
 
