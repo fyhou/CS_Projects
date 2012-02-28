@@ -65,7 +65,7 @@ void produce(void)
 		
 		int result = pipwrite(x, buff, 2);
 		if (result == -1) {
-			kprintf("pipwrite error\r\n");
+			kill(get(pid));
 		}
 	}
 
@@ -82,7 +82,6 @@ void consume(void)
 		{
 			int result = pipread(x, buff, 2);
 			if (result == -1) {
-				kprintf("pipread error\r\n");
 				kill(getpid());
 			}
 			kprintf("Read from pipe: %s\n\r", buff);
