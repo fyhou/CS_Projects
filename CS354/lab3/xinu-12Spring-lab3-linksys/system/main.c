@@ -44,9 +44,6 @@ int main(int argc, char **argv)
 			pipdisconnect(x);
 			pipdelete(x);
 			
-			kill(end1);
-			kill(end2);
-			
 			kprintf("\n\rGoodbye.\n\r");
 		
 			return OK;
@@ -66,7 +63,10 @@ void produce(void)
 		else sprintf(buff, "%d\n\r", i);
 		
 		int result = pipwrite(x, buff, 2);
-		if (result == -1) kprintf("pipwrite error\r\n");
+		if (result == -1) {
+			kprintf("pipwrite error\r\n");
+			kill(getpid());
+		}
 	}
 }
 
@@ -79,7 +79,10 @@ void consume(void)
 		for (i = 0; i < N; i++) 
 		{
 			int result = pipread(x, buff, 2);
-			if (result == -1) kprintf("pipread error\r\n");
+			if (result == -1) {
+				kprintf("pipread error\r\n");
+				kill(getpid());
+			}
 			kprintf("Read from pipe: %s\n\r", buff);
 		}
 		suspend(getpid());
