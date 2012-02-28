@@ -35,8 +35,8 @@ int main(int argc, char **argv)
 	
 	kprintf("fuck4\n\r");
 	
-	resume(end2, 1);
-	resume(end1, 1);
+	resume(end2);
+	resume(end1);
 	
 	kprintf("fuck5\n\r");
 	
