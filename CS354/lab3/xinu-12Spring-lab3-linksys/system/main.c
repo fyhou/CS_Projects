@@ -19,15 +19,26 @@ int main(int argc, char **argv)
 	
 	pid32 end1, end2;
 
+	kprintf("fuck1\n\r");
+
 	end2 = create(produce, 1000, 20, "producer", 0);  // writer
 	end1 = create(consume, 1000, 20, "consumer", 0);  // reader
 	
+	kprintf("fuck2\n\r");
+	
 	x = pipcreate();
+	
+	kprintf("fuck3\n\r");
+	
 	int result = pipconnect(x, end1, end2);
 	if (result == -1) kprintf("pipconnect error\n\r");
 	
+	kprintf("fuck4\n\r");
+	
 	ready(end2, 1);
 	ready(end1, 1);
+	
+	kprintf("fuck5\n\r");
 	
 	char c;
 	
@@ -65,7 +76,6 @@ void produce(void)
 		int result = pipwrite(x, buff, 2);
 		if (result == -1) {
 			kprintf("pipwrite error\r\n");
-			kill(getpid());
 		}
 	}
 	
@@ -84,7 +94,6 @@ void consume(void)
 			int result = pipread(x, buff, 2);
 			if (result == -1) {
 				kprintf("pipread error\r\n");
-				kill(getpid());
 			}
 			kprintf("Read from pipe: %s\n\r", buff);
 		}
