@@ -65,7 +65,7 @@ void produce(void)
 		
 		int result = pipwrite(x, buff, 2);
 		if (result == -1) {
-			kill(get(pid));
+			kill(getpid());
 		}
 	}
 
