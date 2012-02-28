@@ -44,6 +44,7 @@ syscall pipread(int32 pip, char *buf, uint32 len) {
 		{
 			wait(pipeptr->csem);
 				if (isbadpipeid(pip)) {
+					kprintf("pipe gone\n\r");
 					return SYSERR;
 				}
 				
@@ -64,6 +65,7 @@ syscall pipread(int32 pip, char *buf, uint32 len) {
 		{
 			wait(pipeptr->csem);
 				if (isbadpipeid(pip)) {
+					kprintf("pipe gone\n\r");
 					return SYSERR;
 				}
 				
@@ -84,6 +86,7 @@ syscall pipread(int32 pip, char *buf, uint32 len) {
 		{
 			wait(pipeptr->csem);
 				if (isbadpipeid(pip)) {
+					kprintf("pipe gone\n\r");
 					return SYSERR;
 				}
 				
