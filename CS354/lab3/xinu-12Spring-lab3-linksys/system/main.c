@@ -11,6 +11,7 @@
 
 int32 x = 0;     // pipe ID
 int32 N = 10;    // amount of lines to show at a time
+int32 killMe = 0;
 
 int main(int argc, char **argv)
 {
@@ -51,8 +52,7 @@ int main(int argc, char **argv)
 		}
 		else if (c == 'k')
 		{
-			kill(getpid());
-			return OK;
+			killMe = 1;
 		}
 	}
 
