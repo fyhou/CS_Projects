@@ -16,6 +16,10 @@ syscall pipdisconnect(int32 pip) {
 	pipeptr->pipestate = PIPE_USED;
 	pipeptr->end1 = NULL;
 	pipeptr->end2 = NULL;
+	semreset(pipeptr->psem, PIPE_SIZE);
+	semreset(pipeptr->csem, 0);
+	pipeptr->readPos = 0;
+	pipeptr->writePos = 0;
 
 	restore(mask);
 	return(OK);
