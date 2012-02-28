@@ -43,6 +43,10 @@ syscall pipwrite(int32 pip, char *buf, uint32 len) {
 		for (i = 0; i < len; i++)
 		{
 			wait(pipeptr->psem);
+				if (pipeptr->pipestate != PIPE_CONNECTED) {
+					return SYSERR;
+				}
+				
 				pipeptr->buffer[writePos] = buf[i];
 				writePos++; 
 				
@@ -61,6 +65,10 @@ syscall pipwrite(int32 pip, char *buf, uint32 len) {
 		{
 
 			wait(pipeptr->psem);
+				if (pipeptr->pipestate != PIPE_CONNECTED) {
+					return SYSERR;
+				}
+				
 				pipeptr->buffer[writePos] = buf[i];
 				writePos++; 
 				
@@ -77,6 +85,10 @@ syscall pipwrite(int32 pip, char *buf, uint32 len) {
 		for (i = 0; i < len; i++)
 		{
 			wait(pipeptr->psem);
+				if (pipeptr->pipestate != PIPE_CONNECTED) {
+					return SYSERR;
+				}
+				
 				pipeptr->buffer[writePos] = buf[i];
 				writePos++; 
 			
