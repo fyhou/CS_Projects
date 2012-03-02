@@ -15,7 +15,10 @@ March 2, 2012
 
 // Design decisions
 - Straight forward implementation based on the spec.
-- The buffer in the pipe is simply an array and I maintain writer and reader indexes to keep it synchronized.
+- The buffer in the pipe is simply an array and I maintain writer and reader indexes to keep it synchronized
+  and circular.
+- All cases when an error should be returned (i.e. disconnected pipe, writer trying to read, etc.) is handled by
+  returning SYSERR.
 
 // Other notes
 - Corner cases are handled, i.e. if owner disconnects or deletes pipe while writer or reader is waiting, it will
