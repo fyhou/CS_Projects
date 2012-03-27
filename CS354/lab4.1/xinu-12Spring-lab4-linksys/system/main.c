@@ -32,6 +32,6 @@ void sendMessage(pid32 recPID) {
 }
 
 void receiveMessage(void) {
-	umsg32 msg = receiveb();
+	char msg = receiveb();
 	kprintf("msg = %c\n\r", msg);
 }
