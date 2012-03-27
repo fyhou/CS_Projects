@@ -29,7 +29,7 @@ C_FILES += semcreate.c semdelete.c semcount.c signal.c signaln.c wait.c semreset
 C_FILES += getmem.c freemem.c getstk.c bufinit.c mkbufpool.c getbuf.c freebuf.c
 
 # Files for interprocess communication
-C_FILES += send.c receive.c recvclr.c recvtime.c
+C_FILES += send.c receive.c recvclr.c recvtime.c sendb.c
 
 # Files for device drivers
 C_FILES += close.c control.c getc.c open.c ioerr.c ionull.c read.c putc.c seek.c write.c getdev.c
