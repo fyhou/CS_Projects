@@ -27,6 +27,7 @@ int main(int argc, char **argv)
 
 void sendMessage(pid32 recPID) {
 	umsg32 msg = 'a';
+	kprintf("sender sent %s\n\r", msg)
 	sendb(currpid, msg);
 }
 
