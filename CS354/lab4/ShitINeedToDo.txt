@@ -40,3 +40,12 @@ A1. senderlist
 	- added sendb.c to system/Makerules
 	- added senderlist in include/kernel.h
 A2. define PR_SND
+
+B1. make sendb
+	- created file
+	- added to system/Makerules
+B2. done
+
+C1. make receiveb
+	- created file
+	- added to system/Makerules
