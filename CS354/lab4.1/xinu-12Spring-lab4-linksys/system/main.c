@@ -16,11 +16,11 @@ int main(int argc, char **argv)
 
 	kprintf("Welcome to the main function!\n\r");
 
-	//pid32 receiver = create(receiveMessage, 1000, 20, "receiver", 0); 
-	//pid32 sender = create(sendMessage, 1000, 20, "sender", 1, receiver); 
+	pid32 receiver = create(receiveMessage, 1000, 20, "receiver", 0); 
+	pid32 sender = create(sendMessage, 1000, 20, "sender", 1, receiver); 
 
-	//ready(sender, 1);
-	//ready(receiver, 1);
+	ready(sender, 1);
+	ready(receiver, 1);
 
 	return OK;
 }
