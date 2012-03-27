@@ -165,6 +165,11 @@ static	void	sysinit(void)
 
 	readylist = newqueue();
 
+	/* Create a sender list for processes */
+
+	senderlist = newqueue();
+	
+
 	/* Initialize real time clock */
 
 	clkinit();

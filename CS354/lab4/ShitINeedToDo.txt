@@ -1,19 +1,19 @@
 CS 354 Lab 4 Shit I Need To Do
 ------------------------------
 
-System Requirements
+A. System Requirements
 -------------------
-1. make another table like queuetab[] to hold queued Senders that are in SENNDING state: sendqueue[]
+1. in sendb(), reference a senderlist (like ready.c does) and initialize this list in initialize.c
 2. define PR_SND state in process.h to put Senders in that are blocked
 
-Sender Requirements
+B. Sender Requirements
 -------------------
 1. define new function sendb() that behaves like send(), but blocks if receiver is full
 2. modify process' process table entry by adding two fields: umsg32 sndmsg and char sndflag
 	2a. sndmsg holds the message the Sender is sending
 	2b. sndflag determines if sndmsg is legit
 
-Receiver Requirements
+C. Receiver Requirements
 ---------------------
 1. define new function receiveb() that acts like receive() (start by copying code)
 2. receiveb() should release the blocked sender process S when S's message is received
@@ -22,3 +22,15 @@ Receiver Requirements
 	3a. if so, unblock the first one and put it into READY state (assuming by putting message in sndmsg
         into prmsg of receiver for next one
     3b. if not, just return
+
+
+
+
+CS 354 Lab 4 Shit I've Done
+---------------------------
+
+A1. senderqueue[]
+	- created sendb() with senderqueue declared
+	- initialized senderqueue in initialize.c
+	- added sendb.c to system/Makerules
+	- added senderlist in include/kernel.h
