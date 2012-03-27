@@ -171,6 +171,7 @@ extern	syscall	semreset(sid32, int32);
 
 /* in file send.c */
 extern	syscall	send(pid32, umsg32);
+extern  syscall	sendb(pid32, umsg32);
 
 /* in file signal.c */
 extern	syscall	signal(sid32);
