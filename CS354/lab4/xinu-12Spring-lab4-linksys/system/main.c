@@ -11,25 +11,26 @@
 
 int main(int argc, char **argv)
 {
-	kprintf("Welcome to the main function!");
-
 	void sendMessage(pid32 recPID);
 	void receiveMessage(void);
+	
+	kprintf("Welcome to the main function!\n\r");
 
-	pid32 receiver = create(receiveMessage, 1000, 20, "receiver", 0); // reader
-	pid32 sender = create(sendMessage, 1000, 20, "sender", 1, receiver);  // writer
+	//pid32 receiver = create(receiveMessage, 1000, 20, "receiver", 0); 
+	//pid32 sender = create(sendMessage, 1000, 20, "sender", 1, receiver); 
 
-	ready(sender, 1);
-	ready(receiver, 1);
+	//ready(sender, 1);
+	//ready(receiver, 1);
 
 	return OK;
 }
 
 void sendMessage(pid32 recPID) {
-	sendb(currpid, 'a');
+	umsg32 msg = 'a';
+	sendb(currpid, msg);
 }
 
 void receiveMessage(void) {
 	umsg32 msg = receiveb();
-	kprintf("msg = %s\n\r", msg);
+	kprintf("msg = %c\n\r", msg);
 }

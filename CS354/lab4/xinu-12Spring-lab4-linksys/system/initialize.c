@@ -169,7 +169,6 @@ static	void	sysinit(void)
 
 	senderlist = newqueue();
 	
-
 	/* Initialize real time clock */
 
 	clkinit();
