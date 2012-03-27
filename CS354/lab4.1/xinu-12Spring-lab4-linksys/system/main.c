@@ -11,20 +11,26 @@
 
 int main(int argc, char **argv)
 {
-	/*
-	umsg32 retval;
+	void sendMessage(pid32 recPID);
+	void receiveMessage(void);
 
-	resume(create(shell, 4096, 1, "shell", 1, CONSOLE));
+	kprintf("Welcome to the main function!\n\r");
 
-	retval = recvclr();
-	while (TRUE) {
-		retval = receive();
-		kprintf("\n\n\rMain process recreating shell\n\n\r");
-		resume(create(shell, 4096, 1, "shell", 1, CONSOLE));
-	}
-	*/
+	//pid32 receiver = create(receiveMessage, 1000, 20, "receiver", 0); 
+	//pid32 sender = create(sendMessage, 1000, 20, "sender", 1, receiver); 
 
-	kprintf("Hello, world!\n\r");
+	//ready(sender, 1);
+	//ready(receiver, 1);
 
 	return OK;
+}
+
+void sendMessage(pid32 recPID) {
+	umsg32 msg = 'a';
+	sendb(currpid, msg);
+}
+
+void receiveMessage(void) {
+	umsg32 msg = receiveb();
+	kprintf("msg = %c\n\r", msg);
 }
