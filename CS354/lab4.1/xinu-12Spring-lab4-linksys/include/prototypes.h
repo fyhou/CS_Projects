@@ -135,6 +135,7 @@ extern	status	ready(pid32, bool8);
 
 /* in file receive.c */
 extern	umsg32	receive(void);
+extern  umsg32	receiveb(void);
 
 /* in file recvclr.c */
 extern	umsg32	recvclr(void);
