@@ -17,6 +17,11 @@ C. Receiver Requirements
 ---------------------
 1. define new function receiveb() that acts like receive() (start by copying code)
 2. receiveb() should release the blocked sender process S when S's message is received
+	if (isempty(senderlist)) {
+		this.msg = first.sndmsg;
+		this.hasmsg = true;
+		ready (first, YES);
+	}
 3. before returning (after getting a message), must check if there are any blocked sending processes
    in sendqueue[]
 	3a. if so, unblock the first one and put it into READY state (assuming by putting message in sndmsg
@@ -29,8 +34,9 @@ C. Receiver Requirements
 CS 354 Lab 4 Shit I've Done
 ---------------------------
 
-A1. senderqueue[]
+A1. senderlist
 	- created sendb() with senderqueue declared
 	- initialized senderqueue in initialize.c
 	- added sendb.c to system/Makerules
 	- added senderlist in include/kernel.h
+A2. define PR_SND

@@ -16,6 +16,7 @@
 #define	PR_SUSP		5	/* process is suspended			*/
 #define	PR_WAIT		6	/* process is on semaphore queue	*/
 #define	PR_RECTIM	7	/* process is receiving with timeout	*/
+#define PR_SND      8   /* process is waiting for message field to be empty */
 
 /* Miscellaneous process definitions */
 
@@ -57,6 +58,9 @@ struct procent {		/* entry in the process table		*/
 	umsg32	prmsg;		/* message sent to this process		*/
 	bool8	prhasmsg;	/* nonzero iff msg is valid		*/
 	int16	prdesc[NDESC];	/* device descriptors for process	*/
+
+	umsg32 sndmsg;  /* the message this process is waiting to send */
+	bool8 sndflag;   /* if it's valid */
 };
 
 /* Marker for the top of a process stack (used to help detect overflow)	*/
