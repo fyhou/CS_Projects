@@ -25,7 +25,7 @@ int main(int argc, char **argv)
 	void sendMessage(pid32 recPID, char msg);
 	void receiveMessage(int number);
 
-	pid32 receiver  = create(receiveMessage, 1000, 20, "receiver", 1, 3); 
+	pid32 receiver  = create(receiveMessage, 1000, 20, "receiver", 1, 7); 
 	pid32 sender1   = create(sendMessage, 1000, 20, "sender 1", 2, receiver, 'J'); 
 	pid32 sender2   = create(sendMessage, 1000, 20, "sender 2", 2, receiver, 'O'); 
 	pid32 sender3   = create(sendMessage, 1000, 20, "sender 3", 2, receiver, 'E'); 
