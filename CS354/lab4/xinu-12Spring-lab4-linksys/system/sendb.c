@@ -27,8 +27,6 @@ syscall	sendb(
 	}
 
 	if (prptr->prhasmsg) {
-		kprintf("Receiver has message.\n\r");
-		
 		struct	procent *sender;
 		sender = &proctab[currpid];
 
