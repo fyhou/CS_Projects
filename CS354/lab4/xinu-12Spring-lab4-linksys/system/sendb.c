@@ -33,11 +33,9 @@ syscall	sendb(
 		sender->prstate = PR_SND;
 		sender->sndmsg = msg;
 		sender->sndflag = TRUE;
+
 		enqueue(currpid, prptr->senderqueue);
-		
-		kprintf("Sender is queued and about to resched().\n\r");
 		resched();
-		kprintf("Back from resched().\n\r");
 	}
 
 	prptr->prmsg = msg;		    /* deliver message		*/

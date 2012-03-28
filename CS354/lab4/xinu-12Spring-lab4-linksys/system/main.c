@@ -23,14 +23,12 @@ int main(int argc, char **argv)
 	}*/
 
 	void sendMessage(pid32 recPID, char msg);
-	void receiveMessage(void);
+	void receiveMessage(int number);
 
-	pid32 receiver = create(receiveMessage, 1000, 20, "receiver", 0); 
-	pid32 sender = create(sendMessage, 1000, 20, "sender", 2, receiver, 'X'); 
-	pid32 sender2 = create(sendMessage, 1000, 20, "sender2", 2, receiver, 'Y'); 
-	
+	pid32 receiver = create(receiveMessage, 1000, 20, "receiver", 1, 1); 
+	pid32 sender   = create(sendMessage, 1000, 20, "sender", 2, receiver, 'X'); 
+
 	resume(sender);
-	resume(sender2);
 	resume(receiver);
 
 	return OK;
@@ -40,10 +38,12 @@ void sendMessage(pid32 recPID, char msg) {
 	sendb(recPID, msg);
 }
 
-void receiveMessage(void) {
-	char msg = receiveb();
-	kprintf("Receiver received = %c.\n\r", msg);
+void receiveMessage(int number) {
+	char msg = ' ';
+	int  i = 0;
 
-	char msg2 = receiveb();
-	kprintf("Receiver received = %c.\n\r", msg2);
+	for (i = 0; i < number; i++) {
+		msg = receiveb();
+		kprintf("Message received from sender: \"%c\".\n\r", msg);	
+	}
 }

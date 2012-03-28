@@ -28,8 +28,6 @@ umsg32	receiveb(void)
 		;
 	}
 	else {
-		kprintf("Receiver found a waiting Sender.\n\r");
-
 		// get PID of sender that was waiting longest
 		pid32 senderPID = dequeue(prptr->senderqueue);
 

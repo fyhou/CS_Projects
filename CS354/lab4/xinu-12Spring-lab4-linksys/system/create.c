@@ -54,11 +54,6 @@ pid32	create(
 	prptr->prparent = (pid32)getpid();
 	prptr->prhasmsg = FALSE;
 	prptr->sndflag = FALSE;
-	
-	/* clear out senderqueue */
-	if (!isempty(prptr->senderqueue)) {
-		dequeue(prptr->senderqueue);
-	}
 
 	/* Set up initial device descriptors for the shell		*/
 

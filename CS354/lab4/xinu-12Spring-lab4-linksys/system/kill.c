@@ -31,6 +31,20 @@ syscall	kill(
 	}
 	freestk(prptr->prstkbase, prptr->prstklen);
 
+	/* free blocked senders */
+	while (!isempty(prptr->senderqueue)) {
+		// get PID of sender that was waiting longest
+		pid32 senderPID = dequeue(prptr->senderqueue);
+
+		struct	procent *senderptr;
+		senderptr = &proctab[senderPID];
+
+		senderptr->sndflag = FALSE;
+
+		// reschedule sender
+		ready(senderPID, RESCHED_YES);
+	}
+
 	switch (prptr->prstate) {
 	case PR_CURR:
 		prptr->prstate = PR_FREE;	/* suicide */
