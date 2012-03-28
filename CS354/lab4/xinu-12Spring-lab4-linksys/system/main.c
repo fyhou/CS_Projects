@@ -29,10 +29,17 @@ int main(int argc, char **argv)
 	pid32 sender1   = create(sendMessage, 1000, 20, "sender 1", 2, receiver, 'J'); 
 	pid32 sender2   = create(sendMessage, 1000, 20, "sender 2", 2, receiver, 'O'); 
 	pid32 sender3   = create(sendMessage, 1000, 20, "sender 3", 2, receiver, 'E'); 
+	
+	pid32 sender4   = create(sendMessage, 1000, 20, "sender 4", 2, receiver, 'M'); 
+	pid32 sender5   = create(sendMessage, 1000, 20, "sender 5", 2, receiver, 'E'); 
+	pid32 sender6   = create(sendMessage, 1000, 20, "sender 6", 2, receiver, 'G'); 
 
 	resume(sender1);
 	resume(sender2);
 	resume(sender3);
+	resume(sender4);
+	resume(sender5);
+	resume(sender6);
 
 	resume(receiver);
 
