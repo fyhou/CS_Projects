@@ -20,7 +20,7 @@ umsg32	receiveb(void)
 		resched();		/* block until message arrives	*/
 	}
 
-	msg = prptr->prmsg;		/* retrieve message		*/
+	msg = prptr->prmsg;		    /* retrieve message		*/
 	prptr->prhasmsg = FALSE;	/* reset message flag		*/
 
 	// check if any senders are waiting
@@ -28,11 +28,32 @@ umsg32	receiveb(void)
 		;
 	}
 	else {
-		// get PID of sender that was waiting longest
-		pid32 senderPID = dequeue(prptr->senderqueue);
-
 		struct	procent *senderptr;
-		senderptr = &proctab[senderPID];
+		pid32 reschedMe;
+
+		int validSender = 0;
+
+		// get PID of sender that was waiting longest (that isn't dead)
+		while (validSender == 0) {
+			pid32 senderPID;
+
+			if (!isempty(prptr->senderqueue)) {			
+				senderPID = dequeue(prptr->senderqueue);
+				senderptr = &proctab[senderPID];
+				
+				if (senderptr->sndflag == FALSE) {
+					validSender = 0;
+				}
+				else { 
+					reschedMe = senderPID;
+					validSender = 1;
+				}
+			}
+			else {
+				restore(mask);
+				return msg;
+			}
+		}
 
 		// get message and set appropriate flags
 		prptr->prmsg = senderptr->sndmsg;
@@ -40,7 +61,7 @@ umsg32	receiveb(void)
 		senderptr->sndflag = FALSE;
 
 		// reschedule sender
-		ready(senderPID, RESCHED_YES);
+		ready(reschedMe, RESCHED_YES);
 	}
 
 	restore(mask);

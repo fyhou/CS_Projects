@@ -45,6 +45,8 @@ syscall	kill(
 		ready(senderPID, RESCHED_YES);
 	}
 
+	prptr->sndflag = FALSE;
+
 	switch (prptr->prstate) {
 	case PR_CURR:
 		prptr->prstate = PR_FREE;	/* suicide */

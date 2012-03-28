@@ -10,7 +10,6 @@ points to a queue that holds the sender processes that are waiting on it. Each s
 
 Additionally, I wrote a loop that dequeues all left over sender processes that are waiting
 on the receiver and wakes them up if the receiver is killed so the system doesn't hang in 
-kill.c. Also, when a blocked sender is killed, it remains in the senderqueue of a receiver
-with its message still in tact so the receiver can still receive the message. This was done
-because the lab spec says "that messages should not be lost".
-
+kill.c. Also, when a blocked sender is killed, it remains in the senderqueue of a receiver,
+but its sndflag field is set to FALSE, so the receiver knows to ignore it and get another 
+blocked sender from the queue. If no other blocked senders exist, it behaves like receive().

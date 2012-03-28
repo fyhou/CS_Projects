@@ -24,11 +24,21 @@ int main(int argc, char **argv)
 
 	void sendMessage(pid32 recPID, char msg);
 	void receiveMessage(int number);
+	void murder(pid32 target);
 
-	pid32 receiver = create(receiveMessage, 1000, 20, "receiver", 1, 1); 
-	pid32 sender   = create(sendMessage, 1000, 20, "sender", 2, receiver, 'X'); 
+	pid32 receiver  = create(receiveMessage, 1000, 20, "receiver", 1, 2); 
+	pid32 sender1   = create(sendMessage, 1000, 20, "sender 1", 2, receiver, 'X'); 
+	pid32 sender2   = create(sendMessage, 1000, 20, "sender 2", 2, receiver, 'Y'); 
+	pid32 sender3   = create(sendMessage, 1000, 20, "sender 3", 2, receiver, 'Z'); 
 
-	resume(sender);
+	pid32 murderer = create(murder, 1000, 20, "murderer", 1, sender2);
+
+	resume(sender1);
+	resume(sender2);
+	resume(sender3);
+
+	resume(murderer);
+
 	resume(receiver);
 
 	return OK;
@@ -44,6 +54,10 @@ void receiveMessage(int number) {
 
 	for (i = 0; i < number; i++) {
 		msg = receiveb();
-		kprintf("Message received from sender: \"%c\".\n\r", msg);	
+		kprintf("Message received from sender %d: \"%c\".\n\r", i+1, msg);	
 	}
+}
+
+void murder(pid32 target) {
+	kill(target);
 }
