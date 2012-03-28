@@ -37,6 +37,10 @@ extern	uint32	dot2ip(char *, uint32 *);
 /* in file queue.c */
 extern	pid32	enqueue(pid32, qid16);
 extern 	pid32 	dequeue(qid16);
+
+extern	umsg32	messageEnqueue(umsg32, pid32);
+extern 	umsg32 	messageDequeue(pid32);
+
 /* in file intutils.S */
 extern	intmask	disable(void);
 
@@ -136,6 +140,7 @@ extern	status	ready(pid32, bool8);
 /* in file receive.c */
 extern	umsg32	receive(void);
 extern	umsg32	receiveb(void);
+extern	umsg32	receiveq(void);
 
 /* in file recvclr.c */
 extern	umsg32	recvclr(void);
@@ -173,6 +178,7 @@ extern	syscall	semreset(sid32, int32);
 /* in file send.c */
 extern	syscall	send(pid32, umsg32);
 extern	syscall	sendb(pid32, umsg32);
+extern	syscall	sendq(pid32, umsg32);
 
 /* in file signal.c */
 extern	syscall	signal(sid32);

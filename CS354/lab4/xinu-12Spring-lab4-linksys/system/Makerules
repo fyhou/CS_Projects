@@ -40,8 +40,11 @@ C_FILES += kprintf.c debug.c
 # Files for time and date manipulation
 C_FILES += ascdate.c
 
+C_FILES += messagequeue.c
 C_FILES += sendb.c
 C_FILES += receiveb.c
+C_FILES += sendq.c
+C_FILES += receiveq.c
 
 # Main program
 C_FILES += main.c

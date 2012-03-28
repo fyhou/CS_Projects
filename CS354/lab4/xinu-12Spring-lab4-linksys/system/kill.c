@@ -46,6 +46,7 @@ syscall	kill(
 	}
 
 	prptr->sndflag = FALSE;
+	prptr->nummessages = 0;
 
 	switch (prptr->prstate) {
 	case PR_CURR:

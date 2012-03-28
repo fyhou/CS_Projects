@@ -6,6 +6,9 @@
 #define	NPROC		8
 #endif		
 
+/* Messages to hold in queue */
+#define MSGQ_SIZE   3
+
 /* Process state constants */
 
 #define	PR_FREE		0	/* process table entry is unused	*/
@@ -16,7 +19,7 @@
 #define	PR_SUSP		5	/* process is suspended			*/
 #define	PR_WAIT		6	/* process is on semaphore queue	*/
 #define	PR_RECTIM	7	/* process is receiving with timeout	*/
-#define PR_SND      8
+#define PR_SND      8   /* process is a blocked sender */
 
 /* Miscellaneous process definitions */
 
@@ -59,9 +62,14 @@ struct procent {		/* entry in the process table		*/
 	bool8	prhasmsg;	/* nonzero iff msg is valid		*/
 	int16	prdesc[NDESC];	/* device descriptors for process	*/
 
-	umsg32  sndmsg;
-	bool8   sndflag;
-	qid16   senderqueue;
+	/* basic lab variables */
+	umsg32  sndmsg;       /* the message to be sent */
+	bool8   sndflag;      /* flag if sndmsg if valid */
+	qid16   senderqueue;  /* queue of blocked senders */
+
+	/* extra credit variables */
+	umsg32  msgqueue[MSGQ_SIZE];  /* mailbox size */
+	int     nummessages;          /* how many messages are there */
 };
 
 /* Marker for the top of a process stack (used to help detect overflow)	*/
