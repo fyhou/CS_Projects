@@ -57,7 +57,7 @@ pid32	create(
 	
 	/* clear out senderqueue */
 	if (!isempty(prptr->senderqueue)) {
-		pid32 olditem = dequeue(prptr->senderqueue);
+		dequeue(prptr->senderqueue);
 	}
 
 	/* Set up initial device descriptors for the shell		*/
