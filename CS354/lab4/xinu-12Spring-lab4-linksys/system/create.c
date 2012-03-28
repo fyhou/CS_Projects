@@ -53,6 +53,7 @@ pid32	create(
 		;
 	prptr->prparent = (pid32)getpid();
 	prptr->prhasmsg = FALSE;
+	prptr->sndflag = FALSE;
 
 	/* Set up initial device descriptors for the shell		*/
 

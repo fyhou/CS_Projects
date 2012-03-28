@@ -1,4 +1,5 @@
-/* receiveb.c - receive */
+
+/* receive.c - receive */
 
 #include <xinu.h>
 
@@ -10,7 +11,6 @@ umsg32	receiveb(void)
 {
 	intmask	mask;			/* saved interrupt mask		*/
 	struct	procent *prptr;		/* ptr to process' table entry	*/
-	struct	procent *sender;		/* ptr to process' table entry	*/
 	umsg32	msg;			/* message to return		*/
 
 	mask = disable();
@@ -19,19 +19,29 @@ umsg32	receiveb(void)
 		prptr->prstate = PR_RECV;
 		resched();		/* block until message arrives	*/
 	}
-	msg = prptr->prmsg;		/* retrieve message		*/
 
-	if (isempty(senderlist)) {
-		prptr->prhasmsg = FALSE;	/* reset message flag		*/
+	msg = prptr->prmsg;		/* retrieve message		*/
+	prptr->prhasmsg = FALSE;	/* reset message flag		*/
+
+	// check if any senders are waiting
+	if (isempty(prptr->senderqueue)) {
+		;
 	}
 	else {
-		pid32 senderPID = dequeue(senderlist);
-		sender = &proctab[senderPID];
-	
-		prptr->prmsg = sender->sndmsg;
-		prptr->prhasmsg = TRUE;
+		kprintf("Receiver found a waiting Sender.\n\r");
 
-		sender->sndflag = FALSE;
+		// get PID of sender that was waiting longest
+		pid32 senderPID = dequeue(prptr->senderqueue);
+
+		struct	procent *senderptr;
+		senderptr = &proctab[senderPID];
+
+		// get message and set appropriate flags
+		prptr->prmsg = senderptr->sndmsg;
+		prptr->prhasmsg = TRUE;
+		senderptr->sndflag = FALSE;
+
+		// reschedule sender
 		ready(senderPID, RESCHED_YES);
 	}
 

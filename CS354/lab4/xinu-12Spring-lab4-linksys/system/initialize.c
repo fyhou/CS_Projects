@@ -135,6 +135,7 @@ static	void	sysinit(void)
 		prptr->prname[0] = NULLCH;
 		prptr->prstkbase = NULL;
 		prptr->prprio = 0;
+		prptr->senderqueue = newqueue();
 	}
 
 	/* Initialize the Null process entry */
@@ -165,10 +166,6 @@ static	void	sysinit(void)
 
 	readylist = newqueue();
 
-	/* Create a sender list for processes */
-
-	senderlist = newqueue();
-	
 	/* Initialize real time clock */
 
 	clkinit();

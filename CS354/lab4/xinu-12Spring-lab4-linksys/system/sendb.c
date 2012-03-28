@@ -2,8 +2,6 @@
 
 #include <xinu.h>
 
-qid16	senderlist;			/* index of sender list		*/
-
 /*------------------------------------------------------------------------
  *  send  -  pass a message to a process and start recipient if waiting
  *------------------------------------------------------------------------
@@ -15,7 +13,6 @@ syscall	sendb(
 {
 	intmask	mask;			/* saved interrupt mask		*/
 	struct	procent *prptr;		/* ptr to process' table entry	*/
-	struct	procent *currpro;		/* ptr to current process' table entry	*/
 
 	mask = disable();
 	if (isbadpid(pid)) {
@@ -29,19 +26,23 @@ syscall	sendb(
 		return SYSERR;
 	}
 
-	// check if Receiver already has a message
 	if (prptr->prhasmsg) {
-		currpro = &proctab[currpid];
+		kprintf("Receiver has message.\n\r");
+		
+		struct	procent *sender;
+		sender = &proctab[currpid];
 
-		currpro->sndmsg = msg;
-		currpro->sndflag = TRUE;
-		currpro->prstate = PR_SND;
-
-		enqueue(currpid, senderlist);
+		sender->prstate = PR_SND;
+		sender->sndmsg = msg;
+		sender->sndflag = TRUE;
+		enqueue(currpid, prptr->senderqueue);
+		
+		kprintf("Sender is queued and about to resched().\n\r");
 		resched();
+		kprintf("Back from resched().\n\r");
 	}
 
-	prptr->prmsg = msg;		/* deliver message		*/
+	prptr->prmsg = msg;		    /* deliver message		*/
 	prptr->prhasmsg = TRUE;		/* indicate message is waiting	*/
 
 	/* If recipient waiting or in timed-wait make it ready */
@@ -52,6 +53,7 @@ syscall	sendb(
 		unsleep(pid);
 		ready(pid, RESCHED_YES);
 	}
+
 	restore(mask);		/* restore interrupts */
 	return OK;
 }
