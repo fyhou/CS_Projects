@@ -8,6 +8,9 @@ typedef	short		int16;
 typedef	unsigned int	uint32;
 typedef	unsigned short	uint16;
 
+// added 3/29
+typedef int pipid32;
+
 /* Xinu-specific types */
 
 typedef	int32	sid32;		/* semaphore ID				*/
