@@ -159,8 +159,8 @@ void test2(void){
   
   kprintf("Hehe 12\n\r");
   
-  resume(r);
-  resume(w);
+  //resume(r);
+  //resume(w);
   
   kprintf("Hehe 13\n\r");
   
@@ -475,10 +475,9 @@ int main(int argc, char **argv)
       kprintf("Main delete failure\n\r");    
        
     kprintf("Begin TA MAIN\n\r");
-	
     
     test1();
-    //test2();    
+    test2();    
     test3();
     test4();
     
