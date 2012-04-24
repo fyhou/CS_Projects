@@ -1,0 +1,18 @@
+October 25th, 2011, Cheng Cheng
+
+This tarball includes ingredients for students to hack on the lab4 assignment
+(Enhanced Xinu File System). Except the core part of the system, it also has
+the following components:
+
+-------------------------
+TTY Driver
+Ethernet Card Drive
+Remote Disk System
+Basic Xinu File System
+Shell Environment
+-------------------------
+
+Besides, a remote disk server (rdserver) is also included within the tarball. 
+
+Please note that the default communication port for remote disk server is 8888.
+You can change the value from *Configuration*.
