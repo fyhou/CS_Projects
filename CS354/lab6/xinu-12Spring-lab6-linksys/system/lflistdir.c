@@ -17,10 +17,11 @@ syscall  lflistdir(
 	devptr = (struct dentry *) &devtab[descrp];
   
   if (devptr->dvnum == 4) {
-    kprintf("fuck you\n\r");
+    kprintf("there are %d files right now, nigga\n\r", lfdir->lfd_nfiles);
   }
+  // if the device ain't quite right
   else {
-    kprintf("fuck you twice\n\r");
+    return SYSERR;
   }
   
 	restore(mask);
