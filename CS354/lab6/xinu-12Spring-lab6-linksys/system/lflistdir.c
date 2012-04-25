@@ -6,7 +6,6 @@ syscall  lflistdir(
 {
 	intmask		mask;		/* saved interrupt mask		*/
 	struct dentry	*devptr;	/* entry in device switch table	*/
-	int32		retval;		/* value to return to caller	*/
 
 	mask = disable();
 	if (isbaddev(descrp)) {
