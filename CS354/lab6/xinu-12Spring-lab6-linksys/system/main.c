@@ -65,7 +65,7 @@ int main(int argc, char **argv)
 		return SYSERR;
 	}
 
-	file = open(LFILESYS, "", "rw");
+	file = open(LFILESYS, "CS 354", "rw");
 	if(file == SYSERR){
 		kprintf("File open failed for /%d\r\n", i);
 		return SYSERR;
