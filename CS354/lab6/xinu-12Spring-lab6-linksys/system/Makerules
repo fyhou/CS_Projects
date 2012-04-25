@@ -32,7 +32,7 @@ C_FILES += getmem.c freemem.c getstk.c bufinit.c mkbufpool.c getbuf.c freebuf.c
 C_FILES += send.c receive.c recvclr.c recvtime.c
 
 # Files for device drivers
-C_FILES += close.c control.c getc.c open.c ioerr.c ionull.c read.c putc.c seek.c write.c getdev.c
+C_FILES += close.c control.c getc.c open.c ioerr.c ionull.c read.c putc.c seek.c write.c getdev.c lflistdir.c
 
 # Files for system debugging
 C_FILES += kprintf.c debug.c
