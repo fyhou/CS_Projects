@@ -15,7 +15,7 @@ syscall  lflistdir(
 
 	devptr = (struct dentry *) &devtab[descrp];
 
-	if (devptr->dvnum == 4) {
+	if (devptr->dvnum == LFILESYS) {
 		if (Lf_data.lf_dir.lfd_nfiles == 0) {
 			kprintf("No files\n\r");
 			restore(mask);
