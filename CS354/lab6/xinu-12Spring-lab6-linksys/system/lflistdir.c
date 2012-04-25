@@ -18,11 +18,11 @@ syscall  lflistdir(
 	// only use this method for local file system
 	if (devptr->dvnum == LFILESYS) {
 		// some error cases
-		if (Lf_data == null) {
+		if (Lf_data == NULL) {
 			restore(mask);
 			return SYSERR;
 		}
-		else if (Lf_data.lf_dir == null) {
+		else if (Lf_data.lf_dir == NULL) {
 			restore(mask);
 			return SYSERR;
 		}
