@@ -45,7 +45,6 @@ int main(int argc, char **argv)
                                 return SYSERR;
                         }
                         
-	lflistdir(0);
 	lflistdir(4);
 
           /************ EXAMPLE *****************/              
