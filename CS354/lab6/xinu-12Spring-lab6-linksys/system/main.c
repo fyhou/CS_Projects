@@ -44,6 +44,9 @@ int main(int argc, char **argv)
                                kprintf("Creating the filesystem failed\r\n");
                                 return SYSERR;
                         }
+                        
+	lflistdir(0);
+	lflistdir(4);
 
           /************ EXAMPLE *****************/              
                         
