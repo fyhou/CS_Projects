@@ -17,16 +17,6 @@ syscall  lflistdir(
 
 	// only use this method for local file system
 	if (devptr->dvnum == LFILESYS) {
-		// some error cases
-		if (Lf_data == NULL) {
-			restore(mask);
-			return SYSERR;
-		}
-		else if (Lf_data.lf_dir == NULL) {
-			restore(mask);
-			return SYSERR;
-		}
-		
 		// print out No files if there are no files
 		if (Lf_data.lf_dir.lfd_nfiles == 0) {
 			kprintf("No files\n\r");
