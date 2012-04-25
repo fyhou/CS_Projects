@@ -17,7 +17,7 @@ syscall  lflistdir(
 	devptr = (struct dentry *) &devtab[descrp];
   
   if (devptr->dvnum == 4) {
-    kprintf("there are %d files right now, nigga\n\r", lfdir->lfd_nfiles);
+    kprintf("there are %d files right now, nigga\n\r", Lf_data->lf_dir->lfd_nfiles);
   }
   // if the device ain't quite right
   else {
