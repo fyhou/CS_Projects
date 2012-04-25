@@ -13,7 +13,7 @@ int main(int argc, char **argv)
 {
 	int32	retval;
 	int i; 
-	//did32 file = 0;
+	did32 file = 0;
 	//char buf[50];
 
 	/* Obtain network configuration from DHCP server */
@@ -46,6 +46,20 @@ int main(int argc, char **argv)
                         }
                         
 	lflistdir(4);
+	
+	file = open(LFILESYS, "ABC", "rw");
+                if(file == SYSERR){
+                        kprintf("File open failed for /%d\r\n", i);
+                        return SYSERR;
+                }
+                
+                file = open(LFILESYS, "FUCK", "rw");
+                if(file == SYSERR){
+                        kprintf("File open failed for /%d\r\n", i);
+                        return SYSERR;
+                }
+                
+         lflistdir(4);
 
           /************ EXAMPLE *****************/              
                         
