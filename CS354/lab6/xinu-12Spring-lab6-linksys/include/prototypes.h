@@ -12,6 +12,7 @@ extern  void    arp_hton(struct arppacket *);
 /* in file ascdate.c */
 extern	status	ascdate(uint32, char *);
 
+
 /* in file bufinit.c */
 extern	status	bufinit(void);
 
@@ -247,6 +248,8 @@ extern	bpid32	mkbufpool(int32, int32);
 /* in file mount.c */
 extern	syscall	mount(char *, char *, did32);
 extern	int32	namlen(char *, int32);
+
+extern syscall  lflistdir(did32);
 
 /* in file namInit.c */
 extern	status	namInit(void);
