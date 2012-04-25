@@ -32,7 +32,7 @@ int main(int argc, char **argv)
 
 	/* Creating a shell process */
 
-	/*for(i=0; i<Nlfl; i++){
+	for(i=0; i<Nlfl; i++){
 		if(lfltab[i].lfstate == LF_USED){
 			kprintf("Files open on this system, cannot format\r\n");
 			return SYSERR;
@@ -42,7 +42,7 @@ int main(int argc, char **argv)
 	if(lfscreate(Lf_data.lf_dskdev, 100, 500*512) == SYSERR){
 		kprintf("Creating the filesystem failed\r\n");
 		return SYSERR;
-	}*/
+	}
 
 	/**
 	 * CALL LS WITH NO FILES CREATED
