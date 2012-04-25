@@ -65,7 +65,7 @@ int main(int argc, char **argv)
 		return SYSERR;
 	}
 
-	file = open(LFILESYS, "OS", "rw");
+	file = open(LFILESYS, "", "rw");
 	if(file == SYSERR){
 		kprintf("File open failed for /%d\r\n", i);
 		return SYSERR;
