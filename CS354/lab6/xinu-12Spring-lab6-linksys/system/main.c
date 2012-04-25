@@ -46,14 +46,27 @@ int main(int argc, char **argv)
                         }
                         
 	lflistdir(4);
+	kprintf("\n\r\n\r");
 	
-	file = open(LFILESYS, "ABC", "rw");
+	file = open(LFILESYS, "I", "rw");
                 if(file == SYSERR){
                         kprintf("File open failed for /%d\r\n", i);
                         return SYSERR;
                 }
                 
-                file = open(LFILESYS, "FUCK", "rw");
+                file = open(LFILESYS, "LOVE", "rw");
+                if(file == SYSERR){
+                        kprintf("File open failed for /%d\r\n", i);
+                        return SYSERR;
+                }
+                
+                file = open(LFILESYS, "OS", "rw");
+                if(file == SYSERR){
+                        kprintf("File open failed for /%d\r\n", i);
+                        return SYSERR;
+                }
+                
+                file = open(LFILESYS, "LABS", "rw");
                 if(file == SYSERR){
                         kprintf("File open failed for /%d\r\n", i);
                         return SYSERR;
