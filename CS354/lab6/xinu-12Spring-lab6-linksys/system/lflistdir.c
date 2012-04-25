@@ -1,7 +1,7 @@
 #include <xinu.h>
 
 syscall  lflistdir(
-	  did32		descrp,		/* descriptor for device	*/
+	  did32		descrp		/* descriptor for device	*/
 	)
 {
 	intmask		mask;		/* saved interrupt mask		*/
