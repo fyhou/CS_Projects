@@ -18,6 +18,18 @@ syscall  lflistdir(
   
   if (devptr->dvnum == 4) {
     kprintf("there are %d files right now, nigga\n\r", Lf_data.lf_dir.lfd_nfiles);
+    
+    int i = 0;
+    int gottaFileYo = 0;
+    for (i = 0; i < LF_NUM_DIR_ENT; i++) { 	
+    	if (Lf_data.lf_dir.lfd_files[i].ld_ilist != IB_NULL) {
+    		kprintf("%s\n\r", Lf_data.lf_dir.lfd_files[i].ld_name);
+    		gottaFileYo++;
+    	}
+    }
+    
+    if (gottaFileYo == 0)
+    	kprintf("No files");
   }
   // if the device ain't quite right
   else {
