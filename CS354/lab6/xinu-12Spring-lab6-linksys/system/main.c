@@ -48,7 +48,7 @@ int main(int argc, char **argv)
 	 * CALL LS WITH NO FILES CREATED
 	 */
 	lflistdir(4);
-	kprintf("\n\r\n\r");
+	kprintf("\n\r");
 
 	/**
 	 * CREATE FOUR FILES
