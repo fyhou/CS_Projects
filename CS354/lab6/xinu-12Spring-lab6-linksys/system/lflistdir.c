@@ -26,7 +26,7 @@ syscall  lflistdir(
     
     int i = 0;
     for (i = 0; i < LF_NUM_DIR_ENT; i++) { 	
-    	if (Lf_data.lf_dir.lfd_files[i].ld_ilist != IB_NULL) {
+    	if (Lf_data.lf_dir.lfd_files[i].ld_ilist != NULL) {
     		kprintf("%s\n\r", Lf_data.lf_dir.lfd_files[i].ld_name);
     	}
     }
