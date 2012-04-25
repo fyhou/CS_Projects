@@ -14,7 +14,6 @@ int main(int argc, char **argv)
 	int32	retval;
 	int i; 
 	did32 file = 0;
-	//char buf[50];
 
 	/* Obtain network configuration from DHCP server */
 
@@ -32,73 +31,56 @@ int main(int argc, char **argv)
 	kprintf("\n\r**********************************************************\n\r");
 
 	/* Creating a shell process */
-	
-	for(i=0; i<Nlfl; i++){
-             if(lfltab[i].lfstate == LF_USED){
-                   kprintf("Files open on this system, cannot format\r\n");
-                    return SYSERR;
-             }
-        }                        
 
-        if(lfscreate(Lf_data.lf_dskdev, 100, 500*512) == SYSERR){
-                               kprintf("Creating the filesystem failed\r\n");
-                                return SYSERR;
-                        }
-                        
+	for(i=0; i<Nlfl; i++){
+		if(lfltab[i].lfstate == LF_USED){
+			kprintf("Files open on this system, cannot format\r\n");
+			return SYSERR;
+		}
+	}                        
+
+	if(lfscreate(Lf_data.lf_dskdev, 100, 500*512) == SYSERR){
+		kprintf("Creating the filesystem failed\r\n");
+		return SYSERR;
+	}
+
+	/**
+	 * CALL LS WITH NO FILES CREATED
+	 */
 	lflistdir(4);
 	kprintf("\n\r\n\r");
-	
-	file = open(LFILESYS, "I", "rw");
-                if(file == SYSERR){
-                        kprintf("File open failed for /%d\r\n", i);
-                        return SYSERR;
-                }
-                
-                file = open(LFILESYS, "LOVE", "rw");
-                if(file == SYSERR){
-                        kprintf("File open failed for /%d\r\n", i);
-                        return SYSERR;
-                }
-                
-                file = open(LFILESYS, "OS", "rw");
-                if(file == SYSERR){
-                        kprintf("File open failed for /%d\r\n", i);
-                        return SYSERR;
-                }
-                
-                file = open(LFILESYS, "LABS", "rw");
-                if(file == SYSERR){
-                        kprintf("File open failed for /%d\r\n", i);
-                        return SYSERR;
-                }
-                
-         lflistdir(4);
 
-          /************ EXAMPLE *****************/              
-                        
-	  /*file = open(LFILESYS, "ABC", "rw");
-                if(file == SYSERR){
-                        kprintf("File open failed for /%d\r\n", i);
-                        return SYSERR;
-                }
-                
-                if(write(file, "DEF\0", 4) == SYSERR){
-                        kprintf("Write failed for /abcdef%d\r\n", i);
-                        close(file);
-                        return SYSERR;
-                }
-                seek(file, 0);
-                if(read(file, buf, 4) == SYSERR){
-                        kprintf("Read failed for /abcdef%d\r\n", i);
-                        close(file);
-                        return SYSERR;
-                }
-                
-        kprintf("Read is %s\n",buf);
-	
-	close(file);*/
-	
-	/************ EXAMPLE *****************/
-	
+	/**
+	 * CREATE FOUR FILES
+	 */
+	file = open(LFILESYS, "I", "rw");
+	if(file == SYSERR){
+		kprintf("File open failed for /%d\r\n", i);
+		return SYSERR;
+	}
+
+	file = open(LFILESYS, "LOVE", "rw");
+	if(file == SYSERR){
+		kprintf("File open failed for /%d\r\n", i);
+		return SYSERR;
+	}
+
+	file = open(LFILESYS, "OS", "rw");
+	if(file == SYSERR){
+		kprintf("File open failed for /%d\r\n", i);
+		return SYSERR;
+	}
+
+	file = open(LFILESYS, "LABS", "rw");
+	if(file == SYSERR){
+		kprintf("File open failed for /%d\r\n", i);
+		return SYSERR;
+	}
+
+	/**
+	 * CALL LS AGAIN
+	 */
+	lflistdir(4);
+
 	return OK;
 }
