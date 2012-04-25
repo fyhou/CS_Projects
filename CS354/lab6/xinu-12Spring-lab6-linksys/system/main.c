@@ -44,10 +44,13 @@ int main(int argc, char **argv)
 		return SYSERR;
 	}
 
+
+	lflistdir(0);
+
 	/**
 	 * CALL LS WITH NO FILES CREATED
 	 */
-	if (lflistdir(0) == SYSERR) {
+	if (lflistdir(4) == SYSERR) {
 		kprintf("SYSERR handled.\n\r");
 	}
 	
