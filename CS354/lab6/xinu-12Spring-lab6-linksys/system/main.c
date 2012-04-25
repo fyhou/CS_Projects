@@ -47,7 +47,7 @@ int main(int argc, char **argv)
 
           /************ EXAMPLE *****************/              
                         
-	  file = open(LFILESYS, "ABC", "rw");
+	  /*file = open(LFILESYS, "ABC", "rw");
                 if(file == SYSERR){
                         kprintf("File open failed for /%d\r\n", i);
                         return SYSERR;
@@ -67,7 +67,7 @@ int main(int argc, char **argv)
                 
         kprintf("Read is %s\n",buf);
 	
-	close(file);
+	close(file);*/
 	
 	/************ EXAMPLE *****************/
 	
