@@ -47,7 +47,10 @@ int main(int argc, char **argv)
 	/**
 	 * CALL LS WITH NO FILES CREATED
 	 */
-	lflistdir(0);
+	if (lflistdir(0) == SYSERR) {
+		kprintf("SYSERR handled.\n\r");
+	}
+	
 	kprintf("\n\r");
 
 	/**
@@ -80,7 +83,9 @@ int main(int argc, char **argv)
 	/**
 	 * CALL LS AGAIN
 	 */
-	lflistdir(4);
+	if (lflistdir(4) == SYSERR) {
+		kprintf("SYSERR handled.\n\r");
+	}
 
 	return OK;
 }
