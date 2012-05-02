@@ -16,7 +16,7 @@ syscall  lflistdir(
 	devptr = (struct dentry *) &devtab[descrp];
 
 	// only use this method for local file system
-	if (devptr->dvnum == LFILESYS) {
+	if (devptr->dvnum == LFILESYS || devptr->dvnum == Lf_data.lf_dskdev) {
 		// print out No files if there are no files
 		if (Lf_data.lf_dir.lfd_nfiles == 0) {
 			kprintf("No files\n\r");
