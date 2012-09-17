@@ -63,5 +63,5 @@ extern	struct	dentry	devtab[]; /* one entry per device */
 #ifdef RD_SERVER_PORT
 #undef RD_SERVER_PORT
 #endif
-#define RD_SERVER_PORT 	31110
+#define RD_SERVER_PORT 	31111
 #define LF_DISK_DEV     RDISK
