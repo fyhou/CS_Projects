@@ -1,0 +1,34 @@
+$ ../trec_eval qrel result_okapi_stemmed_nostopw
+
+Queryid (Num):       30
+Total number of documents over all queries
+    Retrieved:     3000
+    Relevant:       442
+    Rel_ret:        286
+Interpolated Recall - Precision Averages:
+    at 0.00       0.8056 
+    at 0.10       0.7440 
+    at 0.20       0.6322 
+    at 0.30       0.5556 
+    at 0.40       0.4279 
+    at 0.50       0.3430 
+    at 0.60       0.2557 
+    at 0.70       0.1752 
+    at 0.80       0.1214 
+    at 0.90       0.0488 
+    at 1.00       0.0434 
+Average precision (non-interpolated) for all rel docs(averaged over queries)
+                  0.3584 
+Precision:
+  At    5 docs:   0.4867
+  At   10 docs:   0.3967
+  At   15 docs:   0.3156
+  At   20 docs:   0.2917
+  At   30 docs:   0.2289
+  At  100 docs:   0.0953
+  At  200 docs:   0.0477
+  At  500 docs:   0.0191
+  At 1000 docs:   0.0095
+R-Precision (precision after R (= num_rel for a query) docs retrieved):
+    Exact:        0.3813
+
