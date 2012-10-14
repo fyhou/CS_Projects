@@ -1,0 +1,11 @@
+$ perl TC_eval.pl class_Result_File_RawTFIDF_kNN1 
+Total Number of regular emails are 100 
+The value of True Positive is 31 
+The value of True Negative is 99 
+The value of False Postive is 1 
+The value of False Negative is 69 
+Total Number of spam emails are 100 
+The value of True Positive is 99 
+The value of True Negative is 31 
+The value of False Postive is 69 
+The value of False Negative is 1 

@@ -1,3 +1,5 @@
+Part 1/2 - RawTFIDF Results
+
 $ ../trec_eval qrel result_rawtf_stemmed_nostopw
 
 Queryid (Num):       30

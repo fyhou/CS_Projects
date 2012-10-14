@@ -1,0 +1,11 @@
+$ perl TC_eval.pl class_Result_File_Okapi_kNN20
+Total Number of regular emails are 100 
+The value of True Positive is 97 
+The value of True Negative is 98 
+The value of False Postive is 2 
+The value of False Negative is 3 
+Total Number of spam emails are 100 
+The value of True Positive is 98 
+The value of True Negative is 97 
+The value of False Postive is 3 
+The value of False Negative is 2 

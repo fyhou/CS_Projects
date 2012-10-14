@@ -1,3 +1,5 @@
+Part 3 - RawTFIDF Results
+
 101 Q0 http://www.cs.purdue.edu/gsb/survival_guide:curriculum 1 137.697 Exp
 101 Q0 http://www.cs.purdue.edu/homes/ake/pub.html 2 92.9506 Exp
 101 Q0 http://www.cs.purdue.edu/homes/ckillian/courses/fa09/cs536/ 3 66.2338 Exp

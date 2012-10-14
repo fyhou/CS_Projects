@@ -1,3 +1,5 @@
+Part 1 - RawTF Results
+
 $ ../trec_eval qrel result_rawtf
 
 Queryid (Num):       30
